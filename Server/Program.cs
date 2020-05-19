@@ -128,8 +128,7 @@ namespace Server
 
                         if (answer.Contains("%REG")) //Регистрация
                         {
-                            //REG:{email}:{pass}:{clientName}
-                            Console.WriteLine(answer);
+                            Console.WriteLine($"Регистрация пользователя: {answer}"); //REG:{email}:{pass}:{clientName}                           
                             Match regex = Regex.Match(answer, "%REG:(.*):(.*):(.*)");
                             string email = regex.Groups[1].Value;
                             string password = regex.Groups[2].Value;
@@ -137,12 +136,13 @@ namespace Server
                             //TODO: Сделать проверку почты
                             if (database.CheckEmail(email))
                             {
+                                Console.WriteLine("Проверка почты: %BREG");
                                 client.Client.Send(Encoding.UTF8.GetBytes("%BREG"));
                             }
                             else
                             {
                                 database.AddAccount(email, password, nick);
-                                Console.WriteLine("GoodRegistration");
+                                Console.WriteLine("Проверка почты: %REGOOD");
                                 client.Client.Send(Encoding.UTF8.GetBytes("%REGOOD"));
                                 //Добавление в систему
 
@@ -153,42 +153,34 @@ namespace Server
                             return;
                         }
                         else if (answer.Contains("%LOG"))
-                        {
-                            //%LOG:{email}:{pass}
-                            Console.WriteLine("");
+                        {                          
+                            Console.WriteLine($"Логин пользователя: {answer}");//%LOG:{email}:{pass}
                             Match regex = Regex.Match(answer, "%LOG:(.*):(.*)");
                             string email = regex.Groups[1].Value;
                             string password = regex.Groups[2].Value;
-                            Console.WriteLine("Почта на входе: " + email);
-                            //Проверка почты
-
-                            if (database.CheckEmail(email))
+                            
+                            if (database.CheckEmail(email))//Проверка почты
                             {
-                                Console.WriteLine("Проверка имейла прошла успешно\nПочта после проверки: " + email);
+                                Console.WriteLine($"Логин: Проверка почты успешно: {email}");                            
                                 
-                                //Проверка пароля
-
-                                if (database.CheckPassword(password, email))
+                                if (database.CheckPassword(email, password))//Проверка пароля
                                 {
-                                    Console.WriteLine($"\nПроверка пароля прошла успешна\nИмейл:{email} Пароль:{password}");
+                                    Console.WriteLine($"Логин: Проверка пароля успешно: {password}");
                                     Data.ClientInfoOffile info = database.GetClientInfo(email);
-                                    //POINT МОЖЕТ БЫТЬ ПУСТЫМ!!! 
-
-                                    if (info.Point == null)
+                                    
+                                    if (info.Point == null)//POINT НЕ МОЖЕТ БЫТЬ ПУСТЫМ!!! 
                                     {
                                         info.Point = 0;
                                     }
 
                                     client.Client.Send(
                                         Encoding.UTF8.GetBytes($"%LOGOD:{info.ID}:{info.Nick}:{info.Point}"));
-                                    Console.WriteLine($"%LOGOD:{info.ID}:{info.Nick}:{info.Point}");
                                     Data.ClientInfoOnly clientInfo = new Data.ClientInfoOnly(client, info.Email,
                                         info.Password,
                                         info.Nick);
                                     Data.ClientsInfo.Add(clientInfo);
                                     Thread thread = new Thread(new ParameterizedThreadStart(ClientManager));
                                     thread.Start(clientInfo);
-                                    Console.WriteLine("1");
                                     return;
                                 }
                                 else
@@ -203,7 +195,7 @@ namespace Server
 
                             badling: ; //LOL
                             client.Client.Send(Encoding.UTF8.GetBytes("%BLOG"));
-                            Console.WriteLine("2");
+                            Console.WriteLine("Проверка логина: %BLOG");
                         }
                     }
                     catch (Exception ex)
@@ -223,7 +215,6 @@ namespace Server
                     thread.Start(client);
                 }
             }
-
             #endregion
         }
     }

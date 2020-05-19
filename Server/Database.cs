@@ -35,9 +35,8 @@ namespace Server
         public Data.ClientInfoOffile GetClientInfo(string email) //Получение инфо о клиенте
         {
             MySqlCommand command = new MySqlCommand(
-                $"SELECT * FROM `accounts` WHERE email = '{email}';",
+                $"SELECT * FROM accounts WHERE w_email = '{email}';",
                 connection);
-
             long id = 0;
             string emailInfo = "";
             string password = "";
@@ -46,44 +45,37 @@ namespace Server
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                id = reader.GetInt64("id");
-                emailInfo = reader.GetString("email");
-                password = reader.GetString("password");
-                nick = reader.GetString("nick");
-                Console.WriteLine(nick);
-                point = reader.GetInt64("point");//NULL!!!
+                id = reader.GetInt64("w_id");
+                emailInfo = reader.GetString("w_email");
+                password = reader.GetString("w_password");
+                nick = reader.GetString("w_nick");
+                point = reader.GetInt64("w_point");//NULL!!!
             }
-            
-            Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
+            reader.Close();
             return new Data.ClientInfoOffile(id, email, password, nick, point);
         }
 
-        public bool CheckPassword(string password, string email) //Проверка пароля в аккаунтах
+        public bool CheckPassword(string Pemail,string Ppassword) //Проверка пароля в аккаунтах
         {
-            //SELECT * FROM test.accounts where w_password = '123' and w_email = '123';
+            Console.WriteLine($"Начало проверки пароля: {Pemail}");
             MySqlCommand command = new MySqlCommand(
-                $" SELECT * FROM accounts WHERE w_email = '{email}';", connection);
-            Console.WriteLine("1");
-            //var count = command.ExecuteScalar();
-
-           // Console.WriteLine(count.fetchall());
-            Console.WriteLine("2");
-            return true;
-
-
-            //if (count == 0)
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    return true;
-            //} 
+                $"SELECT * FROM accounts WHERE w_email = '{Pemail}';",
+                connection);
+            string password = "";
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                password = reader.GetString("w_password");
+            }
+            reader.Close();  
+            Console.WriteLine(Ppassword + " " + password);
+            if(Ppassword == password) return true;
+            else return false;          
         }
 
         public bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
-            Console.WriteLine($"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';");
+            Console.WriteLine($"Начало проверки почты: {email}");
             MySqlCommand command = new MySqlCommand(
                 $"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';",
                 connection);
@@ -102,14 +94,11 @@ namespace Server
 
     public void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
-            Console.WriteLine("3");
             MySqlCommand command = new MySqlCommand(
                 $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`, `w_point`) VALUES ('{email}', '{password}', '{nick}', 0);",
                 connection);
-            Console.WriteLine($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');");
-            
+            Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
             command.ExecuteNonQuery();
-            Console.WriteLine("3");
         }
     }
 }
