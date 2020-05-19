@@ -62,30 +62,34 @@ namespace Server
         {
             //SELECT * FROM test.accounts where w_password = '123' and w_email = '123';
             MySqlCommand command = new MySqlCommand(
-                $"SELECT COUNT(*) FROM accounts WHERE w_password = '{password}' AND w_email = `{email}`;",
-                connection);
+                $" SELECT * FROM accounts WHERE w_email = '{email}';", connection);
+            Console.WriteLine("1");
+            //var count = command.ExecuteScalar();
 
-            long count = (long)command.ExecuteScalar();
-            Console.WriteLine($"SELECT COUNT(*) FROM accounts WHERE w_password = '{password}' AND w_email = `{email}`;");
-            
-            if (count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            } 
+           // Console.WriteLine(count.fetchall());
+            Console.WriteLine("2");
+            return true;
+
+
+            //if (count == 0)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    return true;
+            //} 
         }
 
         public bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
+            Console.WriteLine($"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';");
             MySqlCommand command = new MySqlCommand(
                 $"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';",
                 connection);
-            long count = (long)command.ExecuteScalar();
-            
-            Console.WriteLine($"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';");
+
+                long count = (long)command.ExecuteScalar();
+                                
             if (count == 0)
             {
                 return false;

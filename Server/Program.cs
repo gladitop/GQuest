@@ -130,7 +130,7 @@ namespace Server
                         {
                             //REG:{email}:{pass}:{clientName}
                             Console.WriteLine(answer);
-                            Match regex = Regex.Match(answer, "%REG:(.):(.):(.*)");
+                            Match regex = Regex.Match(answer, "%REG:(.*):(.*):(.*)");
                             string email = regex.Groups[1].Value;
                             string password = regex.Groups[2].Value;
                             string nick = regex.Groups[3].Value;
@@ -155,22 +155,22 @@ namespace Server
                         else if (answer.Contains("%LOG"))
                         {
                             //%LOG:{email}:{pass}
-                            Console.WriteLine("1");
-                            Match regex = Regex.Match(answer, "%LOG:(.*):(.*):");
+                            Console.WriteLine("");
+                            Match regex = Regex.Match(answer, "%LOG:(.*):(.*)");
                             string email = regex.Groups[1].Value;
                             string password = regex.Groups[2].Value;
-                            Console.WriteLine(email);
+                            Console.WriteLine("Почта на входе: " + email);
                             //Проверка почты
 
-                            if (!database.CheckEmail(email))
+                            if (database.CheckEmail(email))
                             {
-                                Console.WriteLine("1");
+                                Console.WriteLine("Проверка имейла прошла успешно\nПочта после проверки: " + email);
+                                
                                 //Проверка пароля
 
-                                if (!database.CheckPassword(password, email))
+                                if (database.CheckPassword(password, email))
                                 {
-                                    //Получение инфы и вход в систему
-                                    Console.WriteLine("GOODCHECKPASSWORD");
+                                    Console.WriteLine($"\nПроверка пароля прошла успешна\nИмейл:{email} Пароль:{password}");
                                     Data.ClientInfoOffile info = database.GetClientInfo(email);
                                     //POINT МОЖЕТ БЫТЬ ПУСТЫМ!!! 
 
