@@ -100,7 +100,7 @@ namespace Server
         {
             Console.WriteLine("3");
             MySqlCommand command = new MySqlCommand(
-                $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');",
+                $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`, `w_point`) VALUES ('{email}', '{password}', '{nick}', 0);",
                 connection);
             Console.WriteLine($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');");
             

@@ -135,25 +135,21 @@ namespace Server
                             string password = regex.Groups[2].Value;
                             string nick = regex.Groups[3].Value;
                             //TODO: Сделать проверку почты
-
-                            //Добавление аккаунта
-                            try
-                            {
-                                database.AddAccount(email, password, nick);
-                            }
-                            catch
+                            if (database.CheckEmail(email))
                             {
                                 client.Client.Send(Encoding.UTF8.GetBytes("%BREG"));
-                                return;
                             }
+                            else
+                            {
+                                database.AddAccount(email, password, nick);
+                                Console.WriteLine("GoodRegistration");
+                                client.Client.Send(Encoding.UTF8.GetBytes("%REGOOD"));
+                                //Добавление в систему
 
-                            Console.WriteLine("GoodRegistration");
-                            client.Client.Send(Encoding.UTF8.GetBytes("%REGOOD"));
-                            //Добавление в систему
-
-                            Data.ClientInfoOnly clientInfo = new Data.ClientInfoOnly(client, email, password, nick);
-                            Thread thread = new Thread(new ParameterizedThreadStart(ClientManager));
-                            thread.Start(clientInfo);
+                                Data.ClientInfoOnly clientInfo = new Data.ClientInfoOnly(client, email, password, nick);
+                                Thread thread = new Thread(new ParameterizedThreadStart(ClientManager));
+                                thread.Start(clientInfo);
+                            }
                             return;
                         }
                         else if (answer.Contains("%LOG"))
