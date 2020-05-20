@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -10,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    class Program
+    internal class Program
     {
-        static public TcpListener server { get; set; }
-        static public Database database { get; set; }
+        public static TcpListener server { get; set; }
+        public static Database database { get; set; }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.Title = "Сервер";
             Function.WriteLine("Это сервер для говно теста", ConsoleColor.Green);
             Function.WriteLine("Загрузка сервера...", ConsoleColor.Yellow);
 
             database = new Database();
-            Thread thread1 = new Thread(new ThreadStart(ClearBadClient));
+            var thread1 = new Thread(ClearBadClient);
             thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
-            Thread thread = new Thread(new ThreadStart(ListenClients));
+            var thread = new Thread(ListenClients);
             thread.Start();
 
             Function.WriteLine("Сервер работает!", ConsoleColor.Green);
 
             Console.ReadLine();
-            string answer = "";
+            var answer = "";
             while (true)
             {
                 answer = Console.ReadLine();
@@ -55,11 +54,10 @@ namespace Server
                     Task.Delay(1000).Wait();
 
                     foreach (var clientInfo in Data.ClientsInfo)
-                    {
                         try
                         {
-                            Ping ping = new Ping();
-                            PingReply status = ping.Send(clientInfo.IP.Address);
+                            var ping = new Ping();
+                            var status = ping.Send(clientInfo.IP.Address);
                             if (status.Status != IPStatus.Success)
                             {
                                 clientInfo.Socket.Close();
@@ -71,57 +69,54 @@ namespace Server
                         {
                             Function.WriteLine($"Ошибка: {ex.Message}", ConsoleColor.Red);
                         }
-                    }
                 }
             }
 
             static void ClientManager(object obj) //Прослушка
             {
-                Data.ClientInfoOnly clientInfo = (Data.ClientInfoOnly) obj;
-                byte[] buffer = new byte[1024];
+                var clientInfo = (Data.ClientInfoOnly) obj;
+                var buffer = new byte[1024];
 
                 while (true)
-                {
                     try
                     {
                         Task.Delay(10).Wait();
 
-                        int i = clientInfo.Socket.Client.Receive(buffer);
-                        string answer = Encoding.UTF8.GetString(buffer, 0, i);
+                        var i = clientInfo.Socket.Client.Receive(buffer);
+                        var answer = Encoding.UTF8.GetString(buffer, 0, i);
                         if (answer.Contains("%PCOUNT"))
                         {
                             //%PCOUNT:{Client.id}:{points}
 
-                            Match regex = Regex.Match(answer, "%PCOUNT:(.*):(.*)");
-                            long id = Convert.ToInt64(regex.Groups[1].Value);
-                            long point = Convert.ToInt64(regex.Groups[2].Value);
+                            var regex = Regex.Match(answer, "%PCOUNT:(.*):(.*)");
+                            var id = Convert.ToInt64(regex.Groups[1].Value);
+                            var point = Convert.ToInt64(regex.Groups[2].Value);
 
-                            Data.InfoPoint infoPoint = new Data.InfoPoint(id, point);
+                            var infoPoint = new Data.InfoPoint(id, point);
                             database.AddPoint(infoPoint);
-                            return;                           
+                            return;
                         }
-                        else if (answer.Contains(""))//Потом добавь!
+
+                        if (answer.Contains("")) //Потом добавь!
                         {
-                            List<Data.InfoScore> infos = database.GetScore();
+                            var infos = database.GetScore();
 
                             foreach (var info in infos)
-                            {
                                 try
                                 {
-                                    clientInfo.Socket.Client.Send(Encoding.UTF8.GetBytes($"{info.Email}:{info.Point}"));//И тут тоже!
+                                    clientInfo.Socket.Client.Send(
+                                        Encoding.UTF8.GetBytes($"{info.Email}:{info.Point}")); //И тут тоже!
                                 }
                                 catch (Exception e)
                                 {
                                     Function.WriteLine("Ошибка " + e.Message, ConsoleColor.Red);
                                 }
-                            }
                         }
                     }
                     catch (Exception ex)
                     {
                         Function.WriteLine($"Ошибка: {ex.Message}", ConsoleColor.Red);
                     }
-                }
             }
 
             #endregion
@@ -130,26 +125,26 @@ namespace Server
 
             static void ClientLog(object obj) //Чтобы клиент вошёл в систему
             {
-                TcpClient client = (TcpClient) obj;
-                byte[] buffer = new byte[1024];
+                var client = (TcpClient) obj;
+                var buffer = new byte[1024];
 
                 while (true)
-                {
                     try
                     {
                         Task.Delay(10).Wait();
 
-                        int i = client.Client.Receive(buffer);
-                        string answer = Encoding.UTF8.GetString(buffer, 0, i);
+                        var i = client.Client.Receive(buffer);
+                        var answer = Encoding.UTF8.GetString(buffer, 0, i);
 
                         if (answer.Contains("%REG")) //Регистрация
                         {
-                            Console.WriteLine($"Регистрация пользователя: {answer}"); //REG:{email}:{pass}:{clientName}                           
-                            Match regex = Regex.Match(answer, "%REG:(.*):(.*):(.*)");
-                            string email = regex.Groups[1].Value;
-                            string password = regex.Groups[2].Value;
-                            string nick = regex.Groups[3].Value;
-                            //TODO: Сделать проверку почты
+                            Console.WriteLine(
+                                $"Регистрация пользователя: {answer}"); //REG:{email}:{pass}:{clientName}                           
+                            var regex = Regex.Match(answer, "%REG:(.*):(.*):(.*)");
+                            var email = regex.Groups[1].Value;
+                            var password = regex.Groups[2].Value;
+                            var nick = regex.Groups[3].Value;
+
                             if (database.CheckEmail(email))
                             {
                                 Console.WriteLine("Проверка почты: %BREG");
@@ -162,54 +157,45 @@ namespace Server
                                 client.Client.Send(Encoding.UTF8.GetBytes("%REGOOD"));
                                 //Добавление в систему
 
-                                Data.ClientInfoOnly clientInfo = new Data.ClientInfoOnly(client, email, password, nick);
-                                Thread thread = new Thread(new ParameterizedThreadStart(ClientManager));
+                                var clientInfo = new Data.ClientInfoOnly(client, email, password, nick);
+                                var thread = new Thread(ClientManager);
                                 thread.Start(clientInfo);
                             }
+
                             return;
                         }
-                        else if (answer.Contains("%LOG"))
-                        {                          
-                            Console.WriteLine($"Логин пользователя: {answer}");//%LOG:{email}:{pass}
-                            Match regex = Regex.Match(answer, "%LOG:(.*):(.*)");
-                            string email = regex.Groups[1].Value;
-                            string password = regex.Groups[2].Value;
-                            
-                            if (database.CheckEmail(email))//Проверка почты
+
+                        if (answer.Contains("%LOG"))
+                        {
+                            Console.WriteLine($"Логин пользователя: {answer}"); //%LOG:{email}:{pass}
+                            var regex = Regex.Match(answer, "%LOG:(.*):(.*)");
+                            var email = regex.Groups[1].Value;
+                            var password = regex.Groups[2].Value;
+
+                            if (database.CheckEmail(email)) //Проверка почты
                             {
-                                Console.WriteLine($"Логин: Проверка почты успешно: {email}");                            
-                                
-                                if (database.CheckPassword(email, password))//Проверка пароля
+                                Console.WriteLine($"Логин: Проверка почты успешно: {email}");
+
+                                if (database.CheckPassword(email, password)) //Проверка пароля
                                 {
                                     Console.WriteLine($"Логин: Проверка пароля успешно: {password}");
-                                    Data.ClientInfoOffile info = database.GetClientInfo(email);
-                                    
-                                    if (info.Point == null)//POINT НЕ МОЖЕТ БЫТЬ ПУСТЫМ!!! 
-                                    {
+                                    var info = database.GetClientInfo(email);
+
+                                    if (info.Point == null) //POINT НЕ МОЖЕТ БЫТЬ ПУСТЫМ!!! 
                                         info.Point = 0;
-                                    }
 
                                     client.Client.Send(
                                         Encoding.UTF8.GetBytes($"%LOGOD:{info.ID}:{info.Nick}:{info.Point}"));
-                                    Data.ClientInfoOnly clientInfo = new Data.ClientInfoOnly(client, info.Email,
+                                    var clientInfo = new Data.ClientInfoOnly(client, info.Email,
                                         info.Password,
                                         info.Nick);
                                     Data.ClientsInfo.Add(clientInfo);
-                                    Thread thread = new Thread(new ParameterizedThreadStart(ClientManager));
+                                    var thread = new Thread(ClientManager);
                                     thread.Start(clientInfo);
                                     return;
                                 }
-                                else
-                                {
-                                    goto badling;
-                                }
-                            }
-                            else
-                            {
-                                goto badling;
                             }
 
-                            badling: ; //LOL
                             client.Client.Send(Encoding.UTF8.GetBytes("%BLOG"));
                             Console.WriteLine("Проверка логина: %BLOG");
                         }
@@ -218,7 +204,6 @@ namespace Server
                     {
                         Function.WriteLine($"Ошибка: {ex.Message}", ConsoleColor.Red);
                     }
-                }
             }
 
             static void ListenClients() //Поиск клиентов
@@ -226,11 +211,12 @@ namespace Server
                 while (true)
                 {
                     Task.Delay(10).Wait();
-                    TcpClient client = server.AcceptTcpClient();
-                    Thread thread = new Thread(new ParameterizedThreadStart(ClientLog));
+                    var client = server.AcceptTcpClient();
+                    var thread = new Thread(ClientLog);
                     thread.Start(client);
                 }
             }
+
             #endregion
         }
     }

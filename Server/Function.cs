@@ -2,9 +2,9 @@ using System;
 
 namespace Server
 {
-    static public class Function
+    public static class Function
     {
-        static public void WriteLine(string text, ConsoleColor color)
+        public static void WriteLine(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
