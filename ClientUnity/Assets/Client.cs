@@ -232,6 +232,10 @@ public class Client : MonoBehaviour
         Send($"%PCOUNT:{id}:{point}");
         Debug.Log($"Данные отправленны: %PCOUNT:{id}:{point}");
     } //%PCOUNT:id:point
+    public void SendPcount()
+    {
+        Send("%PCOUNT");
+    }
     #endregion
 
     public void GoLogin()

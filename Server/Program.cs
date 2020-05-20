@@ -88,7 +88,6 @@ namespace Server
 
                         int i = clientInfo.Socket.Client.Receive(buffer);
                         string answer = Encoding.UTF8.GetString(buffer, 0, i);
-
                         if (answer.Contains("%PCOUNT"))
                         {
                             //%PCOUNT:{Client.id}:{points}
@@ -99,6 +98,7 @@ namespace Server
 
                             Data.InfoPoint infoPoint = new Data.InfoPoint(id, point);
                             database.AddPoint(infoPoint);
+                            return;                           
                         }
                     }
                     catch (Exception ex)

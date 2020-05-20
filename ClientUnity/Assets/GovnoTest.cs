@@ -14,7 +14,7 @@ public class GovnoTest : MonoBehaviour
     private int question = 1; //текучий вопрос
     private int points = 0;  //кол-во набранных очков
 
-    public void Sstart()
+    public void Start()
     {
         PText.text = ($"Вопрос {question}/5");
         QuestionText.text = "Cколько вам лет?";

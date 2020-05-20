@@ -27,11 +27,12 @@ namespace Server
         public void AddPoint(Data.InfoPoint infoPoint)
         {
             MySqlCommand command = new MySqlCommand(
-                $"UPDATE `accounts` SET 'point' = 'point' + {infoPoint.Point} WHERE id = {infoPoint.UserID};",
-                connection);
+                $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
+                connection);             
             command.ExecuteNonQuery();
+            Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
         }
-
+     
         public Data.ClientInfoOffile GetClientInfo(string email) //Получение инфо о клиенте
         {
             MySqlCommand command = new MySqlCommand(
@@ -62,12 +63,14 @@ namespace Server
                 $"SELECT * FROM accounts WHERE w_email = '{Pemail}';",
                 connection);
             string password = "";
+
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 password = reader.GetString("w_password");
             }
             reader.Close();  
+
             Console.WriteLine(Ppassword + " " + password);
             if(Ppassword == password) return true;
             else return false;          
