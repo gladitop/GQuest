@@ -1,6 +1,7 @@
 using MySql;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 
 namespace Server
 {
@@ -24,7 +25,26 @@ namespace Server
             connection.Open();
         }
 
-        public void AddPoint(Data.InfoPoint infoPoint)
+        public List<Data.InfoScore> GetScore()
+        {
+            MySqlCommand command = new MySqlCommand(
+                $"SELECT w_email, w_point FROM accounts WHERE w_point != 'NULL';",
+                connection);
+
+            List<Data.InfoScore> info = new List<Data.InfoScore>();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string email = reader.GetString("w_email");
+                long point = reader.GetInt64("w_point");
+                
+                info.Add(new Data.InfoScore(email, point));
+            }
+
+            return info;
+        }
+
+        public void AddPoint(Data.InfoPoint infoPoint)//Обновить 
         {
             MySqlCommand command = new MySqlCommand(
                 $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",

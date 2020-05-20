@@ -100,6 +100,22 @@ namespace Server
                             database.AddPoint(infoPoint);
                             return;                           
                         }
+                        else if (answer.Contains(""))//Потом добавь!
+                        {
+                            List<Data.InfoScore> infos = database.GetScore();
+
+                            foreach (var info in infos)
+                            {
+                                try
+                                {
+                                    clientInfo.Socket.Client.Send(Encoding.UTF8.GetBytes($"{info.Email}:{info.Point}"));//И тут тоже!
+                                }
+                                catch (Exception e)
+                                {
+                                    Function.WriteLine("Ошибка " + e.Message, ConsoleColor.Red);
+                                }
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {

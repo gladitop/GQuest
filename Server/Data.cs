@@ -21,6 +21,18 @@ namespace Server
 
         #region Разное
 
+        public class InfoScore
+        {
+            public string Email { get; set; }
+            public long Point { get; set; }
+
+            public InfoScore(string email, long point)
+            {
+                Email = email;
+                Point = point;
+            }
+        }
+        
         public class InfoPoint//Инфо о очках
         {
             public long UserID { get; set; }//Id пользователя
