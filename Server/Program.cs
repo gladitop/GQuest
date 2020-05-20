@@ -30,7 +30,6 @@ namespace Server
 
             Function.WriteLine("Сервер работает!", ConsoleColor.Green);
 
-            Console.ReadLine();
             var answer = "";
             while (true)
             {
