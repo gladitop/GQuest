@@ -6,26 +6,31 @@ namespace BezumTestCode
     class Program
     {
         static void Main()
-        {
-            /*TODO: пересобрать входную строку. пример: 
-            Входная строка: %REG:Gladi:Hello:123:points... (и др. данные)
-            Выходные данные:
-            .                commad = REG;
-            .                argument[0] = Gladi
-            .                argument[1] = Hello
-            .                argument[2] = 123
-            .                argument[3] = points
-            .                argument[4] = Gladi                        
-            */                       
-            string command = "";                            //команда
-            string[] argument = {"hi!", "hello!", "front"}; //аргументы
-            try{
+        {             
+            
+            string message = "%LOG:ql@yandex.ru:glrb4gfgru"; //Любая входящая команда
+
+            char ch = ':'; //Разделяющий символ
+            string command = message.Substring(1, (message.IndexOf(ch) - 1)); //Команда 
+            string[] arguments = message.Substring(message.IndexOf(ch) + 1).Split(new char[] { ch }); //Массив аргументов    
+
+            try{ //Обращение к командам
+                #region ConsoleWriteLine 
+                Console.WriteLine("\n" + "Команда: " + command + " \n ");
+                Console.WriteLine("Аргументы:\n----------");
+                foreach (string s in arguments)
+                {
+                    Console.WriteLine(s);
+                }
+                Console.WriteLine("----------");
+                #endregion
+
                 Commands ComandClass = new Commands();
-                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[]{argument});
+                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[]{arguments});
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Ошибка при поиске команды:\n " + ex);
+                Console.WriteLine("\nОшибка при поиске команды:\n----------\n" + ex + "\n----------");
             }
 
         }
