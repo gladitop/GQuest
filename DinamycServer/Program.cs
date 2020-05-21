@@ -98,6 +98,7 @@ namespace DinamycServer
 
                         var i = client.Client.Receive(buffer);
                         string message = Encoding.UTF8.GetString(buffer, 0, i);
+                        
                         if(message != "")
                         {
                             char ch = ':'; //Разделяющий символ
@@ -114,30 +115,22 @@ namespace DinamycServer
                                 Console.WriteLine("----------");
                                 #endregion
 
+                                Console.WriteLine(Convert.ToString(obj));
                                 Commands ComandClass = new Commands();
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[]{client});                              
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
                             }
                             catch(Exception ex)
                             {
                                 Console.WriteLine("\nОшибка при поиске команды:\n----------\n" + ex + "\n----------");
                             }
-
-                        }
-                  
+                        }                 
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка: {ex.Message}");
                     }
-                }  
-
-                
-                static void Send(string ss)
-                {
-                    client.Client.Send(Encoding.UTF8.GetBytes(ss));
-                }           
+                }            
             }
-
         }   
     }
 }

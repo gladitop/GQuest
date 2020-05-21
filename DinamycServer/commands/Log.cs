@@ -9,18 +9,22 @@ namespace DinamycServer
     public partial class Commands
     {
         public static Database database { get; set; }
-        void LOG(object[] cmd) // %LOG:email:pass
+        void LOG(TcpClient client, string[] argumets) // %LOG:email:pass
         {         
             try{
                 
-                string email = ((string)cmd[0]);
-                string pass = ((string)cmd[1]);
-                Console.WriteLine($"Проверка логина:\nДанные: {email}, {pass}"); 
+                string email = argumets[0];
+                string pass = argumets[1];
             }
-            catch(Exception ex){Console.WriteLine("\nОшибка проверке аргументов:\n----------\n" + ex + "\n----------");}
-            
-            //проверка данных в БД
-            //Send(%LOGOOD); или Send(%BLOG);
+            catch(Exception ex){Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");}
+                      
+            //проверка данных в БД //TODO
+            //Send(%LOGOOD); или Send(%BLOG); //TODO
+
+            void Send(string msg)
+            {
+                client.Client.Send(Encoding.UTF8.GetBytes(msg));
+            }
         }
     }
 }
