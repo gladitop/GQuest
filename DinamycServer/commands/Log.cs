@@ -8,21 +8,28 @@ namespace DinamycServer
         private void LOG(TcpClient client, string[] argumets) // %LOG:email:pass
         {
             string email = null;
-            string passworld = null;
+            string password = null;
             try
             {
                 email = argumets[0];
-                passworld = argumets[1];
+                password = argumets[1];
             }
             catch (Exception ex)
             {
                 Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
             }
 
-            if (Database.LogAccount(email, passworld))
-                Function.SendClientMessage(client, "%LOGOOD");
-            else
-                Function.SendClientMessage(client, "%BLOG");
+            if (Database.CheckEmail(email))
+            {
+                Console.WriteLine("1");
+                if (Database.CheckPassword(email, password))
+                {
+                    Console.WriteLine("2");
+                    Function.SendClientMessage(client, "%LOGOOD");
+                }
+                else Function.SendClientMessage(client, "%BLOG");
+            }
+            else Function.SendClientMessage(client, "%BLOG");
         }
     }
 }

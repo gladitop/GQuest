@@ -30,42 +30,6 @@ namespace DinamycServer
             Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
             command.ExecuteNonQuery();
         }
-
-        public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
-        {
-            Console.WriteLine($"Начало проверки пароля: {email}");
-            var command = new MySqlCommand(
-                $"SELECT w_password FROM accounts WHERE w_email = '{email}';",
-                connection);
-            var Ppassword = "";
-
-            var reader = command.ExecuteReader();
-            while (reader.Read()) Ppassword = reader.GetString("w_password");
-            reader.Close();
-
-            if (password == Ppassword) return true;
-            return false;
-        }
-
-        /* Проверка данных для входа в аккаунт
-           true - правильные данные
-           false - НЕправильные данные  */
-        public static bool LogAccount(string email, string password)
-        {
-            Console.WriteLine($"Вход в аккаунт: {email}:{password}");
-
-            if (CheckEmail(email))
-            {
-                if (CheckPassword(password, email))
-                    //Вход усМешный!
-
-                    return true;
-            }
-
-            errorLint:
-            return false;
-        }
-
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
             Console.WriteLine($"Начало проверки почты: {email}");
@@ -78,6 +42,22 @@ namespace DinamycServer
             if (count == 0)
                 return false;
             return true;
+        }
+        public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
+        {
+            Console.WriteLine($"Начало проверки пароля: {email}");
+            var command = new MySqlCommand(
+                $"SELECT w_password FROM accounts WHERE w_email = '{email}';",
+                connection);
+            var Ppassword = "";
+
+            var reader = command.ExecuteReader();
+            while (reader.Read()) Ppassword = reader.GetString("w_password");
+            reader.Close();
+            Console.WriteLine(Ppassword);
+
+            if (password == Ppassword) return true;
+            else return false;
         }
     }
 }
