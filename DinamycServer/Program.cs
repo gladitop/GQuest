@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Reflection;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DinamycServer
 {
-    class Program
+    internal class Program
     {
         public static TcpListener server { get; set; }
 
-        static void Main(string[] args)
-        {            
+        private static void Main(string[] args)
+        {
             //Database = new Database();
             //var thread1 = new Thread(ClearBadClient);
             //thread1.Start();
@@ -36,7 +34,7 @@ namespace DinamycServer
                     case "stop":
                         Console.WriteLine("Отключение сервера...");
                         server.Stop();
-                    break;
+                        break;
                 }
             }
 
@@ -73,12 +71,12 @@ namespace DinamycServer
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)
-                {  
-                    Task.Delay(10).Wait();//Задержка
+                {
+                    Task.Delay(10).Wait(); //Задержка
 
                     var client = server.AcceptTcpClient();
                     var thread = new Thread(ClientLog);
-                    thread.Start(client);         
+                    thread.Start(client);
                 }
             }
 
@@ -89,50 +87,50 @@ namespace DinamycServer
                 Console.WriteLine("новое подключение");
 
                 while (true)
-                {
                     try
                     {
                         Task.Delay(10).Wait();
 
-                        int i = client.Client.Receive(buffer);
-                        string message = Encoding.UTF8.GetString(buffer, 0, i);
-                        
-                        if(message != "")
+                        var i = client.Client.Receive(buffer);
+                        var message = Encoding.UTF8.GetString(buffer, 0, i);
+
+                        if (message != "")
                         {
-                            char ch = ':'; //Разделяющий символ
-                            string command = message.Substring(1, (message.IndexOf(ch) - 1)); //Команда 
-                            string[] arguments = message.Substring(message.IndexOf(ch) + 1).Split(new char[] { ch }); //Массив аргументов
+                            var ch = ':'; //Разделяющий символ
+                            var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                            var arguments =
+                                message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
 
                             //string[] spiting = message.Split();
-                            
-                            try{ //Обращение к командам
+
+                            try
+                            {
+                                //Обращение к командам
+
                                 #region Как команда от клиенте?
-                                
+
                                 Console.WriteLine("\n" + "Команда: " + command + " \n ");
                                 Console.WriteLine("Аргументы:\n----------");
-                                foreach (string s in arguments)
-                                {
-                                    Console.WriteLine(s);
-                                }
+                                foreach (var s in arguments) Console.WriteLine(s);
                                 Console.WriteLine("----------");
-                                
+
                                 #endregion
-                                
-                                Commands ComandClass = new Commands();
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+
+                                var ComandClass = new Commands();
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
+                                    .Invoke(ComandClass, new object[] {client, arguments});
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine("\nОшибка при поиске команды:\n----------\n" + ex + "\n----------");
                             }
-                        }                 
+                        }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка: {ex.Message}");
                     }
-                }            
             }
-        }   
+        }
     }
 }

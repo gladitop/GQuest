@@ -68,6 +68,7 @@
       <updated>1590086177259</updated>
       <workItem from="1590086189436" duration="1467000" />
       <workItem from="1590087705188" duration="1006000" />
+      <workItem from="1590088776987" duration="35000" />
     </task>
     <servers />
   </component>
@@ -80,6 +81,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1590088787379">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.27.1920.1053@0.27.1920.1053" timestamp="1590088787379" />
     <state width="1874" height="367" key="GridCell.Tab.0.bottom" timestamp="1590087657160">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

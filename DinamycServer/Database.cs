@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
 namespace DinamycServer
 {
-    static public class Database
+    public static class Database
     {
-        static public MySqlConnection connection { get; set; }
-
-        static Database()//Подключение к базе данных
+        static Database() //Подключение к базе данных
         {
             var ihost = "37.29.78.130";
             var iport = 3311;
@@ -23,7 +20,9 @@ namespace DinamycServer
             connection.Open();
         }
 
-        static public void AddAccount(string email, string password, string nick) //Добавить аккаунт
+        public static MySqlConnection connection { get; set; }
+
+        public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
             var command = new MySqlCommand(
                 $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`, `w_point`) VALUES ('{email}', '{password}', '{nick}', 0);",
@@ -32,7 +31,7 @@ namespace DinamycServer
             command.ExecuteNonQuery();
         }
 
-        static public bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
+        public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
         {
             Console.WriteLine($"Начало проверки пароля: {email}");
             var command = new MySqlCommand(
@@ -43,7 +42,7 @@ namespace DinamycServer
             var reader = command.ExecuteReader();
             while (reader.Read()) Ppassword = reader.GetString("w_password");
             reader.Close();
-            
+
             if (password == Ppassword) return true;
             return false;
         }
@@ -51,33 +50,23 @@ namespace DinamycServer
         /* Проверка данных для входа в аккаунт
            true - правильные данные
            false - НЕправильные данные  */
-        static public bool LogAccount(string email, string password)
+        public static bool LogAccount(string email, string password)
         {
             Console.WriteLine($"Вход в аккаунт: {email}:{password}");
 
             if (CheckEmail(email))
             {
                 if (CheckPassword(password, email))
-                {
                     //Вход усМешный!
 
                     return true;
-                }
-                else
-                {
-                    goto errorLint;
-                }
             }
-            else
-            {
-                goto errorLint;
-            }
-            
+
             errorLint:
             return false;
         }
 
-        static public bool CheckEmail(string email) //Проверка почты в аккаунтах
+        public static bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
             Console.WriteLine($"Начало проверки почты: {email}");
             var command = new MySqlCommand(
