@@ -20,6 +20,11 @@ public class Client : MonoBehaviour
     public GameObject BoxScore;
     public GameObject Counteiner;
     public Image img;
+    [Header("Чат")]
+    public GameObject MsgBox;
+    public Image MsgCounteiner;
+    [Space]
+    public Text Mes_text;
 
     private int id;
     private int PCount;
@@ -203,6 +208,21 @@ public class Client : MonoBehaviour
             GameObject.Find("REmailInput").GetComponent<InputField>().text = "";
             GameObject.Find("RPassInput").GetComponent<InputField>().text = "";
         }
+
+        if (message.Contains("%MES"))
+        {
+            Match regex = Regex.Match(message, "%MES:(.*):(.*)");
+            string name = regex.Groups[1].Value;
+            string msg = regex.Groups[2].Value;
+
+            GameObject go = Instantiate(MsgBox, MsgCounteiner.transform);
+
+            go.transform.GetChild(0).GetComponent<Text>().text = name;
+            go.transform.GetChild(2).GetComponent<Text>().text = msg;
+            MsgCounteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(MsgCounteiner.rectTransform.sizeDelta.x, MsgCounteiner.rectTransform.sizeDelta.y + 65);
+
+            Debug.Log($"Входное сообщение:{name}:{msg}");
+        } //%MES:names:msg   
     }
     public void Registration()
     {
@@ -235,9 +255,7 @@ public class Client : MonoBehaviour
     public Text ttext;
     public void SendMessage()
     {
-        string mes = ttext.text;
-        Debug.Log(mes);
-        Send(mes);
+        Send($"%MSG:nick:{Mes_text.text}");
     }
     #endregion
 
@@ -268,6 +286,7 @@ public class Client : MonoBehaviour
     public void proba()
     {
         message = tt.text;
+        Debug.Log(message);
         OnIncomingData();
     }
     #endregion
