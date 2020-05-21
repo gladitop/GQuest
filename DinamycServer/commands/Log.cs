@@ -8,22 +8,24 @@ namespace DinamycServer
 {
     public partial class Commands
     {
-        public static Database database { get; set; }
         void LOG(TcpClient client, string[] argumets) // %LOG:email:pass
-        {         
+        {
+            string email = null;
+            string passworld = null;
             try{
                 
-                string email = argumets[0];
-                string pass = argumets[1];
+                email = argumets[0];
+                passworld = argumets[1];
             }
             catch(Exception ex){Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");}
-                      
-            //проверка данных в БД //TODO
-            //Send(%LOGOOD); или Send(%BLOG); //TODO
 
-            void Send(string msg)
+            if (Database.LogAccount(email, passworld))
             {
-                client.Client.Send(Encoding.UTF8.GetBytes(msg));
+                Function.SendClientMessage(client, "%LOGOOD");
+            }
+            else
+            {
+                Function.SendClientMessage(client, "%BLOG");
             }
         }
     }

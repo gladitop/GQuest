@@ -13,11 +13,10 @@ namespace DinamycServer
     class Program
     {
         public static TcpListener server { get; set; }
-        public static Database database { get; set; }
 
         static void Main(string[] args)
         {            
-            database = new Database();
+            //Database = new Database();
             //var thread1 = new Thread(ClearBadClient);
             //thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
@@ -28,7 +27,6 @@ namespace DinamycServer
             Console.WriteLine("Сервер работает!");
 
             var answer = "";
-        
             while (true)
             {
                 answer = Console.ReadLine();
@@ -96,16 +94,20 @@ namespace DinamycServer
                     {
                         Task.Delay(10).Wait();
 
-                        var i = client.Client.Receive(buffer);
+                        int i = client.Client.Receive(buffer);
                         string message = Encoding.UTF8.GetString(buffer, 0, i);
                         
                         if(message != "")
                         {
                             char ch = ':'; //Разделяющий символ
                             string command = message.Substring(1, (message.IndexOf(ch) - 1)); //Команда 
-                            string[] arguments = message.Substring(message.IndexOf(ch) + 1).Split(new char[] { ch }); //Массив аргументов  
+                            string[] arguments = message.Substring(message.IndexOf(ch) + 1).Split(new char[] { ch }); //Массив аргументов
+
+                            //string[] spiting = message.Split();
+                            
                             try{ //Обращение к командам
-                                #region ConsoleWriteLine 
+                                #region Как команда от клиенте?
+                                
                                 Console.WriteLine("\n" + "Команда: " + command + " \n ");
                                 Console.WriteLine("Аргументы:\n----------");
                                 foreach (string s in arguments)
@@ -113,9 +115,9 @@ namespace DinamycServer
                                     Console.WriteLine(s);
                                 }
                                 Console.WriteLine("----------");
+                                
                                 #endregion
-
-                                Console.WriteLine(Convert.ToString(obj));
+                                
                                 Commands ComandClass = new Commands();
                                 ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
                             }
