@@ -1,4 +1,4 @@
-using System;
+/*using System;
 namespace Server
 {
 	public partial class Commands   //уточнение "partial" - для связи класса
@@ -31,4 +31,4 @@ namespace Server
             }
         }
     }
-}
+}*/

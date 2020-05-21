@@ -130,15 +130,15 @@ namespace Server
                 while (true)
                     try
                     {
-                        Task.Delay(10).Wait();
+                    Task.Delay(10).Wait();
 
-                        var i = client.Client.Receive(buffer);
-                        var answer = Encoding.UTF8.GetString(buffer, 0, i);
+                    var i = client.Client.Receive(buffer);
+                    var answer = Encoding.UTF8.GetString(buffer, 0, i);
 
                         if (answer.Contains("%REG")) //Регистрация
                         {
-                            Console.WriteLine(
-                                $"Регистрация пользователя: {answer}"); //REG:{email}:{pass}:{clientName}                           
+                           Console.WriteLine(
+                            $"Регистрация пользователя: {answer}"); //REG:{email}:{pass}:{clientName}                           
                             var regex = Regex.Match(answer, "%REG:(.*):(.*):(.*)");
                             var email = regex.Groups[1].Value;
                             var password = regex.Groups[2].Value;
@@ -151,14 +151,14 @@ namespace Server
                             }
                             else
                             {
-                                database.AddAccount(email, password, nick);
-                                Console.WriteLine("Проверка почты: %REGOOD");
-                                client.Client.Send(Encoding.UTF8.GetBytes("%REGOOD"));
-                                //Добавление в систему
+                            database.AddAccount(email, password, nick);
+                            Console.WriteLine("Проверка почты: %REGOOD");
+                            client.Client.Send(Encoding.UTF8.GetBytes("%REGOOD"));
+                            //Добавление в систему
 
-                                var clientInfo = new Data.ClientInfoOnly(client, email, password, nick);
-                                var thread = new Thread(ClientManager);
-                                thread.Start(clientInfo);
+                            var clientInfo = new Data.ClientInfoOnly(client, email, password, nick);
+                            var thread = new Thread(ClientManager);
+                            thread.Start(clientInfo);
                             }
 
                             return;
