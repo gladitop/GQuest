@@ -115,7 +115,7 @@ namespace DinamycServer
                                 #endregion
 
                                 Commands ComandClass = new Commands();
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[]{arguments});
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[]{client});                              
                             }
                             catch(Exception ex)
                             {
@@ -129,9 +129,15 @@ namespace DinamycServer
                     {
                         Console.WriteLine($"Ошибка: {ex.Message}");
                     }
-                }
+                }  
+
                 
+                static void Send(string ss)
+                {
+                    client.Client.Send(Encoding.UTF8.GetBytes(ss));
+                }           
             }
+
         }   
     }
 }
