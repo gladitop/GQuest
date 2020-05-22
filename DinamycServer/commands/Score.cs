@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Collections.Generic;
 
 namespace DinamycServer
 {
@@ -9,10 +10,12 @@ namespace DinamycServer
         {
             //%SCORE:name:points
             for(int i = 0; i<=5; i++)
-            {
-             string[] gg = Database.GetScore(i);   
-                Function.SendClientMessage(client, $"%SCORE:{gg[0]}:{gg[1]}"); 
-                Console.WriteLine($"%SCORE:{gg[0]}:{gg[1]}");
+            {               
+                var nick = Database.GetClientInfo(i).Nick;
+                var point = Database.GetClientInfo(i).Point;
+                
+                Function.SendClientMessage(client, $"%SCORE:{nick}:{point}"); 
+                Console.WriteLine($"%SCORE:{nick}:{point}");
             } 
         }
     }

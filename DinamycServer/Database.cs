@@ -23,33 +23,35 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
-        static public Data.ClientInfoOffile GetClientInfo(string email) //Получение инфо о клиенте
+        #region GetInfo 
+        static public Data.ClientInfoOffile GetClientInfo(int Id) //Получение инфо о клиенте (по id) //TODO Сделать возможность искать и по id и по email
         {
             MySqlCommand command = new MySqlCommand(
-                $"SELECT * FROM `accounts` WHERE email = '{email}';",
+                $"SELECT * FROM `accounts` WHERE w_id = '{Id}';",
                 connection);
 
             long id = 0;
             string emailInfo = "";
             string password = "";
             string nick = "";
-            long? point = null;
+            long point = 0;
             MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                id = reader.GetInt64("id");
-                emailInfo = reader.GetString("email");
-                password = reader.GetString("password");
-                nick = reader.GetString("nick");
-                Console.WriteLine(nick);
-                point = reader.GetInt64("point");//NULL!!!
+                id = reader.GetInt64("w_id");
+                emailInfo = reader.GetString("w_email");
+                password = reader.GetString("w_password");
+                nick = reader.GetString("w_nick");
+                point = reader.GetInt64("w_point");
             }
+            reader.Close();
+            command.Dispose();
             
-            Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
-            return new Data.ClientInfoOffile(id, email, password, nick, point);
+            //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
+            return new Data.ClientInfoOffile(id, emailInfo, password, nick, point);
         }
         
-        public static string[] GetScore(int id) //Получить все очки говна
+        /*public static string[] GetScore(int id)
         {
             //Отправлять по id?
             var command = new MySqlCommand(
@@ -69,9 +71,9 @@ namespace DinamycServer
                 reader.Close();
 
             return new string[2]{email, point};
-        }
+        }*/
         
-        public static List<Data.InfoScoreShow> GetScore()//Не подчинятся!
+        public static List<Data.InfoScoreShow> GetScore()//TODO сделать работающий метод(работа в Data) всё объясню
         {
             //SELECT w_email, w_point FROM test.accounts WHERE w_point != 0;
             var command = new MySqlCommand(
@@ -91,7 +93,7 @@ namespace DinamycServer
             return info;
         }
 
-        public static void UpdatePoint(Data.InfoScoreAdd infoPoint) //Обновить очки говна
+        public static void UpdatePoint(Data.InfoScoreAdd infoPoint)//TODO сделать работающий метод(работа в Data) всё объясню
         {
             var command = new MySqlCommand(
                 $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
@@ -99,7 +101,10 @@ namespace DinamycServer
             command.ExecuteNonQuery();
             Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
         }
+        
+        #endregion
 
+        #region Account managment
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
             var command = new MySqlCommand(
@@ -139,5 +144,7 @@ namespace DinamycServer
             if (password == Ppassword) return true;
             return false;
         }
+    
+        #endregion
     }
 }

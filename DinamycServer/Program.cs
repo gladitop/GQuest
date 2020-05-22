@@ -39,18 +39,20 @@ namespace DinamycServer
                 }
             }
 
-            static void ClearBadClient() //Очистка 'Плохих' клиентов
+           static void ClearBadClient() //Очистка 'Плохих' клиентов
             {
-                //TODO: Это надо проверить!
+                //TODO: Не работает (23.05.2020)
                 while (true)
                 {
-                    Task.Delay(1000).Wait();
-
+                    Task.Delay(2000).Wait();
+                    Console.WriteLine("1");
                     foreach (var clientInfo in Data.ClientsInfo)
                         try
                         {
+                            Console.WriteLine("2");
                             if (!clientInfo.Socket.Connected)
                             {
+                                Console.WriteLine("3");
                                 clientInfo.Socket.Close();
                                 Data.ClientsInfo.Remove(clientInfo);
                                 Console.WriteLine("Найден плохой клиент");
@@ -64,6 +66,7 @@ namespace DinamycServer
                         }
                 }
             }
+            
 
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
@@ -99,9 +102,7 @@ namespace DinamycServer
 
                             try
                             {
-                                //Обращение к командам
-
-                                #region Как команда от клиенте?
+                                #region Вывод в консоль: Команда и аргументы
 
                                 Console.WriteLine("\n" + "Команда: " + command + " \n ");
                                 Console.WriteLine("Аргументы:\n----------");
