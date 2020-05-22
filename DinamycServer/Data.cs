@@ -20,9 +20,9 @@ namespace DinamycServer
 
         #region Разное
 
-        public class InfoScore
+        public class InfoScoreShow//Инфо о очках (для показа)
         {
-            public InfoScore(string email, long point)
+            public InfoScoreShow(string email, long point)
             {
                 Email = email;
                 Point = point;
@@ -32,9 +32,9 @@ namespace DinamycServer
             public long Point { get; set; }
         }
 
-        public class InfoPoint //Инфо о очках
+        public class InfoScoreAdd //Инфо о очках (для Добавление)
         {
-            public InfoPoint(long id, long? point = null)
+            public InfoScoreAdd(long id, long? point = null)
             {
                 UserID = id;
                 Point = point;

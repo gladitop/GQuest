@@ -1,5 +1,6 @@
 using System;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace DinamycServer
 {
@@ -21,6 +22,34 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
+        static  public List<Data.InfoScoreShow> GetScore()//Получить все очки говна
+        {
+            var command = new MySqlCommand(
+                "SELECT w_email, w_point FROM accounts WHERE w_point != 'NULL';",
+                connection);
+
+            var info = new List<Data.InfoScoreShow>();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var email = reader.GetString("w_email");
+                var point = reader.GetInt64("w_point");
+
+                info.Add(new Data.InfoScoreShow(email, point));
+            }
+
+            return info;
+        }
+
+        static public void UpdatePoint(Data.InfoScoreAdd infoPoint) //Обновить очки говна
+        {
+            var command = new MySqlCommand(
+                $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
+                connection);
+            command.ExecuteNonQuery();
+            Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
+        }
+        
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
             var command = new MySqlCommand(

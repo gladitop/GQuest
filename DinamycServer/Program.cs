@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
@@ -14,8 +15,10 @@ namespace DinamycServer
 
         private static void Main(string[] args)
         {
-            //var thread1 = new Thread(ClearBadClient);
-            //thread1.Start();
+            Console.WriteLine("Запуск сервера...");
+            
+            var thread1 = new Thread(ClearBadClient);
+            thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -37,8 +40,8 @@ namespace DinamycServer
                 }
             }
 
-            /*static void ClearBadClient() //Очистка 'Плохих' клиентов //TODO(не работает)
-            {
+            static void ClearBadClient() //Очистка 'Плохих' клиентов
+            {//TODO: Это надо проверить!
                 while (true)
                 {
                     Task.Delay(1000).Wait();
@@ -47,25 +50,22 @@ namespace DinamycServer
                     {
                         try
                         {
-                            Console.WriteLine("1");
-                            var ping = new Ping();
-                            var status = ping.Send(clientInfo.IP.Address);
-                            Console.WriteLine("2");
-                            if (status.Status != IPStatus.Success)
+                            if (!clientInfo.Socket.Connected)
                             {
-                                Console.WriteLine("3");
                                 clientInfo.Socket.Close();
                                 Data.ClientsInfo.Remove(clientInfo);
-                                Console.WriteLine($"Найден плохой клиент {clientInfo.Nick}");
+                                Console.WriteLine("Найден плохой клиент");
                             }
                         }
                         catch (Exception ex)
                         {
+                            clientInfo.Socket.Close();
+                            Data.ClientsInfo.Remove(clientInfo);
                             Console.WriteLine($"Ошибка: {ex.Message}");
                         }
                     }
                 }
-            }*/
+            }
 
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
