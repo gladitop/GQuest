@@ -95,8 +95,7 @@ namespace DinamycServer
                         {
                             var ch = ':'; //Разделяющий символ
                             var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                            var arguments =
-                                message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+                            var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
 
                             try
                             {
@@ -112,8 +111,7 @@ namespace DinamycServer
                                 #endregion
 
                                 var ComandClass = new Commands();
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
-                                    .Invoke(ComandClass, new object[] {client, arguments});
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
                             }
                             catch (Exception ex)
                             {

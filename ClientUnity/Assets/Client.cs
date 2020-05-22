@@ -105,8 +105,6 @@ public class Client : MonoBehaviour
 
                 message = Encoding.UTF8.GetString(buffer);
                 OnIncomingData();
-                Debug.Log(message);
-
             }
         }
     }
@@ -179,23 +177,24 @@ public class Client : MonoBehaviour
         }  //%LOGOD:id:name:PCount
         if (message.Contains("%SCORE"))
         {
+            
+            try{
+            Debug.Log(message);
+            
             Match regex = Regex.Match(message, "%SCORE:(.*):(.*)");
             string names = regex.Groups[1].Value;
             double points = Convert.ToDouble(regex.Groups[2].Value);
-            float p = Convert.ToSingle(Math.Round(((points / 11) * 100), 1));
-            //
-            //nm.Add(regex.Groups[1].Value);
-            //pm.Add(int.Parse(regex.Groups[2].Value));
-            //
+
+            float p = Convert.ToSingle(Math.Round(((points / 11) * 100), 1));           
             GameObject go = Instantiate(BoxScore, Counteiner.transform);
             go.GetComponentInChildren<Text>().text = message;
-            go.transform.GetChild(1).GetComponent<Text>().text = names;
+            go.transform.GetChild(0).GetComponent<Text>().text = names;
             if (p == 100) { p -= 0.1f; }
-            go.transform.GetChild(2).GetComponent<Text>().text = $"{p}%";
-            go.transform.GetChild(3).GetComponent<Scrollbar>().size = p / 100;
-            img.GetComponent<RectTransform>().sizeDelta = new Vector2(img.rectTransform.sizeDelta.x, img.rectTransform.sizeDelta.y + 50);
-            Debug.Log(img.rectTransform.sizeDelta.y);
-            Debug.Log($"%SCORE:{names}:{p}");
+            go.transform.GetChild(1).GetComponent<Text>().text = $"{p}%";
+            go.transform.GetChild(2).GetComponent<Scrollbar>().size = p / 100;
+            img.GetComponent<RectTransform>().sizeDelta = new Vector2(img.rectTransform.sizeDelta.x, img.rectTransform.sizeDelta.y + 65);
+            }
+            catch{Debug.Log("Пустые значения");}
         } //%SCORE:name:points
         if (message.Contains("%BLOG"))
         {
@@ -287,7 +286,7 @@ public class Client : MonoBehaviour
     {
         message = tt.text;
         Debug.Log(message);
-        OnIncomingData();
+        Send(message);
     }
     #endregion
 }

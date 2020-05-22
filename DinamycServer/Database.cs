@@ -23,23 +23,25 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
-        public static List<Data.InfoScoreShow> GetScore() //Получить все очки говна
+        public static string[] GetScore(int id) //Получить все очки говна
         {
             var command = new MySqlCommand(
-                "SELECT w_email, w_point FROM accounts WHERE w_point != 'NULL';",
+                $"SELECT w_email, w_point FROM accounts WHERE w_id = '{id}';",
                 connection);
 
-            var info = new List<Data.InfoScoreShow>();
-            var reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                var email = reader.GetString("w_email");
-                var point = reader.GetInt64("w_point");
+                var reader = command.ExecuteReader();
 
-                info.Add(new Data.InfoScoreShow(email, point));
-            }
+                string email = "";
+                string point = "";
 
-            return info;
+                while (reader.Read())
+                {
+                    email = reader.GetString("w_email");
+                    point = reader.GetString("w_point");
+                }
+                reader.Close();
+
+            return new string[2]{email, point};
         }
 
         public static void UpdatePoint(Data.InfoScoreAdd infoPoint) //Обновить очки говна

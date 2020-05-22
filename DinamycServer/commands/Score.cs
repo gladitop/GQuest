@@ -1,15 +1,19 @@
+using System;
 using System.Net.Sockets;
 
 namespace DinamycServer
 {
     public partial class Commands
     {
-        public void SCORE(TcpClient client, string name, long point) //Отправка всех очков клиенту
+        private void SCORE(TcpClient client, string[] atgument) //Отправка всех очков клиенту
         {
-            var infos = Database.GetScore();
-
             //%SCORE:name:points
-            foreach (var info in infos) Function.SendClientMessage(client, $"%SCORE:{info.Email}:{info.Point}");
+            for(int i = 0; i<=5; i++)
+            {
+             string[] gg = Database.GetScore(i);   
+                Function.SendClientMessage(client, $"%SCORE:{gg[0]}:{gg[1]}"); 
+                Console.WriteLine($"%SCORE:{gg[0]}:{gg[1]}");
+            } 
         }
     }
 }
