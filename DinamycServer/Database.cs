@@ -23,8 +23,35 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
+        static public Data.ClientInfoOffile GetClientInfo(string email) //Получение инфо о клиенте
+        {
+            MySqlCommand command = new MySqlCommand(
+                $"SELECT * FROM `accounts` WHERE email = '{email}';",
+                connection);
+
+            long id = 0;
+            string emailInfo = "";
+            string password = "";
+            string nick = "";
+            long? point = null;
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                id = reader.GetInt64("id");
+                emailInfo = reader.GetString("email");
+                password = reader.GetString("password");
+                nick = reader.GetString("nick");
+                Console.WriteLine(nick);
+                point = reader.GetInt64("point");//NULL!!!
+            }
+            
+            Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
+            return new Data.ClientInfoOffile(id, email, password, nick, point);
+        }
+        
         public static string[] GetScore(int id) //Получить все очки говна
         {
+            //Отправлять по id?
             var command = new MySqlCommand(
                 $"SELECT w_email, w_point FROM accounts WHERE w_id = '{id}';",
                 connection);
@@ -42,6 +69,26 @@ namespace DinamycServer
                 reader.Close();
 
             return new string[2]{email, point};
+        }
+        
+        public static List<Data.InfoScoreShow> GetScore()//Не подчинятся!
+        {
+            //SELECT w_email, w_point FROM test.accounts WHERE w_point != 0;
+            var command = new MySqlCommand(
+                "SELECT w_email, w_point FROM accounts WHERE w_point != 0;",
+                connection);
+
+            var info = new List<Data.InfoScoreShow>();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var email = reader.GetString("w_email");
+                var point = reader.GetInt64("w_point");
+
+                info.Add(new Data.InfoScoreShow(email, point));
+            }
+
+            return info;
         }
 
         public static void UpdatePoint(Data.InfoScoreAdd infoPoint) //Обновить очки говна
