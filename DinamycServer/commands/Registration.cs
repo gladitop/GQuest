@@ -5,7 +5,7 @@ namespace DinamycServer
 {
     public partial class Commands
     {
-       private void REG(TcpClient client, string[] argumets) // %REG:email:pass:nick
+        private void REG(TcpClient client, string[] argumets) // %REG:email:pass:nick
         {
             string email = null;
             string password = null;
@@ -26,7 +26,10 @@ namespace DinamycServer
                 Database.AddAccount(email, password, nick);
                 Function.SendClientMessage(client, "%REGOOD");
             }
-            else Function.SendClientMessage(client, "%BREG");
+            else
+            {
+                Function.SendClientMessage(client, "%BREG");
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
-using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
 
 namespace DinamycServer
 {
@@ -14,7 +14,8 @@ namespace DinamycServer
             var iusername = "admin";
             var ipassword = "030292";
 
-            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername + ";password=" + ipassword;
+            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername +
+                             ";password=" + ipassword;
 
             connection = new MySqlConnection(connString);
             connection.Open();
@@ -22,7 +23,7 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
-        static  public List<Data.InfoScoreShow> GetScore()//Получить все очки говна
+        public static List<Data.InfoScoreShow> GetScore() //Получить все очки говна
         {
             var command = new MySqlCommand(
                 "SELECT w_email, w_point FROM accounts WHERE w_point != 'NULL';",
@@ -41,7 +42,7 @@ namespace DinamycServer
             return info;
         }
 
-        static public void UpdatePoint(Data.InfoScoreAdd infoPoint) //Обновить очки говна
+        public static void UpdatePoint(Data.InfoScoreAdd infoPoint) //Обновить очки говна
         {
             var command = new MySqlCommand(
                 $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
@@ -49,7 +50,7 @@ namespace DinamycServer
             command.ExecuteNonQuery();
             Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
         }
-        
+
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
             var command = new MySqlCommand(
@@ -58,6 +59,7 @@ namespace DinamycServer
             Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
             command.ExecuteNonQuery();
         }
+
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
             Console.WriteLine($"Начало проверки почты: {email}");
@@ -71,6 +73,7 @@ namespace DinamycServer
                 return false;
             return true;
         }
+
         public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
         {
             Console.WriteLine($"Начало проверки пароля: {email}");
@@ -85,7 +88,7 @@ namespace DinamycServer
             Console.WriteLine(Ppassword);
 
             if (password == Ppassword) return true;
-            else return false;
+            return false;
         }
     }
 }

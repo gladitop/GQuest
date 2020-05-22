@@ -20,7 +20,7 @@ namespace DinamycServer
 
         #region Разное
 
-        public class InfoScoreShow//Инфо о очках (для показа)
+        public class InfoScoreShow //Инфо о очках (для показа)
         {
             public InfoScoreShow(string email, long point)
             {

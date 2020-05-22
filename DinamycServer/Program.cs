@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
@@ -16,7 +15,7 @@ namespace DinamycServer
         private static void Main(string[] args)
         {
             Console.WriteLine("Запуск сервера...");
-            
+
             var thread1 = new Thread(ClearBadClient);
             thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
@@ -41,13 +40,13 @@ namespace DinamycServer
             }
 
             static void ClearBadClient() //Очистка 'Плохих' клиентов
-            {//TODO: Это надо проверить!
+            {
+                //TODO: Это надо проверить!
                 while (true)
                 {
                     Task.Delay(1000).Wait();
 
                     foreach (var clientInfo in Data.ClientsInfo)
-                    {
                         try
                         {
                             if (!clientInfo.Socket.Connected)
@@ -63,7 +62,6 @@ namespace DinamycServer
                             Data.ClientsInfo.Remove(clientInfo);
                             Console.WriteLine($"Ошибка: {ex.Message}");
                         }
-                    }
                 }
             }
 
@@ -97,8 +95,9 @@ namespace DinamycServer
                         {
                             var ch = ':'; //Разделяющий символ
                             var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                            var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
-                            
+                            var arguments =
+                                message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+
                             try
                             {
                                 //Обращение к командам
@@ -113,7 +112,8 @@ namespace DinamycServer
                                 #endregion
 
                                 var ComandClass = new Commands();
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
+                                    .Invoke(ComandClass, new object[] {client, arguments});
                             }
                             catch (Exception ex)
                             {

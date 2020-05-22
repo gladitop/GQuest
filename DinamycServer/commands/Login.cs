@@ -22,15 +22,14 @@ namespace DinamycServer
             if (Database.CheckEmail(email))
             {
                 if (Database.CheckPassword(email, password))
-                {
                     Function.SendClientMessage(client, "%LOGOOD");
-                }
                 else
-                {
                     Function.SendClientMessage(client, "%BLOG");
-                }
             }
-            else    Function.SendClientMessage(client, "%BLOG");
+            else
+            {
+                Function.SendClientMessage(client, "%BLOG");
+            }
         }
     }
 }
