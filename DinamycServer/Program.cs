@@ -97,26 +97,35 @@ namespace DinamycServer
                         if (message != "")
                         {
                             var ch = ':'; //Разделяющий символ
-                            var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                            var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
-
+                            var ComandClass = new Commands();
                             try
                             {
-                                #region Вывод в консоль: Команда и аргументы
+                                var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                                try
+                                {
+                                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+                                    #region Вывод в консоль: Команда и аргументы
 
-                                Console.WriteLine("\n" + "Команда: " + command + " \n ");
-                                Console.WriteLine("Аргументы:\n----------");
-                                foreach (var s in arguments) Console.WriteLine(s);
-                                Console.WriteLine("----------");
+                                    Console.WriteLine("\n" + "Команда: " + command + " \n ");
+                                    Console.WriteLine("Аргументы:\n----------");
+                                    foreach (var s in arguments) Console.WriteLine(s);
+                                    Console.WriteLine("----------");
 
-                                #endregion
+                                    #endregion
 
-                                var ComandClass = new Commands();
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+                                }
+                                catch(Exception ex) {Function.WriteColorText("\n" +"Неверный ввод или ПОПЫТКА ВЗЛОМА", ConsoleColor.Red);Console.WriteLine(ex);}
                             }
-                            catch (Exception ex)
+                            catch
                             {
-                                Console.WriteLine("\nОшибка при поиске команды:\n----------\n" + ex + "\n----------");
+                                try
+                                {
+                                    var command = message.Substring(1);
+                                    Console.WriteLine("\n" + "Команда: " + command);
+                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass,  new object[] {client});
+                                }
+                                catch(Exception ex) {Function.WriteColorText("\n" +"Неверный ввод или ПОПЫТКА ВЗЛОМА", ConsoleColor.Red);Console.WriteLine(ex);}
                             }
                         }
                     }

@@ -23,8 +23,9 @@ namespace DinamycServer
             {
                 if (Database.CheckPassword(email, password))
                 {
-                    var info = Database.GetClientInfo(1);
-                    Function.SendClientMessage(client, $"%LOGOOD:{email}:{info.ID};{info.Nick}:{info.Point}");
+                    var info = Database.GetClientInfo(email);
+                    Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
+                    //Console.WriteLine($"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
                 }
                 else
                 {

@@ -19,8 +19,6 @@ namespace DinamycServer
             }
 
             msg = msg.Substring(5); //TODO
-            //Для Антона TODO:Пиши что надо сделать в TODO!
-
             Function.SendClientMessage(client, $"%MES:{nick}:{msg}");
         }
     }

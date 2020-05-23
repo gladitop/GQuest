@@ -102,38 +102,27 @@ public class Client : MonoBehaviour
         Debug.Log(message);
         if (message != "")
         {
+            var ch = ':'; //Разделяющий символ
             try
             {
-                var ch = ':'; //Разделяющий символ
+                var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
                 try
                 {
-                    var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                    Debug.Log("Команда: " + command);
-                    try
-                    {
-                        var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
-                        Debug.Log("Аргументы:");
-                        foreach (var s in arguments) Debug.Log(s);
-
-                        this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, new object[] { arguments });
-                    }
-                    catch (Exception ex) { Debug.Log(ex); }
+                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
+                    this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, new object[] { arguments });
                 }
-                catch
-                {
-                    try 
-                    { 
-                        var command = message.Substring(1);
-                        Debug.Log(command);
-                        this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, null);
-                    }
-                    catch (Exception ex) { Debug.Log(ex); }
-                }
+                catch (Exception ex) { Debug.Log(ex); }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("\nОшибка при поиске команды:\n----------\n" + ex + "\n----------");
+                try
+                {
+                    var command = message.Substring(1);//Команда без аргументов
+                    this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, null);
+                }
+                catch (Exception ex) { Debug.Log(ex); }
             }
+
         }
     }
 
@@ -141,45 +130,90 @@ public class Client : MonoBehaviour
 
     public GameObject M_Login;
     public GameObject M_Registr;
+    public GameObject M_Program;
+    [Space]
     public Text ErrorText;
 
+    static string[] ClientInfo; //email id nick point
 
     #region Команды
 
-    #region Login/Registr
+        #region Login/Registr
 
-        public void SendLog()
-        {
-            string email = M_Login.transform.GetChild(0).GetComponent<InputField>().text;
-            string pass = M_Login.transform.GetChild(1).GetComponent<InputField>().text;
-            Send($"%LOG:{email}:{pass}");
-        }
-        private void LOGOOD(string[] arg)
-        {
-            Debug.Log("Удачный login");
-        }
-        private void BLOG()
-        {
-            Debug.Log("Неудачный login");
-            ErrorText.text = "Неверный логин или пароль";       
-        }
+    public void SendLog()
+    {
+        ErrorText.text = "";
+        string email = M_Login.transform.GetChild(0).GetComponent<InputField>().text;
+        string pass = M_Login.transform.GetChild(1).GetComponent<InputField>().text;
+        Send($"%LOG:{email}:{pass}");
+    }
+    public void GoToRegistratioon()
+    {
+        ErrorText.text = "";
+        M_Login.SetActive(false);
+        M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";
+        M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
+        M_Registr.SetActive(true);
+    }
+    private void LOGOOD(string[] arg)
+    {
+        ClientInfo = arg;
+        ErrorText.text = "";
+        M_Login.SetActive(false);
+        M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";
+        M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
+        M_Program.SetActive(true);
+    }
+    private void BLOG()
+    {
+        ErrorText.text = "Неверный логин или пароль";
+        M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
+    }
 
-        private void REGOOD()
+    public void SendReg()
+    {
+        ErrorText.text = "";
+        string nick = M_Registr.transform.GetChild(0).GetComponent<InputField>().text;
+        string email = M_Registr.transform.GetChild(1).GetComponent<InputField>().text;
+        string pass = M_Registr.transform.GetChild(2).GetComponent<InputField>().text;
+        if ((nick != "")&&(email != "")&&(pass!= ""))
         {
-            Debug.Log("Good!");
+            Send($"%REG:{email}:{pass}:{nick}");
         }
-        private void BREG()
+        else
         {
-            Debug.Log("Good!");
+            ErrorText.text = "Вы ввели не все данные";
         }
+    }
+    public void GoToLogining()
+    {
+        ErrorText.text = "";
+        M_Registr.SetActive(false);
+        M_Registr.transform.GetChild(0).GetComponent<InputField>().text = "";
+        M_Registr.transform.GetChild(1).GetComponent<InputField>().text = "";
+        M_Registr.transform.GetChild(2).GetComponent<InputField>().text = "";
+        M_Login.SetActive(true);
+    }
+    private void REGOOD()
+    {
+        ErrorText.text = "";
+        M_Registr.SetActive(false);
+        M_Login.transform.GetChild(0).GetComponent<InputField>().text = M_Registr.transform.GetChild(1).GetComponent<InputField>().text;
+        M_Login.SetActive(true);
+    }
+    private void BREG()
+    {
+        ErrorText.text = "Данный email уже занят";
+        M_Registr.transform.GetChild(1).GetComponent<InputField>().text = "";
+        M_Registr.transform.GetChild(2).GetComponent<InputField>().text = "";
+    }
 
         #endregion
      
     #endregion
 
-    public void TestMessageInput()
+    /*public void TestMessageInput()
     {
         
-    }
+    }*/
 }
-//string email = GameObject.Find("REmailInput").GetComponent<InputField>().text;

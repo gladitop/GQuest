@@ -24,10 +24,10 @@ namespace DinamycServer
         public static MySqlConnection connection { get; set; }
 
         #region GetInfo 
-        static public Data.ClientInfoOffile GetClientInfo(int Id) //Получение инфо о клиенте (по id) //TODO Сделать возможность искать и по id и по email
+        static public Data.ClientInfoOffile GetClientInfo(string email) //Получение инфо о клиенте (по id) //TODO Сделать возможность искать и по id и по email
         {
             MySqlCommand command = new MySqlCommand(
-                $"SELECT * FROM `accounts` WHERE w_id = '{Id}';",
+                $"SELECT * FROM `accounts` WHERE w_email = '{email}';",
                 connection);
 
             long id = 0;
@@ -48,10 +48,10 @@ namespace DinamycServer
             command.Dispose();
             
             //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
-            return new Data.ClientInfoOffile(id, emailInfo, password, nick, point);
+            return new Data.ClientInfoOffile(id, emailInfo, password, nick, point); //TODO Присылает неверное значените point (постоянно равен 0)
         }
         
-        /*public static string[] GetScore(int id)
+        /*public static string[] GetScore(int id)//TODO удалить
         {
             //Отправлять по id?
             var command = new MySqlCommand(
@@ -73,7 +73,7 @@ namespace DinamycServer
             return new string[2]{email, point};
         }*/
         
-        public static List<Data.InfoScoreShow> GetScore()//TODO сделать работающий метод(работа в Data) всё объясню
+        public static List<Data.InfoScoreShow> GetScore()//TODO удалить
         {
             //SELECT w_email, w_point FROM test.accounts WHERE w_point != 0;
             var command = new MySqlCommand(
@@ -93,7 +93,7 @@ namespace DinamycServer
             return info;
         }
 
-        public static void UpdatePoint(Data.InfoScoreAdd infoPoint)//TODO сделать работающий метод(работа в Data) всё объясню
+        public static void UpdatePoint(Data.InfoScoreAdd infoPoint)//TODO удалить
         {
             var command = new MySqlCommand(
                 $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
