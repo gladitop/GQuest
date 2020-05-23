@@ -7,54 +7,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Reflection;
+using System.Linq;
 
 public class Client : MonoBehaviour
 {
-    [Header("Окна: log|reg|bst|test")]
-    public GameObject[] menu;
-    [Header("Вывод сообщений")]
-    public Text ErrorMessage;
-    [Header("нб")]
-    public GameObject LEmail;
-    [Header("Score")]
-    public GameObject BoxScore;
-    public GameObject Counteiner;
-    public Image img;
-    [Header("Чат")]
-    public GameObject MsgBox;
-    public Image MsgCounteiner;
-    [Space]
-    public Text Mes_text;
-
-    private int id;
-    private int PCount;
-
-    //List<string> nm = new List<string>();
-    //List<int> pm = new List<int>();
-
-    private void Sortirovka(List<string> nm, List<int> pm)
-    {
-        //for(int i=0; i<=pm.Count; i++)
-        //{
-        //    int k = 0;
-        //    int f = pm[i];
-
-        //    for (int h = 0; h <= pm.Count; h++)
-        //    {               
-        //        if (f > pm[h])
-        //        { k = h;
-        //            f = pm[h]; 
-        //        }   
-        //    }
-
-        //    if (pm[i] != f)
-        //    {
-        //        pm[k] = pm[i];
-        //        pm[i] = f;
-        //    }
-        //}
-    }
-
     #region Соединение Клиент-сервер
     private bool socketReady;
     private TcpClient socket;
@@ -108,15 +65,15 @@ public class Client : MonoBehaviour
             }
         }
     }
-    public void Send(string data)
+
+    private void OnApplicationQuit()
     {
-        if (!socketReady)
-            return;
-
-        socket.Client.Send(Encoding.UTF8.GetBytes(data));
-        writer.Flush();
+        CloseSocket();
     }
-
+    private void OnDisable()
+    {
+        CloseSocket();
+    }
     private void CloseSocket()
     {
         if (!socketReady)
@@ -127,166 +84,102 @@ public class Client : MonoBehaviour
         socket.Close();
         socketReady = false;
     }
-    private void OnApplicationQuit()
-    {
-        CloseSocket();
-    }
-    private void OnDisable()
-    {
-        CloseSocket();
-    }
     #endregion
 
-    #region Команды на вход и выход
+    #region Получение / Отправка
+
+    public void Send(string data)
+    {
+        if (!socketReady)
+            return;
+
+        socket.Client.Send(Encoding.UTF8.GetBytes(data));
+        Debug.Log(data);
+        writer.Flush();
+    }
     private void OnIncomingData()
     {
-        if (message.Contains("%REGOOD"))
-        {
-            LEmail.GetComponent<InputField>().text = GameObject.Find("REmailInput").GetComponent<InputField>().text;
-            GameObject.Find("REmailInput").GetComponent<InputField>().text = "";
-            GameObject.Find("RPassInput").GetComponent<InputField>().text = "";
-            GameObject.Find("RNickInput").GetComponent<InputField>().text = "";
-            ErrorMessage.text = "";
-            GoLogin();
-        }
-        if (message.Contains("%LOGOD"))
-        {
-            Match regex = Regex.Match(message, "%LOGOD:(.*):(.*):(.*)");
-            Debug.Log(message);
-            id = int.Parse(regex.Groups[1].Value);
-            string name = regex.Groups[2].Value;
-            PCount = int.Parse(regex.Groups[3].Value);
-
-            if (PCount != 0)
-            {
-                menu[0].SetActive(false);
-                menu[1].SetActive(false);
-                menu[2].SetActive(false);
-                menu[3].SetActive(false);
-                ErrorMessage.text = "";
-                Send($"%PCOUNT:{id.ToString()}:{PCount}");
-                Debug.Log($"Данные отправленны: %PCOUNT:{id}:{PCount}");
-            }
-            else
-            {
-                menu[0].SetActive(false);
-                menu[1].SetActive(false);
-                menu[2].SetActive(true);
-            }
-            ErrorMessage.text = "";
-        }  //%LOGOD:id:name:PCount
-        if (message.Contains("%SCORE"))
-        {
-            
-            try{
-            Debug.Log(message);
-            
-            Match regex = Regex.Match(message, "%SCORE:(.*):(.*)");
-            string names = regex.Groups[1].Value;
-            double points = Convert.ToDouble(regex.Groups[2].Value);
-
-            float p = Convert.ToSingle(Math.Round(((points / 11) * 100), 1));           
-            GameObject go = Instantiate(BoxScore, Counteiner.transform);
-            go.GetComponentInChildren<Text>().text = message;
-            go.transform.GetChild(0).GetComponent<Text>().text = names;
-            if (p == 100) { p -= 0.1f; }
-            go.transform.GetChild(1).GetComponent<Text>().text = $"{p}%";
-            go.transform.GetChild(2).GetComponent<Scrollbar>().size = p / 100;
-            img.GetComponent<RectTransform>().sizeDelta = new Vector2(img.rectTransform.sizeDelta.x, img.rectTransform.sizeDelta.y + 65);
-            }
-            catch{Debug.Log("Пустые значения");}
-        } //%SCORE:name:points
-        if (message.Contains("%BLOG"))
-        {
-            ErrorMessage.text = "Введены неправильные данные";
-            GameObject.Find("LPassInput").GetComponent<InputField>().text = "";
-        }
-        if (message.Contains("%BREG"))
-        {
-            ErrorMessage.text = "Почта уже используется";
-            GameObject.Find("REmailInput").GetComponent<InputField>().text = "";
-            GameObject.Find("RPassInput").GetComponent<InputField>().text = "";
-        }
-
-        if (message.Contains("%MES"))
-        {
-            Match regex = Regex.Match(message, "%MES:(.*):(.*)");
-            string name = regex.Groups[1].Value;
-            string msg = regex.Groups[2].Value;
-
-            GameObject go = Instantiate(MsgBox, MsgCounteiner.transform);
-
-            go.transform.GetChild(0).GetComponent<Text>().text = name;
-            go.transform.GetChild(2).GetComponent<Text>().text = msg;
-            MsgCounteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(MsgCounteiner.rectTransform.sizeDelta.x, MsgCounteiner.rectTransform.sizeDelta.y + 65);
-
-            Debug.Log($"Входное сообщение:{name}:{msg}");
-        } //%MES:names:msg   
-    }
-    public void Registration()
-    {
-        string email = GameObject.Find("REmailInput").GetComponent<InputField>().text;
-        string pass = GameObject.Find("RPassInput").GetComponent<InputField>().text;
-        string clientName = GameObject.Find("RNickInput").GetComponent<InputField>().text;
-        GameObject.Find("RPassInput").GetComponent<InputField>().text = "";
-
-        Debug.Log($"Данные отправленны: %REG:{email}:{pass}:{clientName}");
-        Send($"%REG:{email}:{pass}:{clientName}");
-        Task.Delay(10).Wait();
-        return;
-    }         // %REG:email:pass:clientName
-    public void Login()
-    {
-        string email = GameObject.Find("LEmailInput").GetComponent<InputField>().text;
-        string pass = GameObject.Find("LPassInput").GetComponent<InputField>().text;
-        GameObject.Find("LPassInput").GetComponent<InputField>().text = "";
-
-        Debug.Log($"Данные отправленны: %LOG:{email}:{pass}");
-        Send($"%LOG:{email}:{pass}");
-        Task.Delay(10).Wait();
-        return;
-    }               // %LOG:email:pass
-    public void SendScore(int point)
-    {
-        Send($"%PCOUNT:{id}:{point}");
-        Debug.Log($"Данные отправленны: %PCOUNT:{id}:{point}");
-    } //%PCOUNT:id:point
-    public Text ttext;
-    public void SendMessage()
-    {
-        Send($"%MSG:nick:{Mes_text.text}");
-    }
-    #endregion
-
-    public void GoLogin()
-    {
-        GameObject.Find("REmailInput").GetComponent<InputField>().text = "";
-        GameObject.Find("RPassInput").GetComponent<InputField>().text = "";
-        GameObject.Find("RNickInput").GetComponent<InputField>().text = "";
-        ErrorMessage.text = "";
-
-        menu[1].SetActive(true);
-        menu[0].SetActive(false);
-        menu[2].SetActive(false);
-    }
-    public void GoRegistrarion()
-    {
-        GameObject.Find("LEmailInput").GetComponent<InputField>().text = "";
-        GameObject.Find("LPassInput").GetComponent<InputField>().text = "";
-        ErrorMessage.text = "";
-        menu[0].SetActive(true);
-        menu[1].SetActive(false);
-        menu[2].SetActive(false);
-    }
-
-    #region Пробный метод
-    [Header("пробный текст")]
-    public Text tt;
-    public void proba()
-    {
-        message = tt.text;
         Debug.Log(message);
-        Send(message);
+        if (message != "")
+        {
+            try
+            {
+                var ch = ':'; //Разделяющий символ
+                try
+                {
+                    var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                    Debug.Log("Команда: " + command);
+                    try
+                    {
+                        var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
+                        Debug.Log("Аргументы:");
+                        foreach (var s in arguments) Debug.Log(s);
+
+                        this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, new object[] { arguments });
+                    }
+                    catch (Exception ex) { Debug.Log(ex); }
+                }
+                catch
+                {
+                    try 
+                    { 
+                        var command = message.Substring(1);
+                        Debug.Log(command);
+                        this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, null);
+                    }
+                    catch (Exception ex) { Debug.Log(ex); }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("\nОшибка при поиске команды:\n----------\n" + ex + "\n----------");
+            }
+        }
     }
+
     #endregion
+
+    public GameObject M_Login;
+    public GameObject M_Registr;
+    public Text ErrorText;
+
+
+    #region Команды
+
+    #region Login/Registr
+
+        public void SendLog()
+        {
+            string email = M_Login.transform.GetChild(0).GetComponent<InputField>().text;
+            string pass = M_Login.transform.GetChild(1).GetComponent<InputField>().text;
+            Send($"%LOG:{email}:{pass}");
+        }
+        private void LOGOOD(string[] arg)
+        {
+            Debug.Log("Удачный login");
+        }
+        private void BLOG()
+        {
+            Debug.Log("Неудачный login");
+            ErrorText.text = "Неверный логин или пароль";       
+        }
+
+        private void REGOOD()
+        {
+            Debug.Log("Good!");
+        }
+        private void BREG()
+        {
+            Debug.Log("Good!");
+        }
+
+        #endregion
+     
+    #endregion
+
+    public void TestMessageInput()
+    {
+        
+    }
 }
+//string email = GameObject.Find("REmailInput").GetComponent<InputField>().text;

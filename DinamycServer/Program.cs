@@ -14,6 +14,7 @@ namespace DinamycServer
 
         private static void Main(string[] args)
         {
+            #region  Запуск сервера + консольные команды
             Console.WriteLine("Запуск сервера...");
 
             var thread1 = new Thread(ClearBadClient);
@@ -38,6 +39,7 @@ namespace DinamycServer
                         break;
                 }
             }
+            #endregion
 
            static void ClearBadClient() //Очистка 'Плохих' клиентов
             {
@@ -45,7 +47,6 @@ namespace DinamycServer
                 while (true)
                 {
                     Task.Delay(2000).Wait();
-                    Console.WriteLine("1");
                     foreach (var clientInfo in Data.ClientsInfo)
                         try
                         {
@@ -62,12 +63,11 @@ namespace DinamycServer
                         {
                             clientInfo.Socket.Close();
                             Data.ClientsInfo.Remove(clientInfo);
-                            Console.WriteLine($"Ошибка: {ex.Message}");
+                            Console.WriteLine($"Ошибка: {ex.Message}");                   
                         }
                 }
             }
             
-
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)

@@ -92,7 +92,7 @@ public class GovnoTest : MonoBehaviour
  
     private void End()
     {
-        Client_Main.GetComponent<Client>().SendScore(points);
+        //Client_Main.GetComponent<Client>().SendScore(points);
         this.gameObject.SetActive(false);
     }
 }

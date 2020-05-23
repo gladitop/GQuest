@@ -116,7 +116,6 @@ namespace DinamycServer
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
-            Console.WriteLine($"Начало проверки почты: {email}");
             var command = new MySqlCommand(
                 $"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';",
                 connection);
@@ -130,7 +129,6 @@ namespace DinamycServer
 
         public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
         {
-            Console.WriteLine($"Начало проверки пароля: {email}");
             var command = new MySqlCommand(
                 $"SELECT w_password FROM accounts WHERE w_email = '{email}';",
                 connection);
@@ -139,7 +137,6 @@ namespace DinamycServer
             var reader = command.ExecuteReader();
             while (reader.Read()) Ppassword = reader.GetString("w_password");
             reader.Close();
-            Console.WriteLine(Ppassword);
 
             if (password == Ppassword) return true;
             return false;
