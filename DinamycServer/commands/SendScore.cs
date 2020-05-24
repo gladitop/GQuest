@@ -8,7 +8,12 @@ namespace DinamycServer
     {
         private void SCORE(TcpClient client) //Отправка всех очков клиенту
         {
-            //var info = Database.GetClientInfo(email);
+            for(long i = 0; i <= 20;i++)
+            {
+                var info = Database.GetClientInfo(i);
+                if(info.Nick != "")
+                {Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");}
+            }
         }
     }
 }

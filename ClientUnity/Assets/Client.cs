@@ -137,7 +137,7 @@ public class Client : MonoBehaviour
     public Image Conteiner;
     public GameObject Box_Score;
 
-    static string[] ClientInfo; //email id nick point
+    public string[] ClientInfo; //email id nick point
 
     #region Команды
 
@@ -161,6 +161,7 @@ public class Client : MonoBehaviour
     private void LOGOOD(string[] arg)
     {
         ClientInfo = arg;
+        Debug.Log(arg[0] + " " + arg[1] + " " + arg[2] + " " + arg[3]);
         ErrorText.text = "";
         M_Login.SetActive(false);
         M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";

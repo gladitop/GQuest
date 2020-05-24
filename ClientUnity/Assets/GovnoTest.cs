@@ -10,6 +10,9 @@ public class GovnoTest : MonoBehaviour
     public Text[] but;
     [Header("Объект-Клиент")]
     public GameObject Client_Main;
+    [Space]
+    public GameObject Info_Question;
+    public GameObject Info_Score;
 
     private int question = 1; //текучий вопрос
     private int points = 0;  //кол-во набранных очков
@@ -93,6 +96,11 @@ public class GovnoTest : MonoBehaviour
     private void End()
     {
         //Client_Main.GetComponent<Client>().SendScore(points);
-        this.gameObject.SetActive(false);
+        Info_Question.SetActive(false);
+        Info_Score.SetActive(true);
+        string id = Client_Main.GetComponent<Client>().ClientInfo[2];
+        Client_Main.GetComponent<Client>().Send($"%UPOINT:{id}:{points}");
+        Debug.Log($"%UPOINT:{id}:{points}");
+        Client_Main.GetComponent<Client>().Send("%SCORE");
     }
 }
