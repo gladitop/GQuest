@@ -163,10 +163,23 @@ public class Client : MonoBehaviour
         ClientInfo = arg;
         Debug.Log(arg[0] + " " + arg[1] + " " + arg[2] + " " + arg[3]);
         ErrorText.text = "";
+        
         M_Login.SetActive(false);
         M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";
         M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
-        M_Program.SetActive(true);
+
+        if(int.Parse(arg[3]) == 0)
+        {
+            M_Program.SetActive(true);
+            M_Program.transform.GetChild(0).gameObject.SetActive(true);
+            M_Program.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        else
+        {
+            M_Program.transform.GetChild(0).gameObject.SetActive(false);
+            M_Program.transform.GetChild(1).gameObject.SetActive(true);
+            Send("%SCORE");
+        }
     }
     private void BLOG()
     {
@@ -221,7 +234,7 @@ public class Client : MonoBehaviour
         float p = Convert.ToSingle(Math.Round(((point / 11) * 100), 1));
 
         GameObject so = Instantiate(Box_Score, Conteiner.transform);
-        Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Conteiner.rectTransform.sizeDelta.x, Conteiner.rectTransform.sizeDelta.y + 65);
+        Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Conteiner.rectTransform.sizeDelta.x, Conteiner.rectTransform.sizeDelta.y + 320);
 
         so.transform.GetChild(0).GetComponent<Text>().text = name;
         if (p == 100) { p -= 0.1f; }
