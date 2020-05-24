@@ -98,7 +98,7 @@ public class GovnoTest : MonoBehaviour
         //Client_Main.GetComponent<Client>().SendScore(points);
         Info_Question.SetActive(false);
         Info_Score.SetActive(true);
-        string id = Client_Main.GetComponent<Client>().ClientInfo[2];
+        string id = Client_Main.GetComponent<Client>().ClientInfo[1];
         Client_Main.GetComponent<Client>().Send($"%UPOINT:{id}:{points}");
         Debug.Log($"%UPOINT:{id}:{points}");
         Client_Main.GetComponent<Client>().Send("%SCORE");

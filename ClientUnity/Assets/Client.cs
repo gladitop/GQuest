@@ -33,7 +33,7 @@ public class Client : MonoBehaviour
             return;
 
         //Defalt host / post values
-        string host = "127.0.0.1";
+        string host = "77.108.206.67";
         int port = 908;
 
 
@@ -167,10 +167,11 @@ public class Client : MonoBehaviour
         M_Login.SetActive(false);
         M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";
         M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
+        M_Program.SetActive(true);
 
-        if(int.Parse(arg[3]) == 0)
+        if (int.Parse(arg[3]) == 0)
         {
-            M_Program.SetActive(true);
+            Debug.Log(arg[3]);
             M_Program.transform.GetChild(0).gameObject.SetActive(true);
             M_Program.transform.GetChild(1).gameObject.SetActive(false);
         }
@@ -215,6 +216,10 @@ public class Client : MonoBehaviour
     {
         ErrorText.text = "";
         M_Registr.SetActive(false);
+        M_Registr.transform.GetChild(0).GetComponent<InputField>().text = "";
+        M_Registr.transform.GetChild(1).GetComponent<InputField>().text = "";
+        M_Registr.transform.GetChild(2).GetComponent<InputField>().text = "";
+
         M_Login.transform.GetChild(0).GetComponent<InputField>().text = M_Registr.transform.GetChild(1).GetComponent<InputField>().text;
         M_Login.SetActive(true);
     }
@@ -240,6 +245,12 @@ public class Client : MonoBehaviour
         if (p == 100) { p -= 0.1f; }
         so.transform.GetChild(1).GetComponent<Text>().text = $"{p}%";
         so.transform.GetChild(2).GetComponent<Scrollbar>().size = p / 100;
+    }
+    public void Exit()
+    {
+        M_Program.SetActive(false);
+        M_Program.transform.GetChild(1).gameObject.SetActive(false);
+        M_Login.SetActive(true);
     }
      
     #endregion

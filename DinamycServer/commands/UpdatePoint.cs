@@ -4,9 +4,9 @@ namespace DinamycServer
 {
     public partial class Commands
     {
-        private void UPOINT(long clientId, int point) //TODO доделать метод с изменением очков
+        private void UPOINT(TcpClient client, string[] arg) //TODO доделать метод с изменением очков
         {
-           // Database.UpdatePoint(new Data.InfoScore(clientId, point));
+            Database.UpdatePoint(new Data.InfoScore(long.Parse(arg[0]), long.Parse(arg[1])));
         }
     }
 }

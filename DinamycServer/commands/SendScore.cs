@@ -8,7 +8,7 @@ namespace DinamycServer
     {
         private void SCORE(TcpClient client) //Отправка всех очков клиенту
         {
-            for(long i = 0; i <= 20;i++)
+            for(long i = 0; i <= 100;i++)
             {
                 var info = Database.GetClientInfo(i);
                 if(info.Nick != "")
