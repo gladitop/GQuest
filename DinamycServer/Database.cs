@@ -23,7 +23,8 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
-        #region GetInfo 
+        #region GetInfo
+        //TODO сделать метод по обновлению очков в таблице
         static public Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
             MySqlCommand command = new MySqlCommand(

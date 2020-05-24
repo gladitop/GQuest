@@ -13,7 +13,7 @@ namespace DinamycServer
 
         #region public классы и перечисление
         //TODO Создать 1 класс, который будет иметь всю информацию о пользователе ClientInfo
-        public class InfoScore
+        public class InfoScore //TODO удалить
         {
             public InfoScore(long id, long point)//Для добавление
             {

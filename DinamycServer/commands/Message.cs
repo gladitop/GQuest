@@ -18,7 +18,7 @@ namespace DinamycServer
                 Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
             }
 
-            msg = msg.Substring(5); //TODO
+            msg = msg.Substring(5);
             Function.SendClientMessage(client, $"%MES:{nick}:{msg}");
         }
     }
