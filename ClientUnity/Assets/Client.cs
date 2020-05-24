@@ -133,6 +133,9 @@ public class Client : MonoBehaviour
     public GameObject M_Program;
     [Space]
     public Text ErrorText;
+    [Space]
+    public Image Conteiner;
+    public GameObject Box_Score;
 
     static string[] ClientInfo; //email id nick point
 
@@ -209,11 +212,21 @@ public class Client : MonoBehaviour
     }
 
         #endregion
+
+    private void SCORE(string[] arg)
+    {
+        string name = arg[0];
+        double point = Convert.ToDouble(arg[1]);
+        float p = Convert.ToSingle(Math.Round(((point / 11) * 100), 1));
+
+        GameObject so = Instantiate(Box_Score, Conteiner.transform);
+        Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Conteiner.rectTransform.sizeDelta.x, Conteiner.rectTransform.sizeDelta.y + 65);
+
+        so.transform.GetChild(0).GetComponent<Text>().text = name;
+        if (p == 100) { p -= 0.1f; }
+        so.transform.GetChild(1).GetComponent<Text>().text = $"{p}%";
+        so.transform.GetChild(2).GetComponent<Scrollbar>().size = p / 100;
+    }
      
     #endregion
-
-    /*public void TestMessageInput()
-    {
-        
-    }*/
 }

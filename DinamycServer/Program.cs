@@ -24,7 +24,7 @@ namespace DinamycServer
             var thread = new Thread(ListenClients);
             thread.Start();
 
-            Console.WriteLine("Сервер работает!");
+            Function.WriteColorText("Сервер работает!", ConsoleColor.Green);
 
             var answer = "";
             while (true)
