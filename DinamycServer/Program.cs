@@ -14,7 +14,8 @@ namespace DinamycServer
 
         private static void Main(string[] args)
         {
-            #region  Запуск сервера + консольные команды
+            #region Запуск сервера + консольные команды
+
             Console.WriteLine("Запуск сервера...");
 
             //var thread1 = new Thread(ClearBadClient);
@@ -39,37 +40,38 @@ namespace DinamycServer
                         break;
                 }
             }
+
             #endregion
 
-            
-           /*static void ClearBadClient() //Очистка 'Плохих' клиентов
-            {
-                //TODO: Не работает (23.05.2020)
-                while (true)
-                {
-                    Task.Delay(2000).Wait();
-                    foreach (var clientInfo in Data.ClientsInfo)
-                        try
-                        {
-                            Console.WriteLine("2");
-                            if (!clientInfo.Socket.Connected)
-                            {
-                                Console.WriteLine("3");
-                                clientInfo.Socket.Close();
-                                Data.ClientsInfo.Remove(clientInfo);
-                                Console.WriteLine("Найден плохой клиент");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            clientInfo.Socket.Close();
-                            Data.ClientsInfo.Remove(clientInfo);
-                            Console.WriteLine($"Ошибка: {ex.Message}");                   
-                        }
-                }
-            }
-            */
-            
+
+            /*static void ClearBadClient() //Очистка 'Плохих' клиентов
+             {
+                 //TODO: Не работает (23.05.2020)
+                 while (true)
+                 {
+                     Task.Delay(2000).Wait();
+                     foreach (var clientInfo in Data.ClientsInfo)
+                         try
+                         {
+                             Console.WriteLine("2");
+                             if (!clientInfo.Socket.Connected)
+                             {
+                                 Console.WriteLine("3");
+                                 clientInfo.Socket.Close();
+                                 Data.ClientsInfo.Remove(clientInfo);
+                                 Console.WriteLine("Найден плохой клиент");
+                             }
+                         }
+                         catch (Exception ex)
+                         {
+                             clientInfo.Socket.Close();
+                             Data.ClientsInfo.Remove(clientInfo);
+                             Console.WriteLine($"Ошибка: {ex.Message}");                   
+                         }
+                 }
+             }
+             */
+
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)
@@ -105,7 +107,10 @@ namespace DinamycServer
                                 var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
                                 try
                                 {
-                                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+                                    var arguments =
+                                        message.Substring(message.IndexOf(ch) + 1)
+                                            .Split(new[] {ch}); //Массив аргументов
+
                                     #region Вывод в консоль: Команда и аргументы
 
                                     Console.WriteLine("\n" + "Команда: " + command + " \n ");
@@ -115,9 +120,16 @@ namespace DinamycServer
 
                                     #endregion
 
-                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+                                    ComandClass.GetType()
+                                        .GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
+                                        .Invoke(ComandClass, new object[] {client, arguments});
                                 }
-                                catch(Exception ex) {Function.WriteColorText("\n" +"Неверный ввод или ПОПЫТКА ВЗЛОМА", ConsoleColor.Red);Console.WriteLine(ex);}
+                                catch (Exception ex)
+                                {
+                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА",
+                                        ConsoleColor.Red);
+                                    Console.WriteLine(ex);
+                                }
                             }
                             catch
                             {
@@ -125,9 +137,16 @@ namespace DinamycServer
                                 {
                                     var command = message.Substring(1);
                                     Console.WriteLine("\n" + "Команда: " + command);
-                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass,  new object[] {client});
+                                    ComandClass.GetType()
+                                        .GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
+                                        .Invoke(ComandClass, new object[] {client});
                                 }
-                                catch(Exception ex) {Function.WriteColorText("\n" +"Неверный ввод или ПОПЫТКА ВЗЛОМА", ConsoleColor.Red);Console.WriteLine(ex);}
+                                catch (Exception ex)
+                                {
+                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА",
+                                        ConsoleColor.Red);
+                                    Console.WriteLine(ex);
+                                }
                             }
                         }
                     }

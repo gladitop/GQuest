@@ -1,6 +1,4 @@
-using System;
 using System.Net.Sockets;
-using System.Collections.Generic;
 
 namespace DinamycServer
 {
@@ -8,11 +6,10 @@ namespace DinamycServer
     {
         private void SCORE(TcpClient client) //Отправка всех очков клиенту
         {
-            for(long i = 0; i <= 100;i++)
+            for (long i = 0; i <= 100; i++)
             {
                 var info = Database.GetClientInfo(i);
-                if(info.Nick != "")
-                {Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");}
+                if (info.Nick != "") Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");
             }
         }
     }

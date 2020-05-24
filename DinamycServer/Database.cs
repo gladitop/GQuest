@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
 namespace DinamycServer
@@ -24,19 +23,19 @@ namespace DinamycServer
         public static MySqlConnection connection { get; set; }
 
         #region GetInfo
-        
-        static public Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
+
+        public static Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
-            MySqlCommand command = new MySqlCommand(
+            var command = new MySqlCommand(
                 $"SELECT * FROM `accounts` WHERE w_email = '{email}';",
                 connection);
 
             long id = 0;
-            string emailInfo = "";
-            string password = "";
-            string nick = "";
+            var emailInfo = "";
+            var password = "";
+            var nick = "";
             long point = 0;
-            MySqlDataReader reader = command.ExecuteReader();
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 id = reader.GetInt64("w_id");
@@ -45,24 +44,25 @@ namespace DinamycServer
                 nick = reader.GetString("w_nick");
                 point = reader.GetInt64("w_point");
             }
+
             reader.Close();
             command.Dispose();
-            
+
             //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
             return new Data.ClientInfo(email, password, nick, id, point);
         }
-        
-        static public Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
+
+        public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
-            MySqlCommand command = new MySqlCommand(
+            var command = new MySqlCommand(
                 $"SELECT * FROM `accounts` WHERE w_id = {id};",
                 connection);
-            
-            string email = "";
-            string password = "";
-            string nick = "";
+
+            var email = "";
+            var password = "";
+            var nick = "";
             long point = 0;
-            MySqlDataReader reader = command.ExecuteReader();
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 email = reader.GetString("w_email");
@@ -70,16 +70,17 @@ namespace DinamycServer
                 nick = reader.GetString("w_nick");
                 point = reader.GetInt64("w_point");
             }
+
             reader.Close();
             command.Dispose();
             //string email, string password, string nick)
-            return new Data.ClientInfo(email, password, nick, id, point); 
+            return new Data.ClientInfo(email, password, nick, id, point);
         }
-    
+
         #endregion
 
         #region Account managment
-        
+
         public static void UpdatePoint(Data.InfoScore infoPoint) //Обновить очки
         {
             var command = new MySqlCommand(
@@ -88,7 +89,7 @@ namespace DinamycServer
             command.ExecuteNonQuery();
             Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
         }
-        
+
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
             var command = new MySqlCommand(
@@ -125,7 +126,7 @@ namespace DinamycServer
             if (password == Ppassword) return true;
             return false;
         }
-    
+
         #endregion
     }
 }

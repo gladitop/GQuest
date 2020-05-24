@@ -20,7 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/Function.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Function.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/SendScore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/SendScore.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/UpdatePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/UpdatePoint.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,9 +56,9 @@
         <option value="$PROJECT_DIR$/commands/Message.cs" />
         <option value="$PROJECT_DIR$/commands/Pcount.cs" />
         <option value="$PROJECT_DIR$/commands/UpdatePoint.cs" />
-        <option value="$PROJECT_DIR$/Data.cs" />
         <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/Database.cs" />
+        <option value="$PROJECT_DIR$/Data.cs" />
       </list>
     </option>
   </component>
@@ -108,6 +114,7 @@
       <workItem from="1590307693100" duration="1872000" />
       <workItem from="1590311810337" duration="147000" />
       <workItem from="1590326909223" duration="230000" />
+      <workItem from="1590331914056" duration="93000" />
     </task>
     <servers />
   </component>
@@ -132,10 +139,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1590161155856">
+    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1590331932978">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.27.1920.1053@0.27.1920.1053" timestamp="1590161155856" />
+    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.27.1920.1053@0.27.1920.1053" timestamp="1590331932978" />
     <state width="1874" height="367" key="GridCell.Tab.0.bottom" timestamp="1590087657160">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

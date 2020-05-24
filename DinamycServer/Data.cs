@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using Org.BouncyCastle.Asn1.Ess;
 
 namespace DinamycServer
 {
@@ -12,37 +10,26 @@ namespace DinamycServer
         public static List<ClientInfo> ClientsInfo = new List<ClientInfo>(); //Инфа о клиентах
 
         #region public классы и перечисление
+
         //TODO Создать 1 класс, который будет иметь всю информацию о пользователе ClientInfo
         public class InfoScore //TODO удалить
         {
-            public InfoScore(long id, long point)//Для добавление
+            public InfoScore(long id, long point) //Для добавление
             {
                 UserID = id;
                 Point = point;
             }
 
-            public long UserID { get; set; } //Id пользователя
-            public long Point { get; set; }
-            
-            public InfoScore(string email, long point)//Для показа
+            public InfoScore(string email, long point) //Для показа
             {
                 Email = email;
                 Point = point;
             }
 
-            public string Email { get; set; }
+            public long UserID { get; set; } //Id пользователя
+            public long Point { get; set; }
 
-            public TypeScore GetType()//TODO:Проверить
-            {
-                if (Email == null)
-                {
-                    return TypeScore.Show;
-                }
-                else
-                {
-                    return TypeScore.Add;
-                }
-            }
+            public string Email { get; set; }
         }
 
         public class ClientInfo //Инфо о клиенте (онлайн)
@@ -65,7 +52,7 @@ namespace DinamycServer
                 ID = id;
             }
 
-            public static TcpClient? Socket { get; set; }
+            public static TcpClient Socket { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
             public string Nick { get; set; }
@@ -74,30 +61,8 @@ namespace DinamycServer
             public IPEndPoint IP => (IPEndPoint) Socket.Client.LocalEndPoint; //Я ОЧЕНЬ ленивый
 
             public long Point { get; set; }
-
-            public TypeClient GetType()//TODO: Проверить
-            {
-                if (Socket == null)
-                    return TypeClient.Offline;
-                else
-                {
-                    return TypeClient.Only;
-                }
-            }
         }
 
-        public enum TypeScore
-        {
-            Add = 0,
-            Show = 1
-        }
-
-        public enum TypeClient
-        {
-            Only = 0,
-            Offline = 1
-        }
-        
         #endregion
     }
 }
