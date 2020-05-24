@@ -24,7 +24,7 @@ namespace DinamycServer
         public static MySqlConnection connection { get; set; }
 
         #region GetInfo 
-        static public Data.ClientInfoOffile GetClientInfo(string email) //Получение инфо о клиенте (по id) //TODO Сделать возможность искать и по id и по email
+        static public Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
             MySqlCommand command = new MySqlCommand(
                 $"SELECT * FROM `accounts` WHERE w_email = '{email}';",
@@ -48,31 +48,33 @@ namespace DinamycServer
             command.Dispose();
             
             //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
-            return new Data.ClientInfoOffile(id, emailInfo, password, nick, point); //TODO Присылает неверное значените point (постоянно равен 0)
+            return new Data.ClientInfo(email, password, nick, id, point); //TODO Присылает неверное значените point (постоянно равен 0)
         }
         
-        /*public static string[] GetScore(int id)//TODO удалить
+        static public Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
-            //Отправлять по id?
-            var command = new MySqlCommand(
-                $"SELECT w_email, w_point FROM accounts WHERE w_id = '{id}';",
+            MySqlCommand command = new MySqlCommand(
+                $"SELECT * FROM `accounts` WHERE w_id = {id};",
                 connection);
+            
+            string email = "";
+            string password = "";
+            string nick = "";
+            long point = 0;
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                email = reader.GetString("w_email");
+                password = reader.GetString("w_password");
+                nick = reader.GetString("w_nick");
+                point = reader.GetInt64("w_point");
+            }
+            reader.Close();
+            command.Dispose();
+            //string email, string password, string nick)
+            return new Data.ClientInfo(email, password, nick, id, point); //TODO Присылает неверное значените point (постоянно равен 0)
+        }
 
-                var reader = command.ExecuteReader();
-
-                string email = "";
-                string point = "";
-
-                while (reader.Read())
-                {
-                    email = reader.GetString("w_email");
-                    point = reader.GetString("w_point");
-                }
-                reader.Close();
-
-            return new string[2]{email, point};
-        }*/
-        
         public static List<Data.InfoScoreShow> GetScore()//TODO удалить
         {
             //SELECT w_email, w_point FROM test.accounts WHERE w_point != 0;
@@ -93,7 +95,7 @@ namespace DinamycServer
             return info;
         }
 
-        public static void UpdatePoint(Data.InfoScoreAdd infoPoint)//TODO удалить
+        public static void UpdatePoint(Data.InfoScore infoPoint)//TODO удалить
         {
             var command = new MySqlCommand(
                 $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",

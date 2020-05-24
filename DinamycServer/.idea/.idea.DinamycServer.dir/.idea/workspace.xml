@@ -1,39 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="" />
+    <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/commands/Login.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/commands/Message.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Function.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/Registration.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/commands/Score.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/commands/Pcount.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Database.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AECA31C1-A01A-4DC6-8C7D-679D271FE221/3A/SocketAsyncEngine.Unix.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/commands/Login.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/commands/Message.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Function.cs" />
         <option value="$PROJECT_DIR$/commands/Log.cs" />
-        <option value="$PROJECT_DIR$/Data.cs" />
         <option value="$PROJECT_DIR$/commands/Score.cs" />
         <option value="$PROJECT_DIR$/commands/Message.cs" />
-        <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/commands/Pcount.cs" />
+        <option value="$PROJECT_DIR$/Program.cs" />
+        <option value="$PROJECT_DIR$/Data.cs" />
         <option value="$PROJECT_DIR$/Database.cs" />
       </list>
     </option>
   </component>
   <component name="ProjectId" id="1cEG7vr0zE20oVRmqPRvug0U8rq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -43,6 +67,7 @@
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.30005425" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunManager">
@@ -65,6 +90,9 @@
       </method>
     </configuration>
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="" />
@@ -77,6 +105,7 @@
       <workItem from="1590088776987" duration="35000" />
       <workItem from="1590159492945" duration="1737000" />
       <workItem from="1590170601284" duration="791000" />
+      <workItem from="1590307693100" duration="1872000" />
     </task>
     <servers />
   </component>
@@ -85,6 +114,17 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
@@ -173,9 +213,13 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state width="1874" height="367" key="GridCell.Tab.4.right/0.27.1920.1053@0.27.1920.1053" timestamp="1590087657162" />
-    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1590160385298">
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog" timestamp="1590309249306">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1590160385298" />
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1590309249306" />
+    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1590308387514">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1590308387514" />
   </component>
 </project>
