@@ -19,7 +19,7 @@ namespace DinamycServer
             Console.ResetColor();
         }
 
-        public static void SendMessage(string message) //Отправить всем сообщение
+        public static void SendMessage(string message, string nick) //Отправить всем сообщение
         {
             Console.WriteLine("2");
             Console.WriteLine(Data.ClientsInfo.Count);
@@ -28,7 +28,8 @@ namespace DinamycServer
                 Console.WriteLine("3");
                 if (clientInfo.Socket != null)
                 {
-                    SendClientMessage(clientInfo.Socket, $"%MES:{message}");
+                    //MES:{NICK}:{MESS}
+                    SendClientMessage(clientInfo.Socket, $"%MES:{nick}:{message}");
                     Console.WriteLine("1");
                     Console.WriteLine(clientInfo.Socket);
                 }
