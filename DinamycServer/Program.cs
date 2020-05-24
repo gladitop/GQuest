@@ -41,8 +41,8 @@ namespace DinamycServer
             }
             #endregion
 
-            /*
-           static void ClearBadClient() //Очистка 'Плохих' клиентов
+            
+           /*static void ClearBadClient() //Очистка 'Плохих' клиентов
             {
                 //TODO: Не работает (23.05.2020)
                 while (true)

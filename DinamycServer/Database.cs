@@ -48,7 +48,7 @@ namespace DinamycServer
             command.Dispose();
             
             //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
-            return new Data.ClientInfo(email, password, nick, id, point); //TODO Присылает неверное значените point (постоянно равен 0)
+            return new Data.ClientInfo(email, password, nick, id, point);
         }
         
         static public Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
@@ -72,38 +72,9 @@ namespace DinamycServer
             reader.Close();
             command.Dispose();
             //string email, string password, string nick)
-            return new Data.ClientInfo(email, password, nick, id, point); //TODO Присылает неверное значените point (постоянно равен 0)
+            return new Data.ClientInfo(email, password, nick, id, point); 
         }
-
-        public static List<Data.InfoScore> GetScore()//TODO удалить
-        {
-            //SELECT w_email, w_point FROM test.accounts WHERE w_point != 0;
-            var command = new MySqlCommand(
-                "SELECT w_email, w_point FROM accounts WHERE w_point != 0;",
-                connection);
-
-            var info = new List<Data.InfoScore>();
-            var reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                var email = reader.GetString("w_email");
-                var point = reader.GetInt64("w_point");
-
-                info.Add(new Data.InfoScore(email, point));
-            }
-
-            return info;
-        }
-
-        public static void UpdatePoint(Data.InfoScore infoPoint)//TODO удалить
-        {
-            var command = new MySqlCommand(
-                $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
-                connection);
-            command.ExecuteNonQuery();
-            Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
-        }
-        
+    
         #endregion
 
         #region Account managment

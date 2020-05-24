@@ -12,7 +12,7 @@ namespace DinamycServer
         public static List<ClientInfo> ClientsInfo = new List<ClientInfo>(); //Инфа о клиентах
 
         #region public классы и перечисление
-
+        //TODO Создать 1 класс, который будет иметь всю информацию о пользователе ClientInfo
         public class InfoScore
         {
             public InfoScore(long id, long point)//Для добавление
