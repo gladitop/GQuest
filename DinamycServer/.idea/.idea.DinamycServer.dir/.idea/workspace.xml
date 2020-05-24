@@ -20,11 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/UpdatePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/UpdatePoint.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +38,7 @@
     <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Database.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/commands/UpdatePoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/Login.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/Message.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -50,9 +50,10 @@
         <option value="$PROJECT_DIR$/commands/Score.cs" />
         <option value="$PROJECT_DIR$/commands/Message.cs" />
         <option value="$PROJECT_DIR$/commands/Pcount.cs" />
-        <option value="$PROJECT_DIR$/Program.cs" />
+        <option value="$PROJECT_DIR$/commands/UpdatePoint.cs" />
         <option value="$PROJECT_DIR$/Data.cs" />
         <option value="$PROJECT_DIR$/Database.cs" />
+        <option value="$PROJECT_DIR$/Program.cs" />
       </list>
     </option>
   </component>
@@ -106,6 +107,7 @@
       <workItem from="1590159492945" duration="1737000" />
       <workItem from="1590170601284" duration="791000" />
       <workItem from="1590307693100" duration="1872000" />
+      <workItem from="1590311810337" duration="147000" />
     </task>
     <servers />
   </component>
@@ -124,6 +126,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

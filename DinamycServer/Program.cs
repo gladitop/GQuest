@@ -17,8 +17,8 @@ namespace DinamycServer
             #region  Запуск сервера + консольные команды
             Console.WriteLine("Запуск сервера...");
 
-            var thread1 = new Thread(ClearBadClient);
-            thread1.Start();
+            //var thread1 = new Thread(ClearBadClient);
+            //thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -41,6 +41,7 @@ namespace DinamycServer
             }
             #endregion
 
+            /*
            static void ClearBadClient() //Очистка 'Плохих' клиентов
             {
                 //TODO: Не работает (23.05.2020)
@@ -67,6 +68,7 @@ namespace DinamycServer
                         }
                 }
             }
+            */
             
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {

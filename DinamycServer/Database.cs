@@ -75,21 +75,21 @@ namespace DinamycServer
             return new Data.ClientInfo(email, password, nick, id, point); //TODO Присылает неверное значените point (постоянно равен 0)
         }
 
-        public static List<Data.InfoScoreShow> GetScore()//TODO удалить
+        public static List<Data.InfoScore> GetScore()//TODO удалить
         {
             //SELECT w_email, w_point FROM test.accounts WHERE w_point != 0;
             var command = new MySqlCommand(
                 "SELECT w_email, w_point FROM accounts WHERE w_point != 0;",
                 connection);
 
-            var info = new List<Data.InfoScoreShow>();
+            var info = new List<Data.InfoScore>();
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 var email = reader.GetString("w_email");
                 var point = reader.GetInt64("w_point");
 
-                info.Add(new Data.InfoScoreShow(email, point));
+                info.Add(new Data.InfoScore(email, point));
             }
 
             return info;
