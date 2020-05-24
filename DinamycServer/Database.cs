@@ -24,7 +24,7 @@ namespace DinamycServer
         public static MySqlConnection connection { get; set; }
 
         #region GetInfo
-        //TODO сделать метод по обновлению очков в таблице
+        
         static public Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
             MySqlCommand command = new MySqlCommand(
@@ -79,6 +79,16 @@ namespace DinamycServer
         #endregion
 
         #region Account managment
+        
+        public static void UpdatePoint(Data.InfoScore infoPoint) //Обновить очки
+        {
+            var command = new MySqlCommand(
+                $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
+                connection);
+            command.ExecuteNonQuery();
+            Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
+        }
+        
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
             var command = new MySqlCommand(
