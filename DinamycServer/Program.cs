@@ -23,7 +23,6 @@ namespace DinamycServer
             //thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
-            Data.NetworkStream = new NetworkStream(server.Server, FileAccess.ReadWrite);
             var thread = new Thread(ListenClients);
             thread.Start();
 

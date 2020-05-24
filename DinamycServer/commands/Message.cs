@@ -8,24 +8,10 @@ namespace DinamycServer
     {
         private void MSG(TcpClient client, string[] argumets) // %MSG:nick:message
         {
-            var nick = "nick";//TODO:Сам сделаешь!
-            var msg = "";
-            try
-            {
-                foreach (var str in argumets) msg += $"{str} ";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
-            }
+            var msg = argumets[1];
 
-            msg = msg.Substring(5);
-
-            //1 Вариант
-
-            Data.NetworkStream.Write(Encoding.UTF8.GetBytes(msg));
-
-            //2 Вариант
+            Function.SendMessage(msg);
+            Console.WriteLine("Message= " + msg);
         }
     }
 }

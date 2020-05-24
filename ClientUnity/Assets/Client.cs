@@ -133,9 +133,6 @@ public class Client : MonoBehaviour
     public GameObject M_Program;
     [Space]
     public Text ErrorText;
-    [Space]
-    public Image Conteiner;
-    public GameObject Box_Score;
 
     public string[] ClientInfo; //email id nick point
 
@@ -169,7 +166,7 @@ public class Client : MonoBehaviour
         M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
         M_Program.SetActive(true);
 
-        if (int.Parse(arg[3]) == 0)
+        if (arg[3] != "")
         {
             Debug.Log(arg[3]);
             M_Program.transform.GetChild(0).gameObject.SetActive(true);
@@ -179,6 +176,8 @@ public class Client : MonoBehaviour
         {
             M_Program.transform.GetChild(0).gameObject.SetActive(false);
             M_Program.transform.GetChild(1).gameObject.SetActive(true);
+            GameObject[] go = GameObject.FindGameObjectsWithTag("conteiner");
+            foreach (GameObject g in go) { Destroy(g); };
             Send("%SCORE");
         }
     }
@@ -216,11 +215,11 @@ public class Client : MonoBehaviour
     {
         ErrorText.text = "";
         M_Registr.SetActive(false);
+        M_Login.transform.GetChild(0).GetComponent<InputField>().text = M_Registr.transform.GetChild(1).GetComponent<InputField>().text;
         M_Registr.transform.GetChild(0).GetComponent<InputField>().text = "";
         M_Registr.transform.GetChild(1).GetComponent<InputField>().text = "";
         M_Registr.transform.GetChild(2).GetComponent<InputField>().text = "";
 
-        M_Login.transform.GetChild(0).GetComponent<InputField>().text = M_Registr.transform.GetChild(1).GetComponent<InputField>().text;
         M_Login.SetActive(true);
     }
     private void BREG()
@@ -230,7 +229,11 @@ public class Client : MonoBehaviour
         M_Registr.transform.GetChild(2).GetComponent<InputField>().text = "";
     }
 
-        #endregion
+    #endregion
+
+    [Space]
+    public Image Score_Conteiner;
+    public GameObject Box_Score;
 
     private void SCORE(string[] arg)
     {
@@ -238,19 +241,44 @@ public class Client : MonoBehaviour
         double point = Convert.ToDouble(arg[1]);
         float p = Convert.ToSingle(Math.Round(((point / 11) * 100), 1));
 
-        GameObject so = Instantiate(Box_Score, Conteiner.transform);
-        Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Conteiner.rectTransform.sizeDelta.x, Conteiner.rectTransform.sizeDelta.y + 320);
+        GameObject so = Instantiate(Box_Score, Score_Conteiner.transform);
+        Score_Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Score_Conteiner.rectTransform.sizeDelta.x, Score_Conteiner.rectTransform.sizeDelta.y + 320);
 
         so.transform.GetChild(0).GetComponent<Text>().text = name;
         if (p == 100) { p -= 0.1f; }
         so.transform.GetChild(1).GetComponent<Text>().text = $"{p}%";
         so.transform.GetChild(2).GetComponent<Scrollbar>().size = p / 100;
     }
+
+    [Space]
+    public Image Message_Conteiner;
+    public GameObject Box_Message;
+
+    private void MES(string[] arg)
+    {
+        string nick = arg[0];
+        string msg = "";
+        for(int i = 1; i<=arg.Length; i++)
+        {
+            msg = String.Join(" ", arg[i]);
+        }
+        Debug.Log(msg);
+        Debug.Log(nick);
+
+        GameObject so = Instantiate(Box_Score, Message_Conteiner.transform);
+    }
+
     public void Exit()
     {
         M_Program.SetActive(false);
         M_Program.transform.GetChild(1).gameObject.SetActive(false);
         M_Login.SetActive(true);
+    }
+
+    public void But_Proba(string ss)
+    {
+        message = ss;
+        OnIncomingData();
     }
      
     #endregion

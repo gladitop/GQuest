@@ -21,9 +21,18 @@ namespace DinamycServer
 
         public static void SendMessage(string message) //Отправить всем сообщение
         {
+            Console.WriteLine("2");
+            Console.WriteLine(Data.ClientsInfo.Count);
             foreach (var clientInfo in Data.ClientsInfo)
+            {
+                Console.WriteLine("3");
                 if (clientInfo.Socket != null)
-                    SendClientMessage(clientInfo.Socket, message);
+                {
+                    SendClientMessage(clientInfo.Socket, $"%MES:{message}");
+                    Console.WriteLine("1");
+                    Console.WriteLine(clientInfo.Socket);
+                }
+            }
         }
     }
 }
