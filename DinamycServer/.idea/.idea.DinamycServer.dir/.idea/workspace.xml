@@ -20,13 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/Function.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Function.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/SendScore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/SendScore.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/UpdatePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/UpdatePoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/Function.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Function.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Message.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,22 +42,22 @@
     <setting file="file://$PROJECT_DIR$/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/SendScore.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/UpdatePoint.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/commands/Function.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Function.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/Login.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/commands/Message.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Function.cs" />
         <option value="$PROJECT_DIR$/commands/Log.cs" />
         <option value="$PROJECT_DIR$/commands/Score.cs" />
-        <option value="$PROJECT_DIR$/commands/Message.cs" />
         <option value="$PROJECT_DIR$/commands/Pcount.cs" />
         <option value="$PROJECT_DIR$/commands/UpdatePoint.cs" />
-        <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/Database.cs" />
+        <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/Data.cs" />
+        <option value="$PROJECT_DIR$/Function.cs" />
+        <option value="$PROJECT_DIR$/commands/Message.cs" />
       </list>
     </option>
   </component>
@@ -115,6 +114,7 @@
       <workItem from="1590311810337" duration="147000" />
       <workItem from="1590326909223" duration="230000" />
       <workItem from="1590331914056" duration="93000" />
+      <workItem from="1590335624566" duration="1576000" />
     </task>
     <servers />
   </component>
@@ -139,10 +139,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1590331932978">
+    <state x="711" y="409" width="487" height="326" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1590337119082">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="711" y="409" width="487" height="296" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.27.1920.1053@0.27.1920.1053" timestamp="1590331932978" />
+    <state x="711" y="409" width="487" height="326" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.27.1920.1053@0.27.1920.1053" timestamp="1590337119082" />
     <state width="1874" height="367" key="GridCell.Tab.0.bottom" timestamp="1590087657160">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -223,13 +223,13 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state width="1874" height="367" key="GridCell.Tab.4.right/0.27.1920.1053@0.27.1920.1053" timestamp="1590087657162" />
-    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog" timestamp="1590309249306">
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog" timestamp="1590336102520">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1590309249306" />
-    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1590308387514">
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1590336102520" />
+    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1590335943427">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1590308387514" />
+    <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1590335943427" />
   </component>
 </project>

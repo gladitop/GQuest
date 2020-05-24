@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Text;
 
 namespace DinamycServer
 {
@@ -7,7 +8,7 @@ namespace DinamycServer
     {
         private void MSG(TcpClient client, string[] argumets) // %MSG:nick:message
         {
-            var nick = "nick";
+            var nick = "nick";//TODO:Сам сделаешь!
             var msg = "";
             try
             {
@@ -19,7 +20,12 @@ namespace DinamycServer
             }
 
             msg = msg.Substring(5);
-            Function.SendClientMessage(client, $"%MES:{nick}:{msg}");
+
+            //1 Вариант
+
+            Data.NetworkStream.Write(Encoding.UTF8.GetBytes(msg));
+
+            //2 Вариант
         }
     }
 }

@@ -8,6 +8,7 @@ namespace DinamycServer
     {
         public const int Port = 908;
         public static List<ClientInfo> ClientsInfo = new List<ClientInfo>(); //Инфа о клиентах
+        public static NetworkStream NetworkStream;
 
         #region public классы и перечисление
 
@@ -52,7 +53,7 @@ namespace DinamycServer
                 ID = id;
             }
 
-            public static TcpClient Socket { get; set; }
+            public TcpClient Socket { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
             public string Nick { get; set; }

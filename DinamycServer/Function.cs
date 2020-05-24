@@ -8,7 +8,8 @@ namespace DinamycServer
     {
         public static void SendClientMessage(TcpClient client, string message) //Отравить клиенту сообщение
         {
-            client.Client.Send(Encoding.UTF8.GetBytes(message));
+            if (client != null)
+                client.Client.Send(Encoding.UTF8.GetBytes(message));
         }
 
         public static void WriteColorText(string text, ConsoleColor color)
@@ -16,6 +17,13 @@ namespace DinamycServer
             Console.ForegroundColor = color;
             Console.WriteLine(text);
             Console.ResetColor();
+        }
+
+        public static void SendMessage(string message) //Отправить всем сообщение
+        {
+            foreach (var clientInfo in Data.ClientsInfo)
+                if (clientInfo.Socket != null)
+                    SendClientMessage(clientInfo.Socket, message);
         }
     }
 }
