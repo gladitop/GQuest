@@ -21,7 +21,8 @@ namespace DinamycServer
             }
         }
 
-        #region Удаление клиента
+        #region Удаление клиента 
+        //TODO: Переделывай, и проверяй там где идёт входящие сообщение Program строка 73 и сделать цикл с удаление каждую минуту
 
         public static void DeleteClient(Data.ClientInfo clientInfo)
         {
@@ -33,7 +34,7 @@ namespace DinamycServer
         public static void DeleteClient(TcpClient client)
         {
             client.Close();
-            foreach (var clientInfo in Data.ClientsInfo)//TODO:Поискать нормальное решение
+            foreach (var clientInfo in Data.ClientsInfo)
             {
                 if (clientInfo.Socket == client)
                 {

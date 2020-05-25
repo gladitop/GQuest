@@ -49,9 +49,8 @@ namespace DinamycServer
             command.Dispose();
 
             //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
-            return new Data.ClientInfo(email, password, nick, id, point);
+            return new Data.ClientInfo(null, email, password, nick, id, point);
         }
-
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
             var command = new MySqlCommand(
@@ -74,7 +73,7 @@ namespace DinamycServer
             reader.Close();
             command.Dispose();
             //string email, string password, string nick)
-            return new Data.ClientInfo(email, password, nick, id, point);
+            return new Data.ClientInfo(null, email, password, nick, id, point);
         }
 
         #endregion

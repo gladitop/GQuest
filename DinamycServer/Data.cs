@@ -8,23 +8,12 @@ namespace DinamycServer
     {
         public const int Port = 908;
         public static List<ClientInfo> ClientsInfo = new List<ClientInfo>(); //Инфа о клиентах
-        public static NetworkStream NetworkStream;
-
-        #region public классы и перечисление
         
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
-            public ClientInfo(TcpClient socket, string email, string password, string nick) //Онлайн
+            public ClientInfo(TcpClient socket, string email, string password, string nick, long id, long point) //Инфо о клиенте
             {
-                Socket = socket;
-                Email = email;
-                Password = password;
-                Nick = nick;
-                Point = 0;
-            }
-
-            public ClientInfo(string email, string password, string nick, long id, long point) //Инфо о клиенте
-            {
+                if(socket != null) {Socket = socket;}                      
                 Email = email;
                 Password = password;
                 Nick = nick;
@@ -37,12 +26,8 @@ namespace DinamycServer
             public string Password { get; set; }
             public string Nick { get; set; }
             public long ID { get; set; }
-
-            public IPEndPoint IP => (IPEndPoint) Socket.Client.LocalEndPoint; //Я ОЧЕНЬ ленивый
-
             public long Point { get; set; }
         }
 
-        #endregion
     }
 }
