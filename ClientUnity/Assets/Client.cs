@@ -253,19 +253,29 @@ public class Client : MonoBehaviour
     [Space]
     public Image Message_Conteiner;
     public GameObject Box_Message;
-
+    public Text labelmes;
     private void MES(string[] arg)
     {
         string nick = arg[0];
-        string msg = "";
-        for(int i = 1; i<=arg.Length; i++)
-        {
-            msg = String.Join(" ", arg[i]);
-        }
-        Debug.Log(msg);
-        Debug.Log(nick);
+        string msg = arg[1];
 
-        GameObject so = Instantiate(Box_Score, Message_Conteiner.transform);
+        Debug.Log(nick + "---");
+        Debug.Log(msg + "---");
+
+        GameObject so = Instantiate(Box_Message, Message_Conteiner.transform);
+        so.transform.GetChild(0).GetComponent<Text>().text = nick;
+        so.transform.GetChild(1).GetComponent<Text>().text = msg;
+        Message_Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Message_Conteiner.rectTransform.sizeDelta.x, Message_Conteiner.rectTransform.sizeDelta.y + 200);
+
+    }
+    public void SSMesage()
+    {
+        Send($"%MSG:{ClientInfo[3]}:{labelmes.text}");
+    }
+    public void GoMessage()
+    {
+        M_Program.transform.GetChild(1).gameObject.SetActive(false);
+        M_Program.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     public void Exit()

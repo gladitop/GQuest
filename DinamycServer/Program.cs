@@ -32,25 +32,12 @@ namespace DinamycServer
             {
                 answer = Console.ReadLine();
 
-                try
+                switch (answer)
                 {
-                    switch (answer)
-                    {
-                        case "stop":
-
-                            Console.WriteLine("Отключение сервера...");
-                            foreach (var clientInfo in Data.ClientsInfo)
-                            {
-                                clientInfo.Socket.Close();
-                            }
-
-                            server.Stop();
-                            break;
-                    }
-                }
-                catch
-                {
-                    Function.WriteColorText("ERROR COMMAND", ConsoleColor.Red);
+                    case "stop":
+                        Console.WriteLine("Отключение сервера...");
+                        server.Stop();
+                        break;
                 }
             }
 
@@ -60,42 +47,37 @@ namespace DinamycServer
             {
                 while (true)
                 {
+                    Task.Delay(10).Wait(); //Задержка
+
+                    var client = server.AcceptTcpClient();
+                    var thread = new Thread(ClientLog);
+                    thread.Start(client);
+                }
+            }
+
+            static void ClientLog(object obj) //Поток клиента
+            {
+                var client = (TcpClient) obj;
+                var buffer = new byte[1024];
+                Console.WriteLine("новое подключение");
+
+                while (true)
                     try
                     {
-                        Task.Delay(10).Wait(); //Задержка
+                        Task.Delay(10).Wait();
 
-                        var client = server.AcceptTcpClient();
-                        var thread = new Thread(ClientLog);
-                        thread.Start(client);
-                    }
-                    catch
-                    {
-                        Function.WriteColorText("ERRLIST!", ConsoleColor.Red);
-                    }
-                }
+                        var i = client.Client.Receive(buffer);
+                        var message = Encoding.UTF8.GetString(buffer, 0, i);
 
-                static void ClientLog(object obj) //Поток клиента
-                {
-                    var client = (TcpClient) obj;
-                    var buffer = new byte[1024];
-                    Console.WriteLine("новое подключение");
-
-                    while (true)
-                        try
+                        if (message != "")
                         {
-                            Task.Delay(10).Wait();
-
-                            var i = client.Client.Receive(buffer);
-                            var message = Encoding.UTF8.GetString(buffer, 0, i);
-
-                            if (message != "")
+                            var ch = ':'; //Разделяющий символ
+                            var ComandClass = new Commands();
+                            try
                             {
-                                var ch = ':'; //Разделяющий символ
-                                var ComandClass = new Commands();
+                                var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
                                 try
                                 {
-                                    var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-
                                     var arguments =
                                         message.Substring(message.IndexOf(ch) + 1)
                                             .Split(new[] {ch}); //Массив аргументов
@@ -120,12 +102,29 @@ namespace DinamycServer
                                     Console.WriteLine(ex);
                                 }
                             }
+                            catch
+                            {
+                                try
+                                {
+                                    var command = message.Substring(1);
+                                    Console.WriteLine("\n" + "Команда: " + command);
+                                    ComandClass.GetType()
+                                        .GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
+                                        .Invoke(ComandClass, new object[] {client});
+                                }
+                                catch (Exception ex)
+                                {
+                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА",
+                                        ConsoleColor.Red);
+                                    Console.WriteLine(ex);
+                                }
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Ошибка: {ex.Message}");
-                        }
-                }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Ошибка: {ex.Message}");
+                    }
             }
         }
     }

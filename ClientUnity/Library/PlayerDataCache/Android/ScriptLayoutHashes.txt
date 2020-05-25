@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/Admin/Desktop/test.apk
+C:/Users/Admin/Desktop/test2.apk
 SceneListBegin?
 Assets/Scenes/SampleScene.unity
 SceneListEnd?
@@ -117,7 +117,7 @@ d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.Spa
 b8a5e8091ab0b8861d2add371082c5e0 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 a318a82d5abde553e75543c7b3aba918 XiaomiSupport.dll:AppStoresSupport.AppStoreSettings
 b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset
-9019e1387c3a726075f67a8e8cdcac08 Assembly-CSharp.dll:.Client
+ca3ea7597fb0e7f4395c3fe1e269c2da Assembly-CSharp.dll:.Client
 eab36d9a34c7df97eb23c05cab87a608 Assembly-CSharp.dll:.GovnoTest
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.Analytics.Editor.dll:UnityEditor.Analytics.AnalyticsEventTrackerEditor
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
