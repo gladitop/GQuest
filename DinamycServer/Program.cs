@@ -32,81 +32,70 @@ namespace DinamycServer
             {
                 answer = Console.ReadLine();
 
-                switch (answer)
+                try
                 {
-                    case "stop":
-                        Console.WriteLine("Отключение сервера...");
-                        server.Stop();
-                        break;
+                    switch (answer)
+                    {
+                        case "stop":
+
+                            Console.WriteLine("Отключение сервера...");
+                            foreach (var clientInfo in Data.ClientsInfo)
+                            {
+                                clientInfo.Socket.Close();
+                            }
+
+                            server.Stop();
+                            break;
+                    }
+                }
+                catch
+                {
+                    Function.WriteColorText("ERROR COMMAND", ConsoleColor.Red);
                 }
             }
 
             #endregion
 
-
-            /*static void ClearBadClient() //Очистка 'Плохих' клиентов
-             {
-                 //TODO: Не работает (23.05.2020)
-                 while (true)
-                 {
-                     Task.Delay(2000).Wait();
-                     foreach (var clientInfo in Data.ClientsInfo)
-                         try
-                         {
-                             Console.WriteLine("2");
-                             if (!clientInfo.Socket.Connected)
-                             {
-                                 Console.WriteLine("3");
-                                 clientInfo.Socket.Close();
-                                 Data.ClientsInfo.Remove(clientInfo);
-                                 Console.WriteLine("Найден плохой клиент");
-                             }
-                         }
-                         catch (Exception ex)
-                         {
-                             clientInfo.Socket.Close();
-                             Data.ClientsInfo.Remove(clientInfo);
-                             Console.WriteLine($"Ошибка: {ex.Message}");                   
-                         }
-                 }
-             }
-             */
-
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)
                 {
-                    Task.Delay(10).Wait(); //Задержка
-
-                    var client = server.AcceptTcpClient();
-                    var thread = new Thread(ClientLog);
-                    thread.Start(client);
-                }
-            }
-
-            static void ClientLog(object obj) //Поток клиента
-            {
-                var client = (TcpClient) obj;
-                var buffer = new byte[1024];
-                Console.WriteLine("новое подключение");
-
-                while (true)
                     try
                     {
-                        Task.Delay(10).Wait();
+                        Task.Delay(10).Wait(); //Задержка
 
-                        var i = client.Client.Receive(buffer);
-                        var message = Encoding.UTF8.GetString(buffer, 0, i);
+                        var client = server.AcceptTcpClient();
+                        var thread = new Thread(ClientLog);
+                        thread.Start(client);
+                    }
+                    catch
+                    {
+                        Function.WriteColorText("ERRLIST!", ConsoleColor.Red);
+                    }
+                }
 
-                        if (message != "")
+                static void ClientLog(object obj) //Поток клиента
+                {
+                    var client = (TcpClient) obj;
+                    var buffer = new byte[1024];
+                    Console.WriteLine("новое подключение");
+
+                    while (true)
+                        try
                         {
-                            var ch = ':'; //Разделяющий символ
-                            var ComandClass = new Commands();
-                            try
+                            Task.Delay(10).Wait();
+
+                            var i = client.Client.Receive(buffer);
+                            var message = Encoding.UTF8.GetString(buffer, 0, i);
+
+                            if (message != "")
                             {
-                                var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                                var ch = ':'; //Разделяющий символ
+                                var ComandClass = new Commands();
                                 try
                                 {
+                                    var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+
                                     var arguments =
                                         message.Substring(message.IndexOf(ch) + 1)
                                             .Split(new[] {ch}); //Массив аргументов
@@ -131,29 +120,12 @@ namespace DinamycServer
                                     Console.WriteLine(ex);
                                 }
                             }
-                            catch
-                            {
-                                try
-                                {
-                                    var command = message.Substring(1);
-                                    Console.WriteLine("\n" + "Команда: " + command);
-                                    ComandClass.GetType()
-                                        .GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
-                                        .Invoke(ComandClass, new object[] {client});
-                                }
-                                catch (Exception ex)
-                                {
-                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА",
-                                        ConsoleColor.Red);
-                                    Console.WriteLine(ex);
-                                }
-                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Ошибка: {ex.Message}");
-                    }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Ошибка: {ex.Message}");
+                        }
+                }
             }
         }
     }

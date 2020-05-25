@@ -1,3 +1,4 @@
+using System;
 using System.Net.Sockets;
 
 namespace DinamycServer
@@ -6,10 +7,18 @@ namespace DinamycServer
     {
         private void SCORE(TcpClient client) //Отправка всех очков клиенту
         {
-            for (long i = 0; i <= 100; i++)
+            try
             {
-                var info = Database.GetClientInfo(i);
-                if (info.Nick != "") Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");
+                for (long i = 0; i <= 100; i++)
+                {
+                    var info = Database.GetClientInfo(i);
+                    if (info.Nick != "") Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");
+                }
+            }
+            catch (Exception e)
+            {
+                Function.WriteColorText($"MSG:{e.Message}", ConsoleColor.Red);
+                Function.DeleteClient(client);
             }
         }
     }

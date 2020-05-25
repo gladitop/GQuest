@@ -6,7 +6,7 @@ namespace DinamycServer
     {
         private void UPOINT(TcpClient client, string[] arg) //TODO доделать метод с изменением очков
         {
-            Database.UpdatePoint(new Data.InfoScore(long.Parse(arg[0]), long.Parse(arg[1])));
+            Database.UpdatePoint(int.Parse(arg[0]), long.Parse(arg[1]));
         }
     }
 }

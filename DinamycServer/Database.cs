@@ -81,13 +81,13 @@ namespace DinamycServer
 
         #region Account managment
 
-        public static void UpdatePoint(Data.InfoScore infoPoint) //Обновить очки
+        public static void UpdatePoint(int point, long id) //Обновить очки
         {
             var command = new MySqlCommand(
-                $"UPDATE accounts SET w_point = '{infoPoint.Point}' WHERE w_id = '{infoPoint.UserID}';",
+                $"UPDATE accounts SET w_point = '{point}' WHERE w_id = '{id}';",
                 connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"Добавление в бд очки: id= {infoPoint.UserID}, points= {infoPoint.Point}");
+            Console.WriteLine($"Добавление в бд очки: id= {id}, points= {id}");
         }
 
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт

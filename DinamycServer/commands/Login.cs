@@ -19,22 +19,30 @@ namespace DinamycServer
                 Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
             }
 
-            if (Database.CheckEmail(email))
+            try
             {
-                if (Database.CheckPassword(email, password))
+                if (Database.CheckEmail(email))
                 {
-                    var info = Database.GetClientInfo(email);
-                    Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
-                    //Console.WriteLine($"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
+                    if (Database.CheckPassword(email, password))
+                    {
+                        var info = Database.GetClientInfo(email);
+                        Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
+                        //Console.WriteLine($"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
+                    }
+                    else
+                    {
+                        Function.SendClientMessage(client, "%BLOG");
+                    }
                 }
                 else
                 {
                     Function.SendClientMessage(client, "%BLOG");
                 }
             }
-            else
+            catch (Exception e)
             {
-                Function.SendClientMessage(client, "%BLOG");
+                Function.WriteColorText($"LOG:{e.Message}", ConsoleColor.Red);
+                Function.DeleteClient(client);
             }
         }
     }

@@ -7,12 +7,20 @@ namespace DinamycServer
     {
         private void MSG(TcpClient client, string[] argumets) // %MSG:nick:message
         {
-            var nick = argumets[1];
-            var msg = argumets[2];
+            try
+            {
+                var nick = argumets[1];
+                var msg = argumets[2];
 
-            //MES:{NICK}:{MESS}
-            Function.SendMessage(msg, nick);
-            Console.WriteLine("Message= " + msg);
+                //MES:{NICK}:{MESS}
+                Function.SendMessage(msg, nick);
+                Console.WriteLine("Message= " + msg);
+            }
+            catch(Exception e)
+            {
+                Function.WriteColorText($"MSG:{e.Message}", ConsoleColor.Red);
+                Function.DeleteClient(client);
+            }
         }
     }
 }
