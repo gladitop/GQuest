@@ -33,7 +33,7 @@ namespace DinamycServer
                 }
             }
             
-            WriteColorText($"Удалён клиент: {(IPEndPoint)client.Client.LocalEndPoint}", ConsoleColor.Green);
+            WriteColorText("Удалён клиент", ConsoleColor.Green);
         }
 
         public static void WriteColorText(string text, ConsoleColor color)//Хватит изменить название!

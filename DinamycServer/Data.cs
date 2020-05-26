@@ -12,7 +12,7 @@ namespace DinamycServer
         
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
-            public ClientInfo(TcpClient socket, string email, string password, string nick, long id, long point) //Инфо о клиенте
+            public ClientInfo(TcpClient socket, string email, string password, string nick, long id, long? point) //Инфо о клиенте
             {
                 if(socket != null) {Socket = socket;}                      
                 Email = email;
@@ -29,7 +29,7 @@ namespace DinamycServer
             public string Password { get; set; }
             public string Nick { get; set; }
             public long ID { get; set; }
-            public long Point { get; set; }
+            public long? Point { get; set; }
         }
 
     }

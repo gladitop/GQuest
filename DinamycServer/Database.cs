@@ -34,7 +34,7 @@ namespace DinamycServer
             var emailInfo = "";
             var password = "";
             var nick = "";
-            long point = 0;
+            long? point = null;
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -60,7 +60,7 @@ namespace DinamycServer
             var email = "";
             var password = "";
             var nick = "";
-            long point = 0;
+            long? point = null;
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -80,7 +80,7 @@ namespace DinamycServer
 
         #region Account managment
 
-        public static void UpdatePoint(int point, long id) //Обновить очки
+        public static void UpdatePoint(long? point, long id) //Обновить очки
         {
             var command = new MySqlCommand(
                 $"UPDATE accounts SET w_point = '{point}' WHERE w_id = '{id}';",

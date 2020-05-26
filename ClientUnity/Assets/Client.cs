@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Linq;
+using TMPro.EditorUtilities;
 
 public class Client : MonoBehaviour
 {
@@ -138,7 +139,7 @@ public class Client : MonoBehaviour
 
     #region Команды
 
-        #region Login/Registr
+    #region Login/Registr
 
     public void SendLog()
     {
@@ -160,24 +161,26 @@ public class Client : MonoBehaviour
         ClientInfo = arg;
         Debug.Log(arg[0] + " " + arg[1] + " " + arg[2] + " " + arg[3]);
         ErrorText.text = "";
-        
+
         M_Login.SetActive(false);
         M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";
         M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
         M_Program.SetActive(true);
 
-        if (arg[3] != "")
+        Debug.Log(arg[3]);
+
+        if (arg[3] != null)
         {
-            Debug.Log(arg[3]);
+            Debug.Log("7");
             M_Program.transform.GetChild(0).gameObject.SetActive(true);
             M_Program.transform.GetChild(1).gameObject.SetActive(false);
         }
         else
         {
+            Debug.Log("8");
             M_Program.transform.GetChild(0).gameObject.SetActive(false);
             M_Program.transform.GetChild(1).gameObject.SetActive(true);
-            GameObject[] go = GameObject.FindGameObjectsWithTag("conteiner");
-            foreach (GameObject g in go) { Destroy(g); };
+            DeleteAllBox();
             Send("%SCORE");
         }
     }
@@ -193,7 +196,7 @@ public class Client : MonoBehaviour
         string nick = M_Registr.transform.GetChild(0).GetComponent<InputField>().text;
         string email = M_Registr.transform.GetChild(1).GetComponent<InputField>().text;
         string pass = M_Registr.transform.GetChild(2).GetComponent<InputField>().text;
-        if ((nick != "")&&(email != "")&&(pass!= ""))
+        if ((nick != "") && (email != "") && (pass != ""))
         {
             Send($"%REG:{email}:{pass}:{nick}");
         }
@@ -231,55 +234,83 @@ public class Client : MonoBehaviour
 
     #endregion
 
-    [Space]
-    public Image Score_Conteiner;
-    public GameObject Box_Score;
+    #region занесение объектов в таблицу
 
+    [Space]
+    public Image Conteiner;
+    public GameObject[] box;
+    private void SpavnBoxPrefabs(string type, GameObject box, object[] arg)
+    {
+        GameObject so = Instantiate(box, Conteiner.transform);
+        if (type == "score")
+        {
+            so.transform.GetChild(0).GetComponent<Text>().text = (string)arg[0];
+            so.transform.GetChild(1).GetComponent<Text>().text = $"{(float)arg[1] * 100}%";
+            so.transform.GetChild(2).GetComponent<Scrollbar>().size = (float)arg[2];
+        }
+        else
+        {
+            foreach (object argument in arg) Debug.Log((string)argument);
+            for (int k = 0; k < arg.Length; k++)
+            {
+                so.transform.GetChild(k).GetComponent<Text>().text = Convert.ToString(arg[k]);
+            }
+        }
+
+        Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Conteiner.rectTransform.sizeDelta.x, Conteiner.rectTransform.sizeDelta.y + 165);
+    }
+    private void DeleteAllBox()
+    {
+        Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Conteiner.rectTransform.sizeDelta.x, 0);
+        GameObject[] OldObj = GameObject.FindGameObjectsWithTag("conteiner");
+        foreach (GameObject obj in OldObj) { Destroy(obj); }
+    }
+
+    #endregion
+
+    private bool TakingMessage = true;
+    private void MES(string[] arg)
+    {
+        if(TakingMessage)
+        {
+            SpavnBoxPrefabs(null, box[0], arg);
+        }     
+    }
     private void SCORE(string[] arg)
     {
         string name = arg[0];
         double point = Convert.ToDouble(arg[1]);
         float p = Convert.ToSingle(Math.Round(((point / 11) * 100), 1));
 
-        GameObject so = Instantiate(Box_Score, Score_Conteiner.transform);
-        Score_Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Score_Conteiner.rectTransform.sizeDelta.x, Score_Conteiner.rectTransform.sizeDelta.y + 320);
-
-        so.transform.GetChild(0).GetComponent<Text>().text = name;
         if (p == 100) { p -= 0.1f; }
-        so.transform.GetChild(1).GetComponent<Text>().text = $"{p}%";
-        so.transform.GetChild(2).GetComponent<Scrollbar>().size = p / 100;
+        p /= 100;
+
+        object[] argument = new object[] { name, p, p /= 100 };
+
+        SpavnBoxPrefabs("score", box[1], argument);
     }
 
-    [Space]
-    public Image Message_Conteiner;
-    public GameObject Box_Message;
-    public Text labelmes;
-    private void MES(string[] arg)
+    public Text MesText;
+    public void SendMessage()
     {
-        string nick = arg[0];
-        string msg = arg[1];
-
-        Debug.Log(nick + "---");
-        Debug.Log(msg + "---");
-
-        GameObject so = Instantiate(Box_Message, Message_Conteiner.transform);
-        so.transform.GetChild(0).GetComponent<Text>().text = nick;
-        so.transform.GetChild(1).GetComponent<Text>().text = msg;
-        Message_Conteiner.GetComponent<RectTransform>().sizeDelta = new Vector2(Message_Conteiner.rectTransform.sizeDelta.x, Message_Conteiner.rectTransform.sizeDelta.y + 200);
-
+        Send($"%MSG:{ClientInfo[2]}:{MesText.text}");
     }
-    public void SSMesage()
-    {
-        Send($"%MSG:{ClientInfo[3]}:{labelmes.text}");
-    }
+
     public void GoMessage()
     {
-        M_Program.transform.GetChild(1).gameObject.SetActive(false);
-        M_Program.transform.GetChild(2).gameObject.SetActive(true);
+        DeleteAllBox();
+        TakingMessage = true;
     }
-
+    public void GoScore()
+    {
+        DeleteAllBox();
+        TakingMessage = false;
+        Send("%SCORE");
+    }
     public void Exit()
     {
+        DeleteAllBox();
+        TakingMessage = false;
         M_Program.SetActive(false);
         M_Program.transform.GetChild(1).gameObject.SetActive(false);
         M_Login.SetActive(true);
