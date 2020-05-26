@@ -21,14 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Function.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Function.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/Login.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Login.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/Registration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Registration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/SendScore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/SendScore.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/commands/UpdatePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/UpdatePoint.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,8 +50,6 @@
         <option value="$PROJECT_DIR$/commands/Log.cs" />
         <option value="$PROJECT_DIR$/commands/Score.cs" />
         <option value="$PROJECT_DIR$/commands/Pcount.cs" />
-        <option value="$PROJECT_DIR$/Database.cs" />
-        <option value="$PROJECT_DIR$/commands/UpdatePoint.cs" />
         <option value="$PROJECT_DIR$/Data.cs" />
         <option value="$PROJECT_DIR$/commands/Message.cs" />
         <option value="$PROJECT_DIR$/commands/SendScore.cs" />
@@ -65,6 +57,8 @@
         <option value="$PROJECT_DIR$/commands/Registration.cs" />
         <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/Function.cs" />
+        <option value="$PROJECT_DIR$/commands/UpdatePoint.cs" />
+        <option value="$PROJECT_DIR$/Database.cs" />
       </list>
     </option>
   </component>
@@ -124,6 +118,7 @@
       <workItem from="1590335624566" duration="1576000" />
       <workItem from="1590339316839" duration="480000" />
       <workItem from="1590425605030" duration="2365000" />
+      <workItem from="1590511409508" duration="1159000" />
     </task>
     <servers />
   </component>

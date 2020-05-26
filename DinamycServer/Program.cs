@@ -24,6 +24,8 @@ namespace DinamycServer
             server.Start();
             var thread = new Thread(ListenClients);
             thread.Start();
+            thread = new Thread(CheckClientsConnect);
+            thread.Start();
 
             Function.WriteColorText("Сервер работает!", ConsoleColor.Green);
 
@@ -43,6 +45,8 @@ namespace DinamycServer
 
             #endregion
 
+            #region Клиенты
+            
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)
@@ -126,6 +130,30 @@ namespace DinamycServer
                         Console.WriteLine($"Ошибка: {ex.Message}");
                     }
             }
+            
+            #endregion
+
+            #region Прочее
+
+            static void CheckClientsConnect()//Проверка клиентов
+            {
+                Task.Delay(10000).Wait();
+
+                foreach (var clientInfo in Data.ClientsInfo)
+                {
+                    try
+                    {
+                        if(!clientInfo.Socket.Connected)
+                            Function.DeleteClient(clientInfo.Socket);
+                    }
+                    catch (Exception e)
+                    {
+                        Function.DeleteClient(clientInfo.Socket);
+                    }
+                }
+            }
+
+            #endregion
         }
     }
 }

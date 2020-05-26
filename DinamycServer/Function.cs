@@ -21,17 +21,7 @@ namespace DinamycServer
             }
         }
 
-        #region Удаление клиента 
-        //TODO: Переделывай, и проверяй там где идёт входящие сообщение Program строка 73 и сделать цикл с удаление каждую минуту
-
-        public static void DeleteClient(Data.ClientInfo clientInfo)
-        {
-            clientInfo.Socket.Close();
-            Data.ClientsInfo.Remove(clientInfo);
-            WriteColorText($"Удалён клиент: {clientInfo.Email}", ConsoleColor.Green);
-        }
-        
-        public static void DeleteClient(TcpClient client)
+        public static void DeleteClient(TcpClient client)//Удаление клиента
         {
             client.Close();
             foreach (var clientInfo in Data.ClientsInfo)
@@ -45,8 +35,6 @@ namespace DinamycServer
             
             WriteColorText($"Удалён клиент: {(IPEndPoint)client.Client.LocalEndPoint}", ConsoleColor.Green);
         }
-        
-        #endregion
 
         public static void WriteColorText(string text, ConsoleColor color)//Хватит изменить название!
         {
@@ -70,7 +58,7 @@ namespace DinamycServer
                 catch
                 {
                     Function.WriteColorText("ERRSendMessage!", ConsoleColor.Red);
-                    Function.DeleteClient(clientInfo);
+                    Function.DeleteClient(clientInfo.Socket);
                 }
             }
         }
