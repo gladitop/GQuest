@@ -6,10 +6,8 @@ namespace DinamycServer
 {
     public static class Data
     {
-        public const int Port = 908;
-        public static List<ClientInfo> ClientsInfo = new List<ClientInfo>(); //Инфа о клиентах
-        public static List<ClientInfo> AddInfo = new List<ClientInfo>(); //Инфа о НОВЫХ клиентах
-        
+        public const int Port = 908;       
+        public static List<TcpClient> TpClient = new List<TcpClient>(); //Инфа о подключённых сокетах
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
             public ClientInfo(TcpClient socket, string email, string password, string nick, long id, long? point) //Инфо о клиенте
@@ -21,8 +19,6 @@ namespace DinamycServer
                 Point = point;
                 ID = id;
             }
-
-            public ClientInfo() { }
 
             public TcpClient Socket { get; set; }
             public string Email { get; set; }

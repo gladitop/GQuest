@@ -3,13 +3,8 @@ using System.Net.Sockets;
 using System.IO;
 using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using System.Reflection;
-using System.Linq;
-using TMPro.EditorUtilities;
 
 public class Client : MonoBehaviour
 {
@@ -34,7 +29,7 @@ public class Client : MonoBehaviour
             return;
 
         //Defalt host / post values
-        string host = "77.108.206.67";
+        string host = "127.0.0.1";
         int port = 908;
 
 
@@ -159,7 +154,6 @@ public class Client : MonoBehaviour
     private void LOGOOD(string[] arg)
     {
         ClientInfo = arg;
-        Debug.Log(arg[0] + " " + arg[1] + " " + arg[2] + " " + arg[3]);
         ErrorText.text = "";
 
         M_Login.SetActive(false);
@@ -167,19 +161,17 @@ public class Client : MonoBehaviour
         M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
         M_Program.SetActive(true);
 
-        Debug.Log(arg[3]);
-
-        if (arg[3] != null)
+        if (arg[3].Contains("null"))
         {
-            Debug.Log("7");
             M_Program.transform.GetChild(0).gameObject.SetActive(true);
             M_Program.transform.GetChild(1).gameObject.SetActive(false);
+            M_Program.transform.GetChild(2).gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("8");
             M_Program.transform.GetChild(0).gameObject.SetActive(false);
             M_Program.transform.GetChild(1).gameObject.SetActive(true);
+            M_Program.transform.GetChild(2).gameObject.SetActive(true);
             DeleteAllBox();
             Send("%SCORE");
         }
@@ -285,7 +277,7 @@ public class Client : MonoBehaviour
         if (p == 100) { p -= 0.1f; }
         p /= 100;
 
-        object[] argument = new object[] { name, p, p /= 100 };
+        object[] argument = new object[] { name, p, p };
 
         SpavnBoxPrefabs("score", box[1], argument);
     }

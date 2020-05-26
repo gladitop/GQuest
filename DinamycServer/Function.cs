@@ -11,29 +11,43 @@ namespace DinamycServer
         {
             try
             {
-                if (client != null)
-                    client.Client.Send(Encoding.UTF8.GetBytes(message));
+                client.Client.Send(Encoding.UTF8.GetBytes(message));
             }
             catch
             {
+                CheckEmptyClients(client);
                 Function.WriteColorText("ERRMESS!", ConsoleColor.Red);
-                DeleteClient(client);
             }
         }
 
-        public static void DeleteClient(TcpClient client)//Удаление клиента
+        public static void CheckEmptyClients(TcpClient CheckingClient)//Поиск пустых клиентов и их удаление
         {
-            client.Close();
-            foreach (var clientInfo in Data.ClientsInfo)
+            if(CheckingClient != null)
             {
-                if (clientInfo.Socket == client)
+                if(!CheckingClient.Connected)
                 {
-                    Data.ClientsInfo.Remove(clientInfo);
-                    break;
-                }
+                    CheckingClient.Close();
+                    Data.TpClient.Remove(CheckingClient);
+                    WriteColorText("Удалён клиент", ConsoleColor.Yellow);              
+                }             
             }
-            
-            WriteColorText("Удалён клиент", ConsoleColor.Green);
+            else
+            { 
+                int i = 0;
+                Console.WriteLine(Data.TpClient.Count);  
+                foreach (var client in Data.TpClient)
+                {
+                    if(!client.Connected)
+                    {
+                        Console.WriteLine("нет");
+                        i++;
+                        client.Close();
+                        Data.TpClient.Remove(client);           
+                    }          
+                }
+                WriteColorText($"Произведенна очистка клиетов, очищенно:{i}", ConsoleColor.Yellow);   
+                Console.WriteLine(Data.TpClient.Count);         
+            }
         }
 
         public static void WriteColorText(string text, ConsoleColor color)//Хватит изменить название!
@@ -43,23 +57,13 @@ namespace DinamycServer
             Console.ResetColor();
         }
 
-        public static void SendMessage(string message, string nick) //Отправить всем сообщение
+        public static void SendMessage(string nick, string message) //Отправить всем сообщение
         {
-            foreach (var clientInfo in Data.ClientsInfo)
+            CheckEmptyClients(null); //очистка пустых клинтов
+            foreach (var client in Data.TpClient)
             {
-                try
-                {
-                    if (clientInfo.Socket != null)
-                    {
-                        //MES:{NICK}:{MESS}
-                        SendClientMessage(clientInfo.Socket, $"%MES:{nick}:{message}");
-                    }
-                }
-                catch
-                {
-                    Function.WriteColorText("ERRSendMessage!", ConsoleColor.Red);
-                    Function.DeleteClient(clientInfo.Socket);
-                }
+                SendClientMessage(client, $"%MES:{nick}:{message}");               
+                
             }
         }
     }

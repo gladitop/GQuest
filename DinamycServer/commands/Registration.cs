@@ -36,7 +36,7 @@ namespace DinamycServer
             catch (Exception e)
             {
                 Function.WriteColorText($"REG:{e.Message}", ConsoleColor.Red);
-                Function.DeleteClient(client);
+
             }
         }
     }

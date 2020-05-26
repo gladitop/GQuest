@@ -1,9 +1,0 @@
-{
-    "name": "Xiaomi",
-    "references": [],
-    "includePlatforms": [
-        "Android",
-        "Editor"
-    ],
-    "excludePlatforms": []
-}

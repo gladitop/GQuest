@@ -13,8 +13,7 @@ namespace DinamycServer
             var iusername = "admin";
             var ipassword = "030292";
 
-            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername +
-                             ";password=" + ipassword;
+            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername + ";password=" + ipassword;
 
             connection = new MySqlConnection(connString);
             connection.Open();
@@ -26,15 +25,14 @@ namespace DinamycServer
 
         public static Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
-            var command = new MySqlCommand(
-                $"SELECT * FROM `accounts` WHERE w_email = '{email}';",
-                connection);
+            var command = new MySqlCommand($"SELECT * FROM `accounts` WHERE w_email = '{email}';",connection);
 
             long id = 0;
             var emailInfo = "";
             var password = "";
             var nick = "";
             long? point = null;
+
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -42,37 +40,35 @@ namespace DinamycServer
                 emailInfo = reader.GetString("w_email");
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
-                point = reader.GetInt64("w_point");
+                try{point = reader.GetInt64("w_point");}
+                catch{Console.WriteLine("point = null");}               
             }
-
             reader.Close();
             command.Dispose();
 
-            //Console.WriteLine($"{id}, {emailInfo}, {password}, {nick}");
-            return new Data.ClientInfo(null, email, password, nick, id, point);
+            return new Data.ClientInfo(null, email, password, nick, id, point);        
         }
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
-            var command = new MySqlCommand(
-                $"SELECT * FROM `accounts` WHERE w_id = {id};",
-                connection);
+            var command = new MySqlCommand($"SELECT * FROM `accounts` WHERE w_id = {id};",connection);
 
             var email = "";
             var password = "";
             var nick = "";
             long? point = null;
+
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 email = reader.GetString("w_email");
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
-                point = reader.GetInt64("w_point");
+                try{point = reader.GetInt64("w_point");}
+                catch{Console.WriteLine("point = null");}  
             }
-
             reader.Close();
             command.Dispose();
-            //string email, string password, string nick)
+
             return new Data.ClientInfo(null, email, password, nick, id, point);
         }
 
@@ -80,50 +76,41 @@ namespace DinamycServer
 
         #region Account managment
 
-        public static void UpdatePoint(long? point, long id) //Обновить очки
+        public static void UpdatePoint(long id, long point) //Обновить очки
         {
-            var command = new MySqlCommand(
-                $"UPDATE accounts SET w_point = '{point}' WHERE w_id = '{id}';",
-                connection);
+            Console.WriteLine(point);
+            var command = new MySqlCommand($"UPDATE accounts SET w_point = '{point}' WHERE w_id = '{id}';",connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"Добавление в бд очки: id= {id}, points= {id}");
+            Console.WriteLine($"Добавление в бд очки: id= {id}, points= {point}");
         }
 
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
-            var command = new MySqlCommand(
-                $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`, `w_point`) VALUES ('{email}', '{password}', '{nick}', 0);",
-                connection);
-            Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
+            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`, `w_point`) VALUES ('{email}', '{password}', '{nick}', {null});",connection);
             command.ExecuteNonQuery();
+            Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
         }
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
-            var command = new MySqlCommand(
-                $"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';",
-                connection);
-
+            var command = new MySqlCommand($"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';",connection);
             var count = (long) command.ExecuteScalar();
 
-            if (count == 0)
-                return false;
-            return true;
+            if (count == 0) return false;
+            else return true;          
         }
 
         public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
         {
-            var command = new MySqlCommand(
-                $"SELECT w_password FROM accounts WHERE w_email = '{email}';",
-                connection);
+            var command = new MySqlCommand($"SELECT w_password FROM accounts WHERE w_email = '{email}';",connection);
             var Ppassword = "";
-
             var reader = command.ExecuteReader();
-            while (reader.Read()) Ppassword = reader.GetString("w_password");
+
+            while (reader.Read()) { Ppassword = reader.GetString("w_password"); }
             reader.Close();
 
             if (password == Ppassword) return true;
-            return false;
+            else return false;
         }
 
         #endregion

@@ -18,7 +18,6 @@ namespace DinamycServer
             {
                 Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
             }
-
             try
             {
                 if (Database.CheckEmail(email))
@@ -26,18 +25,13 @@ namespace DinamycServer
                     if (Database.CheckPassword(email, password))
                     {
                         var info = Database.GetClientInfo(email);
-                        Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
-                        
-                        /*
-                        //Добавление клиента
-                        Data.ClientInfo infoClient = new Data.ClientInfo();
-                        info.ID = Data.AddInfo.Count + 1;
-                        info.Email = info.Email;
-                        Data.AddInfo.Add(infoClient);
-                        */
+                        string point = "";
+                        if(info.Point == null) { point = "null"; }
+                        else{ point = Convert.ToString(info.Point); } 
 
-                        var clientInfo = Database.GetClientInfo(email);
-                        Data.ClientsInfo.Add(clientInfo);
+                        
+                        Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{point}");
+                        Console.WriteLine($"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{point}");
                     }
                     else
                     {
@@ -52,7 +46,7 @@ namespace DinamycServer
             catch (Exception e)
             {
                 Function.WriteColorText($"LOG:{e.Message}", ConsoleColor.Red);
-                Function.DeleteClient(client);
+
             }
         }
     }

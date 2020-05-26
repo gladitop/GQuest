@@ -18,8 +18,8 @@ namespace DinamycServer
 
             Console.WriteLine("Запуск сервера...");
 
-            //var thread1 = new Thread(ClearBadClient);
-            //thread1.Start();
+            var thread1 = new Thread(ClearBadClient);
+            thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -50,7 +50,6 @@ namespace DinamycServer
                 while (true)
                 {
                     Task.Delay(10).Wait(); //Задержка
-
                     var client = server.AcceptTcpClient();
                     var thread = new Thread(ClientLog);
                     thread.Start(client);
@@ -59,9 +58,11 @@ namespace DinamycServer
 
             static void ClientLog(object obj) //Поток клиента
             {
-                var client = (TcpClient) obj;
+                var client = (TcpClient) obj;     
                 var buffer = new byte[1024];
+
                 Console.WriteLine("новое подключение");
+                Data.TpClient.Add(client);
 
                 while (true)
                     try
@@ -80,9 +81,7 @@ namespace DinamycServer
                                 var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
                                 try
                                 {
-                                    var arguments =
-                                        message.Substring(message.IndexOf(ch) + 1)
-                                            .Split(new[] {ch}); //Массив аргументов
+                                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
 
                                     #region Вывод в консоль: Команда и аргументы
 
@@ -93,14 +92,11 @@ namespace DinamycServer
 
                                     #endregion
 
-                                    ComandClass.GetType()
-                                        .GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
-                                        .Invoke(ComandClass, new object[] {client, arguments});
+                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
                                 }
                                 catch (Exception ex)
                                 {
-                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА",
-                                        ConsoleColor.Red);
+                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА11",ConsoleColor.Red);
                                     Console.WriteLine(ex);
                                 }
                             }
@@ -110,14 +106,11 @@ namespace DinamycServer
                                 {
                                     var command = message.Substring(1);
                                     Console.WriteLine("\n" + "Команда: " + command);
-                                    ComandClass.GetType()
-                                        .GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
-                                        .Invoke(ComandClass, new object[] {client});
+                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client});
                                 }
                                 catch (Exception ex)
                                 {
-                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА",
-                                        ConsoleColor.Red);
+                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА22",ConsoleColor.Red);
                                     Console.WriteLine(ex);
                                 }
                             }
@@ -129,6 +122,15 @@ namespace DinamycServer
                     }
             }
             
+            static void ClearBadClient()
+            {
+                while(true)
+                {
+                    Task.Delay(60000).Wait();
+                    Function.CheckEmptyClients(null);
+                }    
+            }
+
             #endregion
 
         }

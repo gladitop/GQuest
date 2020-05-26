@@ -12,13 +12,16 @@ namespace DinamycServer
                 for (long i = 0; i <= 100; i++)
                 {
                     var info = Database.GetClientInfo(i);
-                    if (info.Nick != "") Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");
+                    if (info.Point != null)
+                    {
+                        Function.SendClientMessage(client, $"%SCORE:{info.Nick}:{info.Point}");
+                    } 
                 }
             }
             catch (Exception e)
             {
-                Function.WriteColorText($"MSG:{e.Message}", ConsoleColor.Red);
-                Function.DeleteClient(client);
+                Function.WriteColorText($"SCORE:{e.Message}", ConsoleColor.Red);
+
             }
         }
     }

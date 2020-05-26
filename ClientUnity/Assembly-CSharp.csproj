@@ -74,12 +74,6 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Editor">
-      <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/ScriptAssemblies/Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="XiaomiSupport">
-      <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/ScriptAssemblies/XiaomiSupport.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -292,12 +286,6 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="ChannelPurchase">
-      <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/PackageCache/com.unity.xiaomi@1.0.3/ChannelPurchase.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityStore">
-      <HintPath>C:/Users/Admin/Desktop/KvantServerTest/ClientUnity/Library/PackageCache/com.unity.xiaomi@1.0.3/UnityStore.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.11f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
