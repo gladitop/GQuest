@@ -8,6 +8,7 @@ namespace DinamycServer
     {
         public const int Port = 908;
         public static List<ClientInfo> ClientsInfo = new List<ClientInfo>(); //Инфа о клиентах
+        public static List<ClientInfo> AddInfo = new List<ClientInfo>(); //Инфа о НОВЫХ клиентах
         
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
@@ -20,7 +21,9 @@ namespace DinamycServer
                 Point = point;
                 ID = id;
             }
-            
+
+            public ClientInfo() { }
+
             public TcpClient Socket { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }

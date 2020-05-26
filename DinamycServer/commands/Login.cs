@@ -27,7 +27,17 @@ namespace DinamycServer
                     {
                         var info = Database.GetClientInfo(email);
                         Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
-                        //Console.WriteLine($"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{info.Point}");
+                        
+                        /*
+                        //Добавление клиента
+                        Data.ClientInfo infoClient = new Data.ClientInfo();
+                        info.ID = Data.AddInfo.Count + 1;
+                        info.Email = info.Email;
+                        Data.AddInfo.Add(infoClient);
+                        */
+
+                        var clientInfo = Database.GetClientInfo(email);
+                        Data.ClientsInfo.Add(clientInfo);
                     }
                     else
                     {
