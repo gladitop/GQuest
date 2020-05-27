@@ -117,10 +117,7 @@ namespace DinamycServer
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка: {ex.Message}");
-<<<<<<< Updated upstream
-=======
                         Function.CheckEmptyClients(client);
->>>>>>> Stashed changes
                         return;
                     }
             }

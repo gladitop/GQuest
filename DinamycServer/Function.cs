@@ -20,33 +20,36 @@ namespace DinamycServer
             }
         }
 
-        public static void CheckEmptyClients(TcpClient checkingClient)//Поиск пустых клиентов и их удаление
+        public static void CheckEmptyClients(TcpClient CheckingClient)//Поиск пустых клиентов и их удаление
         {
             //public static bool IsSocketStillConnected(Socket socket)
-            if(checkingClient != null)
+            if(CheckingClient != null)
             {
-                check(checkingClient);
+                check(CheckingClient);
             }
             else
             {
                 Console.WriteLine(Data.TpClient.Count); 
+                Console.WriteLine("6");
                 foreach(var ChClients in Data.TpClient)
                 {
+                    Console.WriteLine("7");
                     check(ChClients);
                 }                
                 WriteColorText($"Произведенна очистка клиетов", ConsoleColor.Yellow);   
                 Console.WriteLine(Data.TpClient.Count); 
             }
-            
-            void check(TcpClient cl)//Проверка связи
+            void check(TcpClient cl)
             {
+                Console.WriteLine("8");
                 try
                 {
-                    Function.SendClientMessage(cl, "");
+                    Console.WriteLine("9");              
+                    cl.Client.Send(new byte[1]); //Это работает, незнаю как, главное, что работает!
                 }
                 catch
                 {
-                    
+                    Console.WriteLine("10");
                     Data.TpClient.Remove(cl);
                     cl.Close();
                     WriteColorText("Удалён клиент", ConsoleColor.Yellow); 
@@ -72,7 +75,8 @@ namespace DinamycServer
                 catch
                 {
                     CheckEmptyClients(client);
-                }
+                }      
+                
             }
         }
     }
