@@ -20,12 +20,12 @@ namespace DinamycServer
             }
         }
 
-        public static void CheckEmptyClients(TcpClient CheckingClient)//Поиск пустых клиентов и их удаление
+        public static void CheckEmptyClients(TcpClient checkingClient)//Поиск пустых клиентов и их удаление
         {
             //public static bool IsSocketStillConnected(Socket socket)
-            if(CheckingClient != null)
+            if(checkingClient != null)
             {
-                check(CheckingClient);
+                check(checkingClient);
             }
             else
             {
@@ -37,7 +37,8 @@ namespace DinamycServer
                 WriteColorText($"Произведенна очистка клиетов", ConsoleColor.Yellow);   
                 Console.WriteLine(Data.TpClient.Count); 
             }
-            void check(TcpClient cl)
+            
+            void check(TcpClient cl)//Проверка связи
             {
                 try
                 {
@@ -45,6 +46,7 @@ namespace DinamycServer
                 }
                 catch
                 {
+                    
                     Data.TpClient.Remove(cl);
                     cl.Close();
                     WriteColorText("Удалён клиент", ConsoleColor.Yellow); 
@@ -70,8 +72,7 @@ namespace DinamycServer
                 catch
                 {
                     CheckEmptyClients(client);
-                }      
-                
+                }
             }
         }
     }

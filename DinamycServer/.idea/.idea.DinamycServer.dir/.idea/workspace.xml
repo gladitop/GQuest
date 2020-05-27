@@ -21,8 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/Login.cs" beforeDir="false" afterPath="$PROJECT_DIR$/commands/Login.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Function.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Function.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,12 +52,12 @@
         <option value="$PROJECT_DIR$/commands/Message.cs" />
         <option value="$PROJECT_DIR$/commands/SendScore.cs" />
         <option value="$PROJECT_DIR$/commands/Registration.cs" />
-        <option value="$PROJECT_DIR$/Function.cs" />
         <option value="$PROJECT_DIR$/commands/UpdatePoint.cs" />
         <option value="$PROJECT_DIR$/Database.cs" />
-        <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/Data.cs" />
         <option value="$PROJECT_DIR$/commands/Login.cs" />
+        <option value="$PROJECT_DIR$/Function.cs" />
+        <option value="$PROJECT_DIR$/Program.cs" />
       </list>
     </option>
   </component>
@@ -120,6 +120,7 @@
       <workItem from="1590511409508" duration="1159000" />
       <workItem from="1590513875280" duration="111000" />
       <workItem from="1590524109140" duration="519000" />
+      <workItem from="1590600343927" duration="967000" />
     </task>
     <servers />
   </component>
@@ -232,10 +233,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="555" y="288" width="800" height="537" key="Rider.ProjectTemplateDialog.Size/0.27.1920.1053@0.27.1920.1053" timestamp="1590513982663" />
-    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog" timestamp="1590426303424">
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog" timestamp="1590602148101">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1590426303424" />
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1590602148101" />
     <state x="741" y="237" width="427" height="634" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1590335943427">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
