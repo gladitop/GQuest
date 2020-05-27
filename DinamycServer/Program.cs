@@ -117,6 +117,7 @@ namespace DinamycServer
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка: {ex.Message}");
+                        return;
                     }
             }
             

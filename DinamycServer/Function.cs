@@ -46,6 +46,7 @@ namespace DinamycServer
                 catch
                 {
                     Data.TpClient.Remove(cl);
+                    cl.Close();
                     WriteColorText("Удалён клиент", ConsoleColor.Yellow); 
                 }
             }
