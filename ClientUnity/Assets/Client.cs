@@ -160,18 +160,18 @@ public class Client : MonoBehaviour
         M_Login.transform.GetChild(0).GetComponent<InputField>().text = "";
         M_Login.transform.GetChild(1).GetComponent<InputField>().text = "";
         M_Program.SetActive(true);
+        ErrorText.gameObject.SetActive(false);
 
         if (arg[3].Contains("null"))
         {
             M_Program.transform.GetChild(0).gameObject.SetActive(true);
             M_Program.transform.GetChild(1).gameObject.SetActive(false);
-            M_Program.transform.GetChild(2).gameObject.SetActive(false);
         }
         else
         {
             M_Program.transform.GetChild(0).gameObject.SetActive(false);
             M_Program.transform.GetChild(1).gameObject.SetActive(true);
-            M_Program.transform.GetChild(2).gameObject.SetActive(true);
+            M_Program.transform.GetChild(3).gameObject.SetActive(true);
             DeleteAllBox();
             Send("%SCORE");
         }
@@ -260,7 +260,7 @@ public class Client : MonoBehaviour
 
     #endregion
 
-    private bool TakingMessage = true;
+    private bool TakingMessage = false;
     private void MES(string[] arg)
     {
         if(TakingMessage)
@@ -270,6 +270,7 @@ public class Client : MonoBehaviour
     }
     private void SCORE(string[] arg)
     {
+        if (TakingMessage) return;
         string name = arg[0];
         double point = Convert.ToDouble(arg[1]);
         float p = Convert.ToSingle(Math.Round(((point / 11) * 100), 1));
@@ -290,17 +291,25 @@ public class Client : MonoBehaviour
 
     public void GoMessage()
     {
+        M_Program.transform.GetChild(2).gameObject.SetActive(true);
+        M_Program.transform.GetChild(3).gameObject.SetActive(false);
+        M_Program.transform.GetChild(4).gameObject.SetActive(true);
         DeleteAllBox();
         TakingMessage = true;
     }
     public void GoScore()
     {
+        M_Program.transform.GetChild(2).gameObject.SetActive(false);
+        M_Program.transform.GetChild(3).gameObject.SetActive(true);
+        M_Program.transform.GetChild(4).gameObject.SetActive(false);
         DeleteAllBox();
         TakingMessage = false;
         Send("%SCORE");
     }
     public void Exit()
     {
+        M_Program.transform.GetChild(3).gameObject.SetActive(false);
+        M_Program.transform.GetChild(4).gameObject.SetActive(false);
         DeleteAllBox();
         TakingMessage = false;
         M_Program.SetActive(false);

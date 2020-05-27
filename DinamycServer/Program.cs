@@ -17,9 +17,6 @@ namespace DinamycServer
             #region Запуск сервера + консольные команды
 
             Console.WriteLine("Запуск сервера...");
-
-            var thread1 = new Thread(ClearBadClient);
-            thread1.Start();
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -63,7 +60,8 @@ namespace DinamycServer
 
                 Console.WriteLine("новое подключение");
                 Data.TpClient.Add(client);
-
+                Console.WriteLine(Data.TpClient.Count);
+                
                 while (true)
                     try
                     {
@@ -122,15 +120,6 @@ namespace DinamycServer
                     }
             }
             
-            static void ClearBadClient()
-            {
-                while(true)
-                {
-                    Task.Delay(60000).Wait();
-                    Function.CheckEmptyClients(null);
-                }    
-            }
-
             #endregion
 
         }

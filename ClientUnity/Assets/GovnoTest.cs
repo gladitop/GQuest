@@ -102,5 +102,8 @@ public class GovnoTest : MonoBehaviour
         Client_Main.GetComponent<Client>().Send($"%UPOINT:{id}:{points}");
         Debug.Log($"%UPOINT:{id}:{points}");
         Client_Main.GetComponent<Client>().Send("%SCORE");
+        this.transform.GetChild(2).gameObject.SetActive(false);
+        this.transform.GetChild(3).gameObject.SetActive(true);
+        this.transform.GetChild(4).gameObject.SetActive(false);
     }
 }

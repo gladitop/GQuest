@@ -86,7 +86,7 @@ namespace DinamycServer
 
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
         {
-            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`, `w_point`) VALUES ('{email}', '{password}', '{nick}', {null});",connection);
+            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');",connection);
             command.ExecuteNonQuery();
             Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
         }

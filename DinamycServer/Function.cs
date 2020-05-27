@@ -22,31 +22,32 @@ namespace DinamycServer
 
         public static void CheckEmptyClients(TcpClient CheckingClient)//Поиск пустых клиентов и их удаление
         {
+            //public static bool IsSocketStillConnected(Socket socket)
             if(CheckingClient != null)
             {
-                if(!CheckingClient.Connected)
-                {
-                    CheckingClient.Close();
-                    Data.TpClient.Remove(CheckingClient);
-                    WriteColorText("Удалён клиент", ConsoleColor.Yellow);              
-                }             
+                check(CheckingClient);
             }
             else
-            { 
-                int i = 0;
-                Console.WriteLine(Data.TpClient.Count);  
-                foreach (var client in Data.TpClient)
+            {
+                Console.WriteLine(Data.TpClient.Count); 
+                foreach(var ChClients in Data.TpClient)
                 {
-                    if(!client.Connected)
-                    {
-                        Console.WriteLine("нет");
-                        i++;
-                        client.Close();
-                        Data.TpClient.Remove(client);           
-                    }          
+                    check(ChClients);
+                }                
+                WriteColorText($"Произведенна очистка клиетов", ConsoleColor.Yellow);   
+                Console.WriteLine(Data.TpClient.Count); 
+            }
+            void check(TcpClient cl)
+            {
+                try
+                {
+                    Function.SendClientMessage(cl, "");
                 }
-                WriteColorText($"Произведенна очистка клиетов, очищенно:{i}", ConsoleColor.Yellow);   
-                Console.WriteLine(Data.TpClient.Count);         
+                catch
+                {
+                    Data.TpClient.Remove(cl);
+                    WriteColorText("Удалён клиент", ConsoleColor.Yellow); 
+                }
             }
         }
 
@@ -59,10 +60,16 @@ namespace DinamycServer
 
         public static void SendMessage(string nick, string message) //Отправить всем сообщение
         {
-            CheckEmptyClients(null); //очистка пустых клинтов
             foreach (var client in Data.TpClient)
             {
-                SendClientMessage(client, $"%MES:{nick}:{message}");               
+                try
+                {
+                    SendClientMessage(client, $"%MES:{nick}:{message}"); 
+                }     
+                catch
+                {
+                    CheckEmptyClients(client);
+                }      
                 
             }
         }
