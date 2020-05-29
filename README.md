@@ -15,3 +15,4 @@
 * Unity 2018.4.11f1 Personal
 * Redir 2020
 * MySql
+* Visual Studio 2019
