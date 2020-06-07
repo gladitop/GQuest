@@ -318,9 +318,8 @@ public class Client : MonoBehaviour
     }
 
     public void But_Proba(string ss)
-    {
-        message = ss;
-        OnIncomingData();
+    {      
+        Send(ss);
     }
      
     #endregion

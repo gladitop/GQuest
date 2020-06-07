@@ -5,21 +5,16 @@ namespace DinamycServer
 {
     public partial class Commands
     {
+        public static string[] argLOG = {"email","password"} ; // строка-подсказка с необходимыми аргументами
         private void LOG(TcpClient client, string[] argumets) // %LOG:email:pass
         {
-            string email = null;
-            string password = null;
-            try
-            {
-                email = argumets[0];
-                password = argumets[1];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
-            }
-            try
-            {
+
+            string email = argumets[0];
+            string password = argumets[1];
+
+            try{
+                
+
                 if (Database.CheckEmail(email))
                 {
                     if (Database.CheckPassword(email, password))
@@ -28,10 +23,8 @@ namespace DinamycServer
                         string point = "";
                         if(info.Point == null) { point = "null"; }
                         else{ point = Convert.ToString(info.Point); } 
-
                         
                         Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{point}");
-                        Console.WriteLine($"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{point}");
                     }
                     else
                     {
@@ -45,8 +38,7 @@ namespace DinamycServer
             }
             catch (Exception e)
             {
-                Function.WriteColorText($"LOG:{e.Message}", ConsoleColor.Red);
-
+                Function.WriteColorText($"LOG:{e.Message}", ConsoleColor.Red);               
             }
         }
     }

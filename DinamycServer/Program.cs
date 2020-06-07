@@ -60,8 +60,7 @@ namespace DinamycServer
 
                 Console.WriteLine("новое подключение");
                 Data.TpClient.Add(client);
-                Console.WriteLine(Data.TpClient.Count);
-                
+                end:
                 while (true)
                     try
                     {
@@ -72,53 +71,56 @@ namespace DinamycServer
 
                         if (message != "")
                         {
-                            var ch = ':'; //Разделяющий символ
-                            var ComandClass = new Commands();
+                            string command;
+                            string[] arguments;
+
                             try
                             {
-                                var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                                try
-                                {
-                                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
-
-                                    #region Вывод в консоль: Команда и аргументы
-
-                                    Console.WriteLine("\n" + "Команда: " + command + " \n ");
-                                    Console.WriteLine("Аргументы:\n----------");
-                                    foreach (var s in arguments) Console.WriteLine(s);
-                                    Console.WriteLine("----------");
-
-                                    #endregion
-
-                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
-                                }
-                                catch (Exception ex)
-                                {
-                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА11",ConsoleColor.Red);
-                                    Console.WriteLine(ex);
-                                }
+                                var ch = ':'; //Разделяющий символ
+                                command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                                arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
                             }
                             catch
                             {
+                                Function.WriteColorText($"ERROR_2\nВходящее сообщение: {message}",ConsoleColor.Yellow);
+                               goto end;
+                            }
+
+                            try
+                            {       
+                                var ComandClass = new Commands();                     
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+                            }
+                            catch
+                            {
+                                #region ERROR_3
+                                
+                                Function.WriteColorText("ERROR_3", ConsoleColor.Yellow);
                                 try
                                 {
-                                    var command = message.Substring(1);
-                                    Console.WriteLine("\n" + "Команда: " + command);
-                                    ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client});
+                                    string[] needArg = (string[])typeof(Commands).GetField($"arg{command}").GetValue(null);
+
+                                    Function.WriteColorText("Ожидаемый аргумент | Входящий\n----------", ConsoleColor.White);
+                                    for (int j = 0; j < needArg.Length; j++)
+                                    {                        
+                                        try{if(arguments[j] == "" || arguments[j] == " " || arguments[j] == null) arguments[j] = "пусто";
+                                        Function.WriteColorText($"{needArg[j]} | {arguments[j]}", ConsoleColor.White);}
+                                        catch{Function.WriteColorText($"{needArg[j]} | пусто", ConsoleColor.White);}           
+                                    }
+                                    Function.WriteColorText("----------", ConsoleColor.Yellow);
                                 }
-                                catch (Exception ex)
-                                {
-                                    Function.WriteColorText("\n" + "Неверный ввод или ПОПЫТКА ВЗЛОМА22",ConsoleColor.Red);
-                                    Console.WriteLine(ex);
-                                }
+                                catch{Function.WriteColorText("Не удалось найти список нужных аргументов!\nНеобходимо добавить string[]{необходимые аргументы}!", ConsoleColor.DarkGray); }
+                                
+                                #endregion
+                                
+                                goto end;
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Ошибка: {ex.Message}");
-                        Function.CheckEmptyClients(client);
-                        return;
+                        Console.WriteLine($"ERROR_1: {ex}");
+                        goto end;
                     }
             }
             

@@ -16,13 +16,12 @@ namespace DinamycServer
             catch
             {
                 CheckEmptyClients(client);
-                Function.WriteColorText("ERRMESS!", ConsoleColor.Red);
+                Function.WriteColorText("ERRMESS!\n", ConsoleColor.Red);
             }
         }
 
         public static void CheckEmptyClients(TcpClient CheckingClient)//Поиск пустых клиентов и их удаление
         {
-            //public static bool IsSocketStillConnected(Socket socket)
             if(CheckingClient != null)
             {
                 check(CheckingClient);
@@ -30,26 +29,21 @@ namespace DinamycServer
             else
             {
                 Console.WriteLine(Data.TpClient.Count); 
-                Console.WriteLine("6");
                 foreach(var ChClients in Data.TpClient)
                 {
-                    Console.WriteLine("7");
                     check(ChClients);
                 }                
                 WriteColorText($"Произведенна очистка клиетов", ConsoleColor.Yellow);   
                 Console.WriteLine(Data.TpClient.Count); 
             }
-            void check(TcpClient cl)
+            void check(TcpClient cl) //Метод по проверке определённого клиента
             {
-                Console.WriteLine("8");
                 try
-                {
-                    Console.WriteLine("9");              
+                {           
                     cl.Client.Send(new byte[1]); //Это работает, незнаю как, главное, что работает!
                 }
                 catch
                 {
-                    Console.WriteLine("10");
                     Data.TpClient.Remove(cl);
                     cl.Close();
                     WriteColorText("Удалён клиент", ConsoleColor.Yellow); 
@@ -57,14 +51,14 @@ namespace DinamycServer
             }
         }
 
-        public static void WriteColorText(string text, ConsoleColor color)//Хватит изменить название!
+        public static void WriteColorText(string text, ConsoleColor color) //Отправка цветного сообщения в консоль
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
             Console.ResetColor();
         }
 
-        public static void SendMessage(string nick, string message) //Отправить всем сообщение
+        public static void SendMessage(string nick, string message) //Отправить сообщение в ОБЩИЙ чат
         {
             foreach (var client in Data.TpClient)
             {
@@ -77,6 +71,17 @@ namespace DinamycServer
                     CheckEmptyClients(client);
                 }      
                 
+            }
+        }
+    
+        public static void SendConsoleArgumentList(string[] needArg, string[] inArg) //Отправка в консоль нужных и входящих аргументов
+        {
+            Function.WriteColorText("[Нужный аргумент] | [Входящий аргумент]", default);
+            for(int i = 0; i < needArg.Length; i++)
+            {
+                if(inArg[i] == null || inArg[i] == "" || inArg[i] == " ") inArg[i] = "пусто";
+                
+                Function.WriteColorText(needArg[i] + " | " + inArg[i], default);
             }
         }
     }
