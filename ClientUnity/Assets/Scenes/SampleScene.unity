@@ -1787,7 +1787,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693961235}
-  - component: {fileID: 693961236}
   m_Layer: 5
   m_Name: M_Programm
   m_TagString: Untagged
@@ -1819,28 +1818,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &693961236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 693961234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 883af3c6d0c285b438b826d176121211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PText: {fileID: 938390316}
-  QuestionText: {fileID: 370616506}
-  but:
-  - {fileID: 709656389}
-  - {fileID: 723968632}
-  - {fileID: 59075683}
-  - {fileID: 195076533}
-  Client_Main: {fileID: 1361004241}
-  Info_Question: {fileID: 152939541}
-  Info_Score: {fileID: 582384954}
 --- !u!1 &704625701
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,7 +2252,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 693961236}
+      - m_Target: {fileID: 0}
         m_MethodName: But4
         m_Mode: 1
         m_Arguments:
@@ -2708,7 +2685,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 693961236}
+      - m_Target: {fileID: 0}
         m_MethodName: But3
         m_Mode: 1
         m_Arguments:
@@ -2844,7 +2821,7 @@ GameObject:
   - component: {fileID: 1070741279}
   - component: {fileID: 1070741278}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Main_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3012,7 +2989,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 693961236}
+      - m_Target: {fileID: 0}
         m_MethodName: But1
         m_Mode: 1
         m_Arguments:
@@ -3299,6 +3276,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1361004243}
   - component: {fileID: 1361004242}
+  - component: {fileID: 1361004244}
+  - component: {fileID: 1361004245}
   m_Layer: 0
   m_Name: Client_Main
   m_TagString: Untagged
@@ -3318,16 +3297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14921e867a42a144385b83dd754d96d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  M_Login: {fileID: 1643475714}
-  M_Registr: {fileID: 1360080743}
-  M_Program: {fileID: 693961234}
-  ErrorText: {fileID: 1784212997}
-  ClientInfo: []
-  Conteiner: {fileID: 859908883}
-  box:
-  - {fileID: 7714092211283530060, guid: c0f7094c268d5ff498b3fd2c0b2addde, type: 3}
-  - {fileID: 3665003724769911340, guid: ccc6a62a4e6a16f4882432738aa09010, type: 3}
-  MesText: {fileID: 192786074}
 --- !u!4 &1361004243
 Transform:
   m_ObjectHideFlags: 0
@@ -3342,6 +3311,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1361004244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361004241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a20f77cac7d3e454693175efbbb09439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1361004245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361004241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f19b95be89106c44dbaa4ea7b3363485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1439321732
 GameObject:
   m_ObjectHideFlags: 0
@@ -3499,14 +3492,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1361004242}
-        m_MethodName: But_Proba
+        m_MethodName: AAA_out
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: '%STEST:1'
+          m_StringArgument: '&LOG:ffff:123'
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1449410064
@@ -3912,8 +3905,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1361004242}
-        m_MethodName: GoToLogining
+      - m_Target: {fileID: 1361004244}
+        m_MethodName: GoRegistration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4201,8 +4194,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1361004242}
-        m_MethodName: SendLog
+      - m_Target: {fileID: 1361004244}
+        m_MethodName: Login
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4326,8 +4319,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1361004242}
-        m_MethodName: SendReg
+      - m_Target: {fileID: 1361004244}
+        m_MethodName: Registration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4977,8 +4970,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1361004242}
-        m_MethodName: GoToRegistratioon
+      - m_Target: {fileID: 1361004244}
+        m_MethodName: GoRegistration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5102,7 +5095,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 693961236}
+      - m_Target: {fileID: 0}
         m_MethodName: But2
         m_Mode: 1
         m_Arguments:

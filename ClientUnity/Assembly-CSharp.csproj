@@ -61,7 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Client.cs" />
-    <Compile Include="Assets\GovnoTest.cs" />
+    <Compile Include="Assets\Data.cs" />
+    <Compile Include="Assets\Interactive.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>E:/GitProjects/GQuest/ClientUnity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

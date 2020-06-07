@@ -12,7 +12,7 @@ namespace DinamycServer
         {
             var ihost = "37.29.78.130";
             var iport = 3311;
-            var idatabase = "tests";
+            var idatabase = "test";
             var iusername = "admin";
             var ipassword = "030292";
 
