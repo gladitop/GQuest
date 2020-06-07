@@ -41,7 +41,7 @@ namespace DinamycServer
             #endregion
 
             #region Клиенты
-            
+
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)
@@ -55,13 +55,14 @@ namespace DinamycServer
 
             static void ClientLog(object obj) //Поток клиента
             {
-                var client = (TcpClient) obj;     
+                var client = (TcpClient)obj;
                 var buffer = new byte[1024];
 
                 Console.WriteLine("новое подключение");
                 Data.TpClient.Add(client);
-                end:
+            end:
                 while (true)
+                {
                     try
                     {
                         Task.Delay(10).Wait();
@@ -69,7 +70,7 @@ namespace DinamycServer
                         var i = client.Client.Receive(buffer);
                         var message = Encoding.UTF8.GetString(buffer, 0, i);
 
-                        if (message != "")
+                        if (message != "" && (client.Client.Receive(buffer) != 1))
                         {
                             string command;
                             string[] arguments;
@@ -78,23 +79,23 @@ namespace DinamycServer
                             {
                                 var ch = ':'; //Разделяющий символ
                                 command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                                arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+                                arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
                             }
                             catch
                             {
-                                Function.WriteColorText($"ERROR_2\nВходящее сообщение: {message}",ConsoleColor.Yellow);
-                               goto end;
+                                Function.WriteColorText($"ERROR_2\nВходящее сообщение: {message}", ConsoleColor.Yellow);
+                                goto end;
                             }
 
                             try
-                            {       
-                                var ComandClass = new Commands();                     
-                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] {client, arguments});
+                            {
+                                var ComandClass = new Commands();
+                                ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] { client, arguments });
                             }
                             catch
                             {
                                 #region ERROR_3
-                                
+
                                 Function.WriteColorText("ERROR_3", ConsoleColor.Yellow);
                                 try
                                 {
@@ -102,17 +103,20 @@ namespace DinamycServer
 
                                     Function.WriteColorText("Ожидаемый аргумент | Входящий\n----------", ConsoleColor.White);
                                     for (int j = 0; j < needArg.Length; j++)
-                                    {                        
-                                        try{if(arguments[j] == "" || arguments[j] == " " || arguments[j] == null) arguments[j] = "пусто";
-                                        Function.WriteColorText($"{needArg[j]} | {arguments[j]}", ConsoleColor.White);}
-                                        catch{Function.WriteColorText($"{needArg[j]} | пусто", ConsoleColor.White);}           
+                                    {
+                                        try
+                                        {
+                                            if (arguments[j] == "" || arguments[j] == " " || arguments[j] == null) arguments[j] = "пусто";
+                                            Function.WriteColorText($"{needArg[j]} | {arguments[j]}", ConsoleColor.White);
+                                        }
+                                        catch { Function.WriteColorText($"{needArg[j]} | пусто", ConsoleColor.White); }
                                     }
                                     Function.WriteColorText("----------", ConsoleColor.Yellow);
                                 }
-                                catch{Function.WriteColorText("Не удалось найти список нужных аргументов!\nНеобходимо добавить string[]{необходимые аргументы}!", ConsoleColor.DarkGray); }
-                                
+                                catch { Function.WriteColorText("Не удалось найти список нужных аргументов!\nНеобходимо добавить string[]{необходимые аргументы}!", ConsoleColor.DarkGray); }
+
                                 #endregion
-                                
+
                                 goto end;
                             }
                         }
@@ -122,8 +126,9 @@ namespace DinamycServer
                         Console.WriteLine($"ERROR_1: {ex}");
                         goto end;
                     }
+                }
             }
-            
+
             #endregion
 
         }

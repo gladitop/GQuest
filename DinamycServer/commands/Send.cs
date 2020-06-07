@@ -5,8 +5,10 @@ namespace DinamycServer
 {
     public partial class Commands
     {
+        /*
         private void STEST(TcpClient client, string[] arguments)
         {
+            
             try
             {
                 for(int i = 1; i <= 1; i++)
@@ -24,5 +26,6 @@ namespace DinamycServer
                 Console.WriteLine("2");
             }
         }
+        */
     }
 }
