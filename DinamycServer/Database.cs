@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using MySql.Data.MySqlClient;
 
 namespace DinamycServer
@@ -31,6 +33,37 @@ namespace DinamycServer
         public static MySqlConnection connection { get; set; }
 
         #region GetInfo
+
+        public static Data.QuestionsInfo GetQuestionInfo(long id)
+        {
+            var command = new MySqlCommand($"SELECT * FROM `questions` WHERE tests_id = '{id}';", connection);
+
+            var questionsInfo = new Data.QuestionsInfo();
+            List<Data.QuestionInfo> questionInfo = new List<Data.QuestionInfo>();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                for (int i = 0; i == 5; i++)
+                {
+                    //Получение
+                    string title = "";//TODO
+                    string q1 = reader.GetString("text");//!!!
+                    string q2 = reader.GetString("text");
+                    string q3 = reader.GetString("text");
+                    string q4 = reader.GetString("text");
+                    string q5 = reader.GetString("text");
+                    string q6 = reader.GetString("text");
+
+                    //Инцилизация
+
+                    questionInfo.Add(new Data.QuestionInfo(title, q1, q2, q3, q4, q5, q6));
+                }
+            }
+
+            questionsInfo = new Data.QuestionsInfo(questionInfo[1], questionInfo[2], questionInfo[3], questionInfo[4], questionInfo[5]);
+            return questionsInfo;
+        }
 
         public static Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
@@ -124,39 +157,6 @@ namespace DinamycServer
             command.ExecuteNonQuery();
             Console.WriteLine($"Добавление в бд очки: id= {id}, points= {point}");
         }
-
-        public static string[]
-
-        /*
-        public static string GetTest(int num) //Получение инфо о вопросе
-        {
-            var command = new MySqlCommand($"SELECT * FROM `questions` WHERE w_id = '{num}';", connection);
-            var reader = command.ExecuteReader();
-            string answer = "";
-            Console.WriteLine("33");
-            while (reader.Read())
-            {
-                for (int o = 1; o <= 14; o++)
-                {
-                    try
-                    {
-                        answer += (":" + reader[o].ToString());
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Нет значения: " + o);
-                    }
-                }
-            }
-            reader.Close();
-            reader.Dispose();
-            answer.Substring(1);
-            Console.WriteLine(answer);
-            Console.WriteLine("12");
-
-            return answer;
-        }
-        */
 
         #endregion
     }

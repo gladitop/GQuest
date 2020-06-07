@@ -65,12 +65,14 @@ namespace DinamycServer
                 Question5 = question5;
             }
 
+            public QuestionsInfo() {}
+
             //Вопросы
-            QuestionInfo Question1 { get; set; }
-            QuestionInfo Question2 { get; set; }
-            QuestionInfo Question3 { get; set; }
-            QuestionInfo Question4 { get; set; }
-            QuestionInfo Question5 { get; set; }
+            public QuestionInfo Question1 { get; set; }
+            public QuestionInfo Question2 { get; set; }
+            public QuestionInfo Question3 { get; set; }
+            public QuestionInfo Question4 { get; set; }
+            public QuestionInfo Question5 { get; set; }
             //Вопросы
         }
     }
