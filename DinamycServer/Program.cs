@@ -60,10 +60,10 @@ namespace DinamycServer
 
                 Console.WriteLine("новое подключение");
                 Data.TpClient.Add(client);
-
+            end:
                 while (true)
                 {
-                    end:
+                    
 
                     string message = "";
 
@@ -72,18 +72,20 @@ namespace DinamycServer
                         Task.Delay(10).Wait();
 
                         var i = client.Client.Receive(buffer);
-                        message = Encoding.UTF8.GetString(buffer, 0, i);
-                        Console.WriteLine(message);
+                        if (i == 1) goto end;
+
+                        message = Encoding.UTF8.GetString(buffer, 0, i);                 
                     }
                     catch (Exception ex)
                     {
                         Function.CheckEmptyClients(client);
                         Console.WriteLine($"ERROR_1: {ex}");
-                        goto end;
                     }
 
                     if (message != "")
                     {
+                        Console.WriteLine(message);
+
                         string command;
                         string[] arguments;
 
@@ -132,7 +134,6 @@ namespace DinamycServer
 
                         }
                     }
-                    
                 }
             }
 

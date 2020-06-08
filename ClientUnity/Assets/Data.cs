@@ -11,7 +11,6 @@ public class Data : MonoBehaviour
     public static string ID { get; set; }
     public static string EMAIL { get; set; }
     public static string NICK { get; set; }
-    public static string POINT { get; set; }
 
     #endregion
 
@@ -27,8 +26,8 @@ public class Data : MonoBehaviour
     private void Start()
     {
         Main_Canvas = GameObject.Find("Main_Canvas");
-        client = GameObject.Find("Client_Main").GetComponent<Client>();
-        interactive = GameObject.Find("Client_Main").GetComponent<Interactive>();
+        client = GameObject.Find("Client_Main").GetComponent<Client>();//Скрипт Client
+        interactive = GameObject.Find("Client_Main").GetComponent<Interactive>();//Скрипт Interactive
         M_Login = Main_Canvas.transform.GetChild(0).GetChild(0).gameObject;
         M_Registration = Main_Canvas.transform.GetChild(0).GetChild(1).gameObject;
         ErrorText = GameObject.Find("ErrorText").GetComponent<Text>();
@@ -38,6 +37,7 @@ public class Data : MonoBehaviour
     public static string LF_Email
     {     
         get { return M_Login.transform.GetChild(0).GetComponent<InputField>().text; }
+        set { M_Login.transform.GetChild(0).GetComponent<InputField>().text = value; }
     }
     public static string LF_Password
     {

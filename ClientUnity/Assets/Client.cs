@@ -22,13 +22,49 @@ public class Client : MonoBehaviour
 
     private void Start()
     {
-        ConnectedToServer();
+        var threadLOG = new Thread(ServerLog);
+        threadLOG.IsBackground = true;
+        threadLOG.Start();
     }
+
+    private void ServerLog() // проверка на подключение к серверу
+    {
+        while (true)
+        {
+        end:
+            Task.Delay(60).Wait(); //Задержа до повторного подключения           
+            if (!socketReady)
+            {
+                try
+                {
+                    ConnectedToServer();
+                }
+                catch
+                {
+                    Debug.Log("Не удалось подключиться к серверу");
+                    goto end;
+                }
+            }
+            else
+            {
+                try
+                {
+                    socket.Client.Send(new byte[1]);
+                }
+                catch
+                {
+                    Debug.Log("Разрыв с сервером");
+                    CloseSocket();
+                    goto end;
+                }
+            }
+        }
+    }
+
     public void ConnectedToServer()
     {
         try
         {
-
             //Defalt host / post values
             string host = "127.0.0.1";
             int port = 908;
@@ -54,6 +90,7 @@ public class Client : MonoBehaviour
             {
                 byte[] buffer = new byte[1024];
                 socket.Client.Receive(buffer);
+
                 message = Encoding.UTF8.GetString(buffer);
                 OnIncomingData();
             }
@@ -69,7 +106,7 @@ public class Client : MonoBehaviour
         CloseSocket();
     }
     private void CloseSocket()
-    {     
+    {
         socketReady = false;
     }
     #endregion
@@ -104,6 +141,16 @@ public class Client : MonoBehaviour
     #endregion
 
     #region Методы
+
+    private void LOGOOD(string[] arg)
+    {
+        Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Login });
+    }
+    private void REGOOD(string[] arg)
+    {
+        Data.LF_Email = Data.RF_Email;
+        Data.interactive.GoLogin();
+    }
 
     private void BLOG(string[] arg)
     {

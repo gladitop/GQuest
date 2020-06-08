@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace DinamycServer
 {
@@ -9,6 +10,7 @@ namespace DinamycServer
     {
         public static void SendClientMessage(TcpClient client, string message) //Отравить клиенту сообщение
         {
+            Console.WriteLine("Send: " + message);
             try
             {
                 client.Client.Send(Encoding.UTF8.GetBytes(message));
@@ -40,7 +42,7 @@ namespace DinamycServer
             {
                 try
                 {           
-                    cl.Client.Send(new byte[1]); //Это работает, незнаю как, главное, что работает!
+                    cl.Client.Send(new byte[1]);
                 }
                 catch
                 {

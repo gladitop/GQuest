@@ -13,7 +13,7 @@ public class Interactive : MonoBehaviour
 
     public void Registration()
     {
-        Data.client.Send($"REG:{Data.RF_Email}:{Data.RF_Password}:{Data.RF_Nick}");
+        Data.client.Send($"%REG:{Data.RF_Email}:{Data.RF_Password}:{Data.RF_Nick}");
     }
 
 
@@ -21,14 +21,14 @@ public class Interactive : MonoBehaviour
     {
         Data.M_Login.SetActive(true);
         Data.M_Registration.SetActive(false);
-        Clearing_Fields(new GameObject[] { Data.M_Login});
+        Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
 
     public void GoRegistration()
     {
         Data.M_Login.SetActive(false);
         Data.M_Registration.SetActive(true);
-        Clearing_Fields(new GameObject[] { Data.M_Registration });
+        Clearing_Fields(new GameObject[] { Data.M_Login });
     }
 
     public void Clearing_Fields(GameObject[] obj)

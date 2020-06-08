@@ -3906,7 +3906,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1361004244}
-        m_MethodName: GoRegistration
+        m_MethodName: GoLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
