@@ -26,11 +26,11 @@ namespace DinamycServer
                 if (!Database.CheckEmail(email))
                 {
                     Database.AddAccount(email, password, nick);
-                    Function.SendClientMessage(client, "%REGOOD");
+                    Function.SendClientMessage(client, "%REGOOD:");
                 }
                 else
                 {
-                    Function.SendClientMessage(client, "%BREG");
+                    Function.SendClientMessage(client, "%BREG:");
                 }
             }
             catch (Exception e)

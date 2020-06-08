@@ -5,7 +5,7 @@ namespace DinamycServer
 {
     public partial class Commands
     {
-        private void STEST(TcpClient client, string[] arguments)
+        /*private void STEST(TcpClient client, string[] arguments)
         {
             
             try
@@ -31,6 +31,6 @@ namespace DinamycServer
                 Function.CheckEmptyClients(client);
                 Console.WriteLine("2");
             }
-        }
+        }*/
     }
 }

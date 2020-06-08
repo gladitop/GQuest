@@ -12,28 +12,23 @@ namespace DinamycServer
             string email = argumets[0];
             string password = argumets[1];
 
-            try{
-                
-
+            try{              
                 if (Database.CheckEmail(email))
                 {
                     if (Database.CheckPassword(email, password))
                     {
                         var info = Database.GetClientInfo(email);
-                        string point = "";
-                        if(info.Point == null) { point = "null"; }
-                        else{ point = Convert.ToString(info.Point); } 
                         
-                        Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}:{point}");
+                        Function.SendClientMessage(client, $"%LOGOOD:{info.Email}:{info.ID}:{info.Nick}");
                     }
                     else
                     {
-                        Function.SendClientMessage(client, "%BLOG");
+                        Function.SendClientMessage(client, "%BLOG:");
                     }
                 }
                 else
                 {
-                    Function.SendClientMessage(client, "%BLOG");
+                    Function.SendClientMessage(client, "%BLOG:");
                 }
             }
             catch (Exception e)

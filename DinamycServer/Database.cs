@@ -27,44 +27,11 @@ namespace DinamycServer
             {
                 Function.WriteColorText("Не удалось подключиться к бд: \n" + ex, ConsoleColor.DarkYellow);
             }
-
         }
 
         public static MySqlConnection connection { get; set; }
 
-        #region GetInfo
-
-        public static Data.QuestionsInfo GetQuestionInfo(long id)
-        {
-            var command = new MySqlCommand($"SELECT * FROM `questions` WHERE tests_id = '{id}';", connection);
-
-            var questionsInfo = new Data.QuestionsInfo();
-            List<Data.QuestionInfo> questionInfo = new List<Data.QuestionInfo>();
-            var reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                for (int i = 0; i == 5; i++)
-                {
-                    //Получение
-                    string title = "";//TODO
-                    string q1 = reader.GetString("text");//!!!
-                    string q2 = reader.GetString("text");
-                    string q3 = reader.GetString("text");
-                    string q4 = reader.GetString("text");
-                    string q5 = reader.GetString("text");
-                    string q6 = reader.GetString("text");
-
-                    //Инцилизация
-
-                    questionInfo.Add(new Data.QuestionInfo(title, q1, q2, q3, q4, q5, q6));
-                }
-            }
-
-            questionsInfo = new Data.QuestionsInfo(questionInfo[1], questionInfo[2], questionInfo[3], questionInfo[4], questionInfo[5]);
-            return questionsInfo;
-        }
-
+        #region GetInfo      
         public static Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
             var command = new MySqlCommand($"SELECT * FROM `accounts` WHERE w_email = '{email}';", connection);
@@ -73,7 +40,6 @@ namespace DinamycServer
             var emailInfo = "";
             var password = "";
             var nick = "";
-            long? point = null;
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -82,13 +48,11 @@ namespace DinamycServer
                 emailInfo = reader.GetString("w_email");
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
-                try { point = reader.GetInt64("w_point"); }
-                catch { Console.WriteLine("point = null"); }
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, email, password, nick, id, point);
+            return new Data.ClientInfo(null, email, password, nick, id);
         }
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
@@ -97,7 +61,6 @@ namespace DinamycServer
             var email = "";
             var password = "";
             var nick = "";
-            long? point = null;
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -105,13 +68,11 @@ namespace DinamycServer
                 email = reader.GetString("w_email");
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
-                try { point = reader.GetInt64("w_point"); }
-                catch { Console.WriteLine("point = null"); }
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, email, password, nick, id, point);
+            return new Data.ClientInfo(null, email, password, nick, id);
         }
 
         #endregion

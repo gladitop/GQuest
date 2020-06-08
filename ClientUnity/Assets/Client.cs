@@ -22,43 +22,8 @@ public class Client : MonoBehaviour
 
     private void Start()
     {
-        //var threadLOG = new Thread(ServerLog);
-        //threadLOG.IsBackground = true;
-        ConnectedToServer();//threadLOG.Start();
-    } //ServerLog
-    /*private void ServerLog() // проверка на подключение к серверу
-    {
-        while (true)
-        {
-            end:
-            Task.Delay(60).Wait(); //Задержа до повторного подключения           
-            if (!socketReady)
-            {
-                try
-                {
-                    ConnectedToServer();
-                }
-                catch
-                {
-                    Debug.Log("Не удалось подключиться к серверу");
-                    goto end;
-                }
-            }
-            else
-            {
-                try
-                {
-                    socket.Client.Send(new byte[1]);
-                }
-                catch
-                {
-                    Debug.Log("Разрыв с сервером");
-                    CloseSocket();
-                    goto end;
-                }
-            }
-        }     
-    }*/
+        ConnectedToServer();
+    }
     public void ConnectedToServer()
     {
         try
@@ -87,17 +52,10 @@ public class Client : MonoBehaviour
         {
             if (stream.DataAvailable)
             {
-                try
-                {
-                    byte[] buffer = new byte[1024];
-                    socket.Client.Receive(buffer);
-                    message = Encoding.UTF8.GetString(buffer);
-                    OnIncomingData();
-                }
-                catch
-                {
-                    Debug.Log("hi");
-                }
+                byte[] buffer = new byte[1024];
+                socket.Client.Receive(buffer);
+                message = Encoding.UTF8.GetString(buffer);
+                OnIncomingData();
             }
         }
     }
@@ -147,12 +105,12 @@ public class Client : MonoBehaviour
 
     #region Методы
 
-    private void BLOG()
+    private void BLOG(string[] arg)
     {
         Data.ErrorText.text = "Неверный логин или пароль";
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Login });
     }
-    private void BREG()
+    private void BREG(string[] arg)
     {
         Data.ErrorText.text = "Данный email уже занят";
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Registration });
