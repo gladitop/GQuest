@@ -40,6 +40,7 @@ namespace DinamycServer
             var emailInfo = "";
             var password = "";
             var nick = "";
+            var coef = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -48,11 +49,12 @@ namespace DinamycServer
                 emailInfo = reader.GetString("w_email");
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
+                coef = reader.GetString("coef");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, email, password, nick, id);
+            return new Data.ClientInfo(null, id, email, password, nick,coef);
         }
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
@@ -61,6 +63,7 @@ namespace DinamycServer
             var email = "";
             var password = "";
             var nick = "";
+            var coef = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -68,11 +71,12 @@ namespace DinamycServer
                 email = reader.GetString("w_email");
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
+                coef = reader.GetString("coef");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, email, password, nick, id);
+            return new Data.ClientInfo(null, id, email, password, nick, coef);
         }
 
         #endregion

@@ -89,9 +89,8 @@ public class Client : MonoBehaviour
             if (stream.DataAvailable)
             {
                 byte[] buffer = new byte[1024];
-                socket.Client.Receive(buffer);
-
-                message = Encoding.UTF8.GetString(buffer);
+                int i = socket.Client.Receive(buffer);
+                message = Encoding.UTF8.GetString(buffer, 0, i);
                 OnIncomingData();
             }
         }
@@ -145,6 +144,17 @@ public class Client : MonoBehaviour
     private void LOGOOD(string[] arg)
     {
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Login });
+
+        Data.ID = arg[0];
+        Data.EMAIL = arg[1];
+        Data.NICK = arg[2];
+        Data.COEF = arg[3];
+
+        if (Data.COEF == "0")
+        {
+            Data.interactive.TEST0();
+        }
+
     }
     private void REGOOD(string[] arg)
     {
@@ -162,7 +172,6 @@ public class Client : MonoBehaviour
         Data.ErrorText.text = "Данный email уже занят";
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
-
 
     public void AAA_in(string ss) //Пробный метод на вход
     {

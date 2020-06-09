@@ -11,6 +11,7 @@ public class Data : MonoBehaviour
     public static string ID { get; set; }
     public static string EMAIL { get; set; }
     public static string NICK { get; set; }
+    public static string COEF { get; set; }
 
     #endregion
 

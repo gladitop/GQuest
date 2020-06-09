@@ -16,7 +16,6 @@ public class Interactive : MonoBehaviour
         Data.client.Send($"%REG:{Data.RF_Email}:{Data.RF_Password}:{Data.RF_Nick}");
     }
 
-
     public void GoLogin()
     {
         Data.M_Login.SetActive(true);
@@ -49,4 +48,12 @@ public class Interactive : MonoBehaviour
             catch { }
         }
     } //очистка полей
+
+    public void TEST0()
+    {
+        Debug.Log("Hello, Test 0 начался!");
+        Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Data.Main_Canvas.transform.GetChild(2).gameObject.SetActive(true);
+        
+    }
 }
