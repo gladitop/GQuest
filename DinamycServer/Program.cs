@@ -16,13 +16,13 @@ namespace DinamycServer
         {
             #region Запуск сервера + консольные команды
 
-            Console.WriteLine("Запуск сервера...");
+            Console.WriteLine("Start server...");
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
             thread.Start();
 
-            Function.WriteColorText("Сервер работает!", ConsoleColor.Green);
+            Function.WriteColorText("Done server!", ConsoleColor.Green);
 
             var answer = "";
             while (true)
@@ -32,8 +32,22 @@ namespace DinamycServer
                 switch (answer)
                 {
                     case "stop":
-                        Console.WriteLine("Отключение сервера...");
+                        Console.WriteLine("off server...");
+                        foreach (var client in Data.TpClient)
+                        {
+                            try
+                            {
+                                client.Client.Close();
+                                Console.WriteLine("off client");
+                            }
+                            catch(Exception e)
+                            {
+                                Console.WriteLine($"error: {e.Message}");
+                            }
+                        }
                         server.Stop();
+                        Function.WriteColorText("Done off server!", ConsoleColor.Green);
+                        Environment.Exit(0);
                         break;
                 }
             }
@@ -58,7 +72,7 @@ namespace DinamycServer
                 var client = (TcpClient)obj;
                 var buffer = new byte[1024];
 
-                Console.WriteLine("новое подключение");
+                Console.WriteLine("new connect!");
                 Data.TpClient.Add(client);
             end:
                 while (true)
@@ -97,7 +111,7 @@ namespace DinamycServer
                         }
                         catch
                         {
-                            Function.WriteColorText($"ERROR_2\nВходящее сообщение: {message}", ConsoleColor.Yellow);
+                            Function.WriteColorText($"ERROR_2\n Incoming message: {message}", ConsoleColor.Yellow);
                             goto end;
                         }
 
@@ -115,19 +129,19 @@ namespace DinamycServer
                             {
                                 string[] needArg = (string[])typeof(Commands).GetField($"arg{command}").GetValue(null);
 
-                                Function.WriteColorText("Ожидаемый аргумент | Входящий\n----------", ConsoleColor.White);
+                                Function.WriteColorText("Expected argument | Incoming\n----------", ConsoleColor.White);
                                 for (int j = 0; j < needArg.Length; j++)
                                 {
                                     try
                                     {
-                                        if (arguments[j] == "" || arguments[j] == " " || arguments[j] == null) arguments[j] = "пусто";
+                                        if (arguments[j] == "" || arguments[j] == " " || arguments[j] == null) arguments[j] = "null";
                                         Function.WriteColorText($"{needArg[j]} | {arguments[j]}", ConsoleColor.White);
                                     }
-                                    catch { Function.WriteColorText($"{needArg[j]} | пусто", ConsoleColor.White); }
+                                    catch { Function.WriteColorText($"{needArg[j]} | null", ConsoleColor.White); }
                                 }
                                 Function.WriteColorText("----------", ConsoleColor.Yellow);
                             }
-                            catch { Function.WriteColorText("Не удалось найти список нужных аргументов!\nНеобходимо добавить string[]{необходимые аргументы}!", ConsoleColor.DarkGray); }
+                            catch { Function.WriteColorText("Could not find the list of required arguments!\nYou must add string [] {required arguments}!", ConsoleColor.DarkGray); }
 
                             #endregion
                             goto end;

@@ -20,9 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf808862-756e-4b26-b146-f618b7ed3b0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Function.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Function.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DinamycServer.dir/.idea/contentModel.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +119,7 @@
       <workItem from="1590513875280" duration="111000" />
       <workItem from="1590524109140" duration="519000" />
       <workItem from="1590600343927" duration="967000" />
+      <workItem from="1591813962701" duration="15000" />
     </task>
     <servers />
   </component>
@@ -145,6 +144,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="584" y="187" width="741" height="738" key="#DinamycServer" timestamp="1591813973824">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="584" y="187" width="741" height="738" key="#DinamycServer/0.27.1920.1053@0.27.1920.1053" timestamp="1591813973824" />
     <state x="711" y="409" width="487" height="326" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1590339777708">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

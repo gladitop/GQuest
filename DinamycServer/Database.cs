@@ -25,7 +25,7 @@ namespace DinamycServer
             }
             catch (Exception ex)
             {
-                Function.WriteColorText("Не удалось подключиться к бд: \n" + ex, ConsoleColor.DarkYellow);
+                Function.WriteColorText("Failed to connect to the database: \n" + ex, ConsoleColor.DarkYellow);
             }
         }
 
@@ -87,7 +87,7 @@ namespace DinamycServer
         {
             var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
+            Console.WriteLine($"A new client has been added to the database: {email}, {password}, {nick}");
         }
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
@@ -120,7 +120,7 @@ namespace DinamycServer
             Console.WriteLine(point);
             var command = new MySqlCommand($"UPDATE accounts SET w_point = '{point}' WHERE w_id = '{id}';", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"Добавление в бд очки: id= {id}, points= {point}");
+            Console.WriteLine($"Adding to db points: id= {id}, points= {point}");
         }
 
         #endregion

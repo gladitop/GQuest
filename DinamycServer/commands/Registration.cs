@@ -20,7 +20,7 @@ namespace DinamycServer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("\nОшибка при проверке аргументов:\n----------\n" + ex + "\n----------");
+                    Console.WriteLine("\nError checking arguments:\n----------\n" + ex + "\n----------");
                 }
 
                 if (!Database.CheckEmail(email))

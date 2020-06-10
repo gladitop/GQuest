@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$PROJECT_DIR$" t="IncludeRecursive">
-      <e p="Data.cs" t="Include" />
-      <e p="Database.cs" t="Include" />
-      <e p="DinamycServer.csproj" t="IncludeRecursive" />
-      <e p="Function.cs" t="Include" />
-      <e p="Program.cs" t="Include" />
-      <e p="bin" t="ExcludeRecursive" />
-      <e p="commands" t="Include">
-        <e p="Login.cs" t="Include" />
-        <e p="Message.cs" t="Include" />
-        <e p="Registration.cs" t="Include" />
-        <e p="SendScore.cs" t="Include" />
-        <e p="UpdatePoint.cs" t="Include" />
-      </e>
-      <e p="obj" t="ExcludeRecursive">
-        <e p="Debug" t="Include">
-          <e p="netcoreapp3.1" t="Include">
-            <e p="DinamycServer.AssemblyInfo.cs" t="Include" />
-          </e>
-        </e>
-      </e>
-      <e p="packages" t="ExcludeRecursive" />
-    </e>
+    <e p="$PROJECT_DIR$" t="IncludeFlat" />
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_.19.00" t="ExcludeRecursive" />
   </component>

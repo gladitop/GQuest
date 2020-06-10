@@ -35,7 +35,7 @@ namespace DinamycServer
                 {
                     check(ChClients);
                 }                
-                WriteColorText($"Произведенна очистка клиетов", ConsoleColor.Yellow);   
+                WriteColorText($"Clients cleared", ConsoleColor.Yellow);   
                 Console.WriteLine(Data.TpClient.Count); 
             }
             void check(TcpClient cl) //Метод по проверке определённого клиента
@@ -48,7 +48,7 @@ namespace DinamycServer
                 {
                     Data.TpClient.Remove(cl);
                     cl.Close();
-                    WriteColorText("Удалён клиент", ConsoleColor.Yellow); 
+                    WriteColorText("Client removed", ConsoleColor.Yellow); 
                 }
             }
         }
@@ -78,10 +78,10 @@ namespace DinamycServer
     
         public static void SendConsoleArgumentList(string[] needArg, string[] inArg) //Отправка в консоль нужных и входящих аргументов
         {
-            Function.WriteColorText("[Нужный аргумент] | [Входящий аргумент]", default);
+            Function.WriteColorText("[Argument needed] | [Incoming argument]", default);
             for(int i = 0; i < needArg.Length; i++)
             {
-                if(inArg[i] == null || inArg[i] == "" || inArg[i] == " ") inArg[i] = "пусто";
+                if(inArg[i] == null || inArg[i] == "" || inArg[i] == " ") inArg[i] = "null";
                 
                 Function.WriteColorText(needArg[i] + " | " + inArg[i], default);
             }
