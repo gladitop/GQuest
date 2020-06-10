@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class Interactive : MonoBehaviour
 {
+    private void Start()
+    {
+        Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(true);
+        Data.M_Login.SetActive(true);
+    }
 
     public void Login()
     {
         Data.client.Send($"%LOG:{Data.LF_Email}:{Data.LF_Password}");
     }
-
     public void Registration()
     {
         Data.client.Send($"%REG:{Data.RF_Email}:{Data.RF_Password}:{Data.RF_Nick}");
@@ -22,7 +26,6 @@ public class Interactive : MonoBehaviour
         Data.M_Registration.SetActive(false);
         Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
-
     public void GoRegistration()
     {
         Data.M_Login.SetActive(false);
@@ -53,7 +56,15 @@ public class Interactive : MonoBehaviour
     {
         Debug.Log("Hello, Test 0 начался!");
         Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
-        Data.Main_Canvas.transform.GetChild(2).gameObject.SetActive(true);
-        
+        Data.Main_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+        Data.Test_0.SetActive(true);
+    } //Тест для определения коэффицентов
+
+    public void GameMenu()
+    {
+        Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
+        Data.Main_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+        Data.GameMenu.SetActive(true);
+        Debug.Log("hello1111");
     }
 }

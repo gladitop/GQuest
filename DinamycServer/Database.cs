@@ -25,13 +25,13 @@ namespace DinamycServer
             }
             catch (Exception ex)
             {
-                Function.WriteColorText("Failed to connect to the database: \n" + ex, ConsoleColor.DarkYellow);
+                Function.WriteColorText("Не удалось подключиться к бд: \n" + ex, ConsoleColor.DarkYellow);
             }
         }
 
         public static MySqlConnection connection { get; set; }
 
-        #region GetInfo      
+        #region GetClientInfo      
         public static Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
             var command = new MySqlCommand($"SELECT * FROM `accounts` WHERE w_email = '{email}';", connection);
@@ -87,7 +87,7 @@ namespace DinamycServer
         {
             var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"A new client has been added to the database: {email}, {password}, {nick}");
+            Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
         }
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
@@ -115,14 +115,12 @@ namespace DinamycServer
         #endregion
 
         #region Interactive
-        public static void UpdatePoint(long id, long point) //Обновить очки
+        public static void UpdateCoefficients(long id, string coef) //Обновить очки
         {
-            Console.WriteLine(point);
-            var command = new MySqlCommand($"UPDATE accounts SET w_point = '{point}' WHERE w_id = '{id}';", connection);
+            var command = new MySqlCommand($"UPDATE accounts SET coef = '{coef}' WHERE w_id = '{id}';", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"Adding to db points: id= {id}, points= {point}");
+            Console.WriteLine($"Установка коэффицентов: id= {id}, points= {coef}");
         }
-
         #endregion
     }
 }
