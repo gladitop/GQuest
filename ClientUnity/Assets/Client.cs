@@ -154,6 +154,10 @@ public class Client : MonoBehaviour
         {
             Data.interactive.TEST0();
         }
+        else
+        {
+            Data.interactive.GameMenu();
+        }
 
     }
     private void REGOOD(string[] arg)
