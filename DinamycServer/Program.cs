@@ -29,9 +29,9 @@ namespace DinamycServer
             {
                 answer = Console.ReadLine();
 
-                switch (answer)
+                switch (answer.ToLower())
                 {
-                    case "stop":
+                    case "stop"://Остановка сервера (После этого ctr + c)
                         Console.WriteLine("off server...");
                         foreach (var client in Data.TpClient)
                         {
@@ -48,6 +48,9 @@ namespace DinamycServer
                         server.Stop();
                         Function.WriteColorText("Done off server!", ConsoleColor.Green);
                         Environment.Exit(0);
+                        break;
+                    case "help"://хелб
+                        Function.WriteColorText("stop - this is stop", ConsoleColor.Yellow);
                         break;
                 }
             }
