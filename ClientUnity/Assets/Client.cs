@@ -158,9 +158,9 @@ public class Client : MonoBehaviour
         Data.EMAIL = arg[1];
         Data.NICK = arg[2];
         Data.COEF = arg[3];
-        Data.LEVEL = int.Parse(arg[4]);
-
-        if (Data.LEVEL == 0)
+        //Data.LEVEL = int.Parse(arg[4]);
+  
+        if (Data.COEF == "0")
         {
             Data.interactive.TEST0();
         }
