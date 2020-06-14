@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Org.BouncyCastle.Utilities.Collections;
 
 namespace DinamycServer
 {
@@ -33,6 +34,11 @@ namespace DinamycServer
                 {
                     case "stop"://Остановка сервера (После этого ctr + c)
                         Console.WriteLine("off server...");
+                        
+                        Console.WriteLine(Data.TpClient.Count);
+                        if(Data.TpClient.Count == 0)
+                            goto Link;
+
                         foreach (var client in Data.TpClient)
                         {
                             try
@@ -45,7 +51,9 @@ namespace DinamycServer
                                 Console.WriteLine($"error: {e.Message}");
                             }
                         }
+                        
                         server.Stop();
+                        Link:
                         Function.WriteColorText("Done off server!", ConsoleColor.Green);
                         Environment.Exit(0);
                         break;
