@@ -12,6 +12,7 @@ public class Data : MonoBehaviour
     public static string EMAIL { get; set; }
     public static string NICK { get; set; }
     public static string COEF { get; set; }
+    public static int LEVEL { get; set; }
     public static int[] COEFICENT = new int[6]; // 0-Nano | 1-Bio | 2-IT | 3-Robo | 4-HiTech | 5-PromDiz
 
     #endregion

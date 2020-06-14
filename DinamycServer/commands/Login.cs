@@ -19,7 +19,7 @@ namespace DinamycServer
                     {
                         var info = Database.GetClientInfo(email);
                         
-                        Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}");
+                        Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}");
                     }
                     else
                     {

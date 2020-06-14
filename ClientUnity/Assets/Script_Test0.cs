@@ -108,7 +108,8 @@ public class Script_Test0 : MonoBehaviour
             Data.COEFICENT[l] = (marks[l]*100/30);
         }
         //отправка UCOEF id коэффиценты
-        Data.client.Send($"%UCOEF:{Data.ID}:{Data.COEFICENT[0]}:{Data.COEFICENT[1]}:{Data.COEFICENT[2]}:{Data.COEFICENT[3]}:{Data.COEFICENT[4]}:{Data.COEFICENT[5]}");
+        Data.client.Send($"%UCOEF:{Data.ID}:{Data.COEFICENT[0]}|{Data.COEFICENT[1]}|{Data.COEFICENT[2]}|{Data.COEFICENT[3]}|{Data.COEFICENT[4]}|{Data.COEFICENT[5]}");
+        Data.LEVEL = 1;
         Data.Test_0.SetActive(false);
         Data.interactive.GameMenu();
     }

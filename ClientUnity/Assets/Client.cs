@@ -20,9 +20,10 @@ public class Client : MonoBehaviour
 
     private string message;
 
+    public Thread threadLOG;
     private void Start()
     {
-        var threadLOG = new Thread(ServerLog);
+        threadLOG = new Thread(ServerLog);
         threadLOG.IsBackground = true;
         threadLOG.Start();
     }
@@ -32,7 +33,7 @@ public class Client : MonoBehaviour
         while (true)
         {
         end:
-            Task.Delay(60).Wait(); //Задержа до повторного подключения           
+            Task.Delay(1200).Wait(); //Задержа до повторного подключения           
             if (!socketReady)
             {
                 try
@@ -50,6 +51,7 @@ public class Client : MonoBehaviour
                 try
                 {
                     socket.Client.Send(new byte[1]);
+                    Debug.Log("пинг");
                 }
                 catch
                 {
@@ -84,12 +86,14 @@ public class Client : MonoBehaviour
 
     private void Update()
     {
+        end:
         if (socketReady)
         {
             if (stream.DataAvailable)
             {
                 byte[] buffer = new byte[1024];
                 int i = socket.Client.Receive(buffer);
+                if (i == 1) goto end;
                 message = Encoding.UTF8.GetString(buffer, 0, i);
                 OnIncomingData();
             }
@@ -116,10 +120,15 @@ public class Client : MonoBehaviour
     {
         if (!socketReady)
             return;
+        threadLOG.Suspend(); //Для пинговки сервера
+        Task.Delay(100).Wait();
 
         socket.Client.Send(Encoding.UTF8.GetBytes(data));
         Debug.Log(data);
         writer.Flush();
+
+        Task.Delay(100).Wait();
+        threadLOG.Resume(); //Для пинговки сервера
     }
     private void OnIncomingData() //принятие
     {
@@ -149,8 +158,9 @@ public class Client : MonoBehaviour
         Data.EMAIL = arg[1];
         Data.NICK = arg[2];
         Data.COEF = arg[3];
+        Data.LEVEL = int.Parse(arg[4]);
 
-        if (Data.COEF == "0")
+        if (Data.LEVEL == 0)
         {
             Data.interactive.TEST0();
         }

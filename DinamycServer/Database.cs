@@ -25,7 +25,7 @@ namespace DinamycServer
             }
             catch (Exception ex)
             {
-                Function.WriteColorText("Не удалось подключиться к бд: \n" + ex, ConsoleColor.DarkYellow);
+                Function.WriteColorText("Error to connected BD: \n" + ex, ConsoleColor.DarkYellow);
             }
         }
 
@@ -41,6 +41,7 @@ namespace DinamycServer
             var password = "";
             var nick = "";
             var coef = "";
+            var level = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -50,11 +51,12 @@ namespace DinamycServer
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
                 coef = reader.GetString("coef");
+                level = reader.GetString("w_level");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, id, email, password, nick,coef);
+            return new Data.ClientInfo(null, id, email, password, nick,coef,level);
         }
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
@@ -64,6 +66,7 @@ namespace DinamycServer
             var password = "";
             var nick = "";
             var coef = "";
+            var level = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -72,11 +75,12 @@ namespace DinamycServer
                 password = reader.GetString("w_password");
                 nick = reader.GetString("w_nick");
                 coef = reader.GetString("coef");
+                level = reader.GetString("w_level");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, id, email, password, nick, coef);
+            return new Data.ClientInfo(null, id, email, password, nick, coef, level);
         }
 
         #endregion
@@ -87,7 +91,7 @@ namespace DinamycServer
         {
             var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"В БД добавился новый клиент: {email}, {password}, {nick}");
+            Console.WriteLine($"Add new client in BD: {email}, {password}, {nick}");
         }
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
@@ -119,7 +123,76 @@ namespace DinamycServer
         {
             var command = new MySqlCommand($"UPDATE accounts SET coef = '{coef}' WHERE w_id = '{id}';", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"Установка коэффицентов: id= {id}, points= {coef}");
+            Console.WriteLine($"Set coeficents: id= {id}, coeficent = {coef}");
+        }
+
+        public static void UpdateLevel(long id, string lvl)
+        {
+            var command = new MySqlCommand($"UPDATE accounts SET w_level = '{lvl}' WHERE w_id = '{id}';", connection);
+            command.ExecuteNonQuery();
+            Console.WriteLine($"Set level: id= {id}, level= {lvl}");
+        }
+
+        /*public static void CheckUsersLevel(long id)
+        {
+            
+        }*/
+        public static string[] TableLevel(long id)
+        {
+            var command = new MySqlCommand($"SELECT * FROM `level` WHERE id = {id};", connection);
+
+            var pf_IT = "";
+            var pf_ROBO = "";
+            var pf_HT = "";
+            var pf_PROM = "";
+            var pf_NANO = "";
+            var pf_BIO = "";
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                pf_IT = reader.GetString("pf_IT");
+                pf_ROBO = reader.GetString("pf_ROBO");
+                pf_HT = reader.GetString("pf_HT");
+                pf_PROM = reader.GetString("pf_PROM");
+                pf_NANO = reader.GetString("pf_NANO");
+                pf_BIO = reader.GetString("pf_BIO");
+            }
+            reader.Close();
+            command.Dispose();
+
+            Console.WriteLine($"TableLevel {pf_IT}:{pf_ROBO}:{pf_HT}:{pf_PROM}:{pf_NANO}:{pf_BIO}");
+            return new string[] {pf_IT, pf_ROBO, pf_HT, pf_PROM, pf_NANO, pf_BIO};
+        }
+        public static string[][] TableTest(long[] id)
+        {
+            string[][] main = new string[id.Length][];
+            for(int i = 0; i <= id.Length; i++)
+            {
+                var command = new MySqlCommand($"SELECT * FROM `tests` WHERE w_id = {id[i]};", connection);
+
+                var name = "";
+                var text = "";
+                var questions = "";
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    name = reader.GetString("name");
+                    text = reader.GetString("text");
+                    questions = reader.GetString("questions");
+                }
+                reader.Close();
+                command.Dispose();
+
+                main[i] = new string[3]{name,text,questions};
+            }
+            return main;
+        }
+         public static string TableQuestions(long[] id)
+        {
+            
+            return "";
         }
         #endregion
     }

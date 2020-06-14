@@ -65,6 +65,8 @@ public class Interactive : MonoBehaviour
         Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Data.Main_Canvas.transform.GetChild(1).gameObject.SetActive(true);
         Data.GameMenu.SetActive(true);
-        Debug.Log("hello1111");
+        Debug.Log("Start Game_Menu");
+        Data.GameMenu.transform.GetChild(1).GetComponent<Text>().text = $" Результаты:  Nano:{ Data.COEFICENT[0]} Bio:{ Data.COEFICENT[1]} IT:{ Data.COEFICENT[2]} ROBO:{ Data.COEFICENT[3]} HITECH:{ Data.COEFICENT[4]} PROMDIZ:{ Data.COEFICENT[5]}";
+        //Data.client.Send($"%TEST:{Data.LEVEL}");
     }
 }
