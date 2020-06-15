@@ -115,6 +115,7 @@ namespace DinamycServer
                     {
                         Function.CheckEmptyClients(client);
                         Function.WriteColorText($"ERROR_1: {ex}");
+                        return;//Чтобы памяти было много)
                     }
 
                     if (message != "")
