@@ -20,7 +20,7 @@ namespace DinamycServer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("\nError checking arguments:\n----------\n" + ex + "\n----------");
+                    Function.WriteColorText("\nError checking arguments:\n----------\n" + ex + "\n----------");
                 }
 
                 if (!Database.CheckEmail(email))

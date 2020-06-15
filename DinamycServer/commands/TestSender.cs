@@ -19,11 +19,10 @@ namespace DinamycServer
                 string[] str = i_t.Split(new[] { '|' }); //Массив аргументов
                 for(int i = 0; i < str.Length; i++)
                 {
-                    Console.WriteLine("Test: " + str[i]);
+                    Function.WriteColorText("Test: " + str[i]);
                 }
 
-                Console.WriteLine("Next: ");
-
+                Function.WriteColorText("Next: ");
             }
         }
     }

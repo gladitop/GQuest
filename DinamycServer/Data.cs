@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
 
 namespace DinamycServer
 {
@@ -8,6 +10,7 @@ namespace DinamycServer
     {
         public const int Port = 908;//Порт сервера
         public static List<TcpClient> TpClient = new List<TcpClient>(); //Инфа о подключённых сокетах
+        public static StreamWriter Logger;//Логи
 
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
