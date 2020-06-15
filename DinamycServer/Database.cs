@@ -129,7 +129,6 @@ namespace DinamycServer
             command.ExecuteNonQuery();
             Function.WriteColorText($"Set coeficents: id= {id}, coeficent = {coef}");
         }
-
         public static void UpdateLevel(long id, string lvl)
         {
             var command = new MySqlCommand($"UPDATE accounts SET w_level = '{lvl}' WHERE w_id = '{id}';", connection);
@@ -137,10 +136,6 @@ namespace DinamycServer
             Function.WriteColorText($"Set level: id= {id}, level= {lvl}");
         }
 
-        /*public static void CheckUsersLevel(long id)
-        {
-            
-        }*/
         public static string[] CheckTableLevel(long id)
         {
             var command = new MySqlCommand($"SELECT * FROM `level` WHERE w_id = {id};", connection);
@@ -165,7 +160,7 @@ namespace DinamycServer
             reader.Close();
             command.Dispose();
 
-            Function.WriteColorText($"TableLevel {pf_IT}:{pf_ROBO}:{pf_HT}:{pf_PROM}:{pf_NANO}:{pf_BIO}");
+            //Function.WriteColorText($"TableLevel {pf_IT}:{pf_ROBO}:{pf_HT}:{pf_PROM}:{pf_NANO}:{pf_BIO}");
             return new string[] {pf_IT, pf_ROBO, pf_HT, pf_PROM, pf_NANO, pf_BIO};
         }
 

@@ -14,12 +14,17 @@ namespace DinamycServer
             var info = Database.GetClientInfo(id);         
             Console.WriteLine($"\nfaa ID: {info.ID} |Lvl: {info.Level} |CompleteLevel: {info.LevelComplete}");
 
-            var CompleteLevel = info.LevelComplete; //важно     ВСЕ ТЕСЛЫ ПРОЙДЕННЫЕ КЛИНТОМ
-            string[] tableinfolevel = Database.CheckTableLevel(long.Parse(info.Level)); //важно    ВСЕ ТЕСТЫ С УРОВНЯ
+            string[] CompleteLevel = info.LevelComplete.Substring(info.LevelComplete.IndexOf(':') + 1).Split(new[] { ':' });//ВСЕ ТЕСТЫ ПРОЙДЕННЫЕ КЛИЕНТОМ
 
+            string[] tableinfolevel = Database.CheckTableLevel(long.Parse(info.Level)); //ВСЕ ТЕСТЫ С УРОВНЯ
+
+            foreach(string cmpl in CompleteLevel)
+            {
+                Console.WriteLine(cmpl);
+            }
             foreach(string til in tableinfolevel)
             {
-
+                Console.WriteLine(til);
             }
         }
     }
