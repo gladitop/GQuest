@@ -117,7 +117,7 @@ public class Script_Test0 : MonoBehaviour
         int m = 0;
         foreach (int g in marks)
         {
-            if(m < g) m = g;
+            if (m < g) m = g;
         }
         Debug.Log(m);
 

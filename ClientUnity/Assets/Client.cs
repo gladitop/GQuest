@@ -68,7 +68,7 @@ public class Client : MonoBehaviour
         try
         {
             //Defalt host / post values
-            string host = "127.0.0.1";
+            string host = "37.29.78.130";
             int port = 908;
 
             //Create the socket
