@@ -160,7 +160,14 @@ public class Client : MonoBehaviour
         Data.NICK = arg[2];
         Data.COEF = arg[3];
         Data.LEVEL = int.Parse(arg[4]);
-  
+
+        string[] coef = arg[3].Split(new[] { '|' });
+        for(int i = 0; i < coef.Length; i++)
+        {
+            Data.COEFICENT[i] = int.Parse(coef[i]);
+            Debug.Log(coef[i]);
+        }
+
         if (Data.COEF == "0")
         {
             Data.interactive.TEST0();
