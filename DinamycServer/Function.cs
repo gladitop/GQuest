@@ -57,14 +57,14 @@ namespace DinamycServer
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
-            Data.Logger.WriteLine(text);
+            Data.Logger.WriteLine($"{DateTime.Now}:text");
             Console.ResetColor();
         }
         
         public static void WriteColorText(string text) //Отправка обычный сообщения в консоль
         {
             Console.WriteLine(text);
-            Data.Logger.WriteLine(text);
+            Data.Logger.WriteLine($"{DateTime.Now}:text");
         }
 
         public static void SendMessage(string nick, string message) //Отправить сообщение в ОБЩИЙ чат

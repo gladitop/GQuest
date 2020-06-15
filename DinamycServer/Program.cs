@@ -25,7 +25,7 @@ namespace DinamycServer
                 Directory.CreateDirectory("LOG");
             */
                 
-            Data.Logger = new StreamWriter($"{DateTime.Today}.log");
+            Data.Logger = new StreamWriter($"LOG.log", true);
             Data.Logger.AutoFlush = true;
             
             server = new TcpListener(IPAddress.Any, Data.Port);
