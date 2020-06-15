@@ -11,7 +11,7 @@ namespace DinamycServer
 
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
-            public ClientInfo(TcpClient socket, long id, string email, string password, string nick, string coef, string level) //Инфо о клиенте
+            public ClientInfo(TcpClient socket, long id, string email, string password, string nick, string coef, string level, string levelcmpl) //Инфо о клиенте
             {
                 if(socket != null) {Socket = socket;}     
                 ID = id;   
@@ -22,6 +22,7 @@ namespace DinamycServer
                 Nick = nick;
                 Coef = coef;
                 Level = level;
+                LevelComplete = levelcmpl;
             }
 
             public TcpClient Socket { get; set; }
@@ -33,6 +34,7 @@ namespace DinamycServer
             public string Nick { get; set; }
             public string Coef { get; set; }
             public string Level { get; set; }
+            public string LevelComplete { get; set; }
         }
     }
 }

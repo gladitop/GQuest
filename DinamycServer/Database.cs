@@ -42,6 +42,7 @@ namespace DinamycServer
             var nick = "";
             var coef = "";
             var level = "";
+            var levelcomplete = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -52,11 +53,12 @@ namespace DinamycServer
                 nick = reader.GetString("w_nick");
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
+                levelcomplete = reader.GetString("w_chek_level");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, id, email, password, nick,coef,level);
+            return new Data.ClientInfo(null, id, email, password, nick,coef,level, levelcomplete);
         }
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
@@ -67,6 +69,7 @@ namespace DinamycServer
             var nick = "";
             var coef = "";
             var level = "";
+            var levelcomplete = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -76,11 +79,12 @@ namespace DinamycServer
                 nick = reader.GetString("w_nick");
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
+                levelcomplete = reader.GetString("w_chek_level");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, id, email, password, nick, coef, level);
+            return new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
         }
 
         #endregion
@@ -137,9 +141,9 @@ namespace DinamycServer
         {
             
         }*/
-        public static string[] TableLevel(long id)
+        public static string[] CheckTableLevel(long id)
         {
-            var command = new MySqlCommand($"SELECT * FROM `level` WHERE id = {id};", connection);
+            var command = new MySqlCommand($"SELECT * FROM `level` WHERE w_id = {id};", connection);
 
             var pf_IT = "";
             var pf_ROBO = "";
@@ -164,36 +168,7 @@ namespace DinamycServer
             Console.WriteLine($"TableLevel {pf_IT}:{pf_ROBO}:{pf_HT}:{pf_PROM}:{pf_NANO}:{pf_BIO}");
             return new string[] {pf_IT, pf_ROBO, pf_HT, pf_PROM, pf_NANO, pf_BIO};
         }
-        public static string[][] TableTest(long[] id)
-        {
-            string[][] main = new string[id.Length][];
-            for(int i = 0; i <= id.Length; i++)
-            {
-                var command = new MySqlCommand($"SELECT * FROM `tests` WHERE w_id = {id[i]};", connection);
 
-                var name = "";
-                var text = "";
-                var questions = "";
-
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    name = reader.GetString("name");
-                    text = reader.GetString("text");
-                    questions = reader.GetString("questions");
-                }
-                reader.Close();
-                command.Dispose();
-
-                main[i] = new string[3]{name,text,questions};
-            }
-            return main;
-        }
-         public static string TableQuestions(long[] id)
-        {
-            
-            return "";
-        }
         #endregion
     }
 }
