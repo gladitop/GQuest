@@ -12,10 +12,10 @@ namespace DinamycServer
                 var nick = argumets[0];
                 var msg = argumets[1];
 
-                Console.WriteLine("Goood");
-                Console.WriteLine("help");
+                Function.WriteColorText("Goood");
+                Function.WriteColorText("help");
                 Function.SendMessage(nick, msg);
-                Console.WriteLine("Message= " + msg);
+                Function.WriteColorText("Message= " + msg);
             }
             catch(Exception e)
             {

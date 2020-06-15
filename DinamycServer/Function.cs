@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -10,7 +11,7 @@ namespace DinamycServer
     {
         public static void SendClientMessage(TcpClient client, string message) //Отравить клиенту сообщение
         {
-            Console.WriteLine("Send: " + message);
+            Function.WriteColorText("Send: " + message);
             try
             {
                 client.Client.Send(Encoding.UTF8.GetBytes(message));
@@ -30,7 +31,6 @@ namespace DinamycServer
             }
             else
             {
-                Console.WriteLine(Data.TpClient.Count); 
                 foreach(var ChClients in Data.TpClient)
                 {
                     check(ChClients);
@@ -57,7 +57,14 @@ namespace DinamycServer
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
+            Data.Logger.WriteLine(text);
             Console.ResetColor();
+        }
+        
+        public static void WriteColorText(string text) //Отправка обычный сообщения в консоль
+        {
+            Console.WriteLine(text);
+            Data.Logger.WriteLine(text);
         }
 
         public static void SendMessage(string nick, string message) //Отправить сообщение в ОБЩИЙ чат

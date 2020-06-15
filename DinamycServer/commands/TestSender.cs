@@ -10,7 +10,7 @@ namespace DinamycServer
         private void TEST(TcpClient client, string[] argumets)
         {       
             Console.WriteLine(argumets[0]);
-            string[] id_tests = Database.TableLevel(long.Parse(argumets[0]));
+            string[] id_tests = Database.CheckTableLevel(long.Parse(argumets[0]));
 
             foreach(string i_t in id_tests)
             {
@@ -19,11 +19,10 @@ namespace DinamycServer
                 string[] str = i_t.Split(new[] { '|' }); //Массив аргументов
                 for(int i = 0; i < str.Length; i++)
                 {
-                    Console.WriteLine("Test: " + str[i]);
+                    Function.WriteColorText("Test: " + str[i]);
                 }
 
-                Console.WriteLine("Next: ");
-
+                Function.WriteColorText("Next: ");
             }
         }
     }

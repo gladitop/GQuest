@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -18,6 +19,15 @@ namespace DinamycServer
             #region Запуск сервера + консольные команды
 
             Console.WriteLine("Start server...");
+
+            /*
+            if (!Directory.Exists("LOG"))
+                Directory.CreateDirectory("LOG");
+            */
+                
+            Data.Logger = new StreamWriter($"{DateTime.Today}.log");
+            Data.Logger.AutoFlush = true;
+            
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -33,9 +43,8 @@ namespace DinamycServer
                 switch (answer.ToLower())
                 {
                     case "stop"://Остановка сервера (После этого ctr + c)
-                        Console.WriteLine("off server...");
+                        Function.WriteColorText("off server...");
                         
-                        Console.WriteLine(Data.TpClient.Count);
                         if(Data.TpClient.Count == 0)
                             goto Link;
 
@@ -44,17 +53,18 @@ namespace DinamycServer
                             try
                             {
                                 client.Client.Close();
-                                Console.WriteLine("off client");
+                                Function.WriteColorText("off client");
                             }
                             catch(Exception e)
                             {
-                                Console.WriteLine($"error: {e.Message}");
+                                Function.WriteColorText($"error: {e.Message}");
                             }
                         }
                         
                         server.Stop();
                         Link:
                         Function.WriteColorText("Done off server!", ConsoleColor.Green);
+                        Data.Logger.Close();
                         Environment.Exit(0);
                         break;
                     case "help"://хелб
@@ -83,7 +93,7 @@ namespace DinamycServer
                 var client = (TcpClient)obj;
                 var buffer = new byte[1024];
 
-                Console.WriteLine("new connect!");
+                Function.WriteColorText("new connect!");
                 Data.TpClient.Add(client);
             end:
                 while (true)
@@ -104,12 +114,12 @@ namespace DinamycServer
                     catch (Exception ex)
                     {
                         Function.CheckEmptyClients(client);
-                        Console.WriteLine($"ERROR_1: {ex}");
+                        Function.WriteColorText($"ERROR_1: {ex}");
                     }
 
                     if (message != "")
                     {
-                        Console.WriteLine(message);
+                        Function.WriteColorText(message);
 
                         string command;
                         string[] arguments;
