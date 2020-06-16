@@ -103,27 +103,9 @@ public class Script_Test0 : MonoBehaviour
     }
     private void end()
     {
-        int k = 30;
-        foreach (int j in marks)
-        {
-            if (k > j) k = j;
-        }
-        for (int p = 0; p < marks.Length; p++)
-        {
-            marks[p] -= k;
-        }
-        Debug.Log(k);
-
-        int m = 0;
-        foreach (int g in marks)
-        {
-            if (m < g) m = g;
-        }
-        Debug.Log(m);
-
         for (int l = 0; l <= 5; l++)
         {
-            Data.COEFICENT[l] = (marks[l] * 100 / m);
+            Data.COEFICENT[l] = (marks[l] * 100 / 30);
         }
 
         Debug.Log("Сумма: " + (Data.COEFICENT[0] + Data.COEFICENT[1] + Data.COEFICENT[2] + Data.COEFICENT[3] + Data.COEFICENT[4] + Data.COEFICENT[5]));

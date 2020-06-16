@@ -140,30 +140,67 @@ namespace DinamycServer
         {
             var command = new MySqlCommand($"SELECT * FROM `level` WHERE w_id = {id};", connection);
 
-            var pf_IT = "";
-            var pf_ROBO = "";
-            var pf_HT = "";
-            var pf_PROM = "";
-            var pf_NANO = "";
-            var pf_BIO = "";
+            string[] info = new string[6];
 
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                pf_IT = reader.GetString("pf_IT");
-                pf_ROBO = reader.GetString("pf_ROBO");
-                pf_HT = reader.GetString("pf_HT");
-                pf_PROM = reader.GetString("pf_PROM");
-                pf_NANO = reader.GetString("pf_NANO");
-                pf_BIO = reader.GetString("pf_BIO");
+                info[0] = reader.GetString("pf_IT");
+                info[1] = reader.GetString("pf_ROBO");
+                info[2] = reader.GetString("pf_HT");
+                info[3] = reader.GetString("pf_PROM");
+                info[4] = reader.GetString("pf_NANO");
+                info[5] = reader.GetString("pf_BIO");
             }
             reader.Close();
             command.Dispose();
 
-            //Function.WriteColorText($"TableLevel {pf_IT}:{pf_ROBO}:{pf_HT}:{pf_PROM}:{pf_NANO}:{pf_BIO}");
-            return new string[] {pf_IT, pf_ROBO, pf_HT, pf_PROM, pf_NANO, pf_BIO};
+            return info;
         }
+        public static string[] CheckTableTest(long id)
+        {
+            var command = new MySqlCommand($"SELECT * FROM `tests` WHERE w_id = {id};", connection);
 
+            string[] info = new string[4];
+            info[0] = Convert.ToString(id);
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {      
+                info[1] = reader.GetString("name");
+                info[2] = reader.GetString("text");
+                info[3] = reader.GetString("questions");
+            }
+            reader.Close();
+            command.Dispose();
+
+            return info;
+        }       
+        public static string[] CheckTableQuestion(long id)
+        {
+            var command = new MySqlCommand($"SELECT * FROM `quest` WHERE w_id = {id};", connection);
+
+            string[] info = new string[8];
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                info[0] = reader.GetString("text"); 
+                info[1] = reader.GetString("f1"); 
+                info[2] = reader.GetString("f2"); 
+                info[3] = reader.GetString("f3"); 
+                info[4] = reader.GetString("f4"); 
+                info[5] = reader.GetString("f5"); 
+                info[6] = reader.GetString("f6"); 
+                info[7] = reader.GetString("mark"); 
+
+            }
+            reader.Close();
+            command.Dispose();
+
+            return info;
+        }
+        
         #endregion
     }
 }

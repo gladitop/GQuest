@@ -157,7 +157,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Kvantorium.GovnoTest
+    Android: com.Kvantorium.Test
     Standalone: com.Company.ProductName
   buildNumber: {}
   AndroidBundleVersionCode: 1
