@@ -58,7 +58,8 @@ namespace DinamycServer
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, id, email, password, nick,coef,level, levelcomplete);
+            var info = new Data.ClientInfo(null, id, email, password, nick,coef,level, levelcomplete);
+            return info;       
         }
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
@@ -70,7 +71,6 @@ namespace DinamycServer
             var coef = "";
             var level = "";
             var levelcomplete = "";
-            var isAdmin = false;
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -81,13 +81,11 @@ namespace DinamycServer
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
                 levelcomplete = reader.GetString("w_chek_level");
-                isAdmin = reader.GetBoolean("IsAdmin");
             }
             reader.Close();
             command.Dispose();
 
             var info = new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
-            info.IsAdmin = true;
             return info;
         }
 

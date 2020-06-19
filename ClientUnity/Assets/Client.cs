@@ -7,11 +7,13 @@ using System.Text;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class Client : MonoBehaviour
 {
     #region Соединение Клиент-сервер
 
+    private bool unityReady = true;
     private bool socketReady = false;
     private TcpClient socket;
     private NetworkStream stream;
@@ -23,6 +25,7 @@ public class Client : MonoBehaviour
     public Thread threadLOG;
     private void Start()
     {
+        unityReady = true;
         threadLOG = new Thread(ServerLog);
         threadLOG.IsBackground = true;
         threadLOG.Start();
@@ -30,6 +33,7 @@ public class Client : MonoBehaviour
 
     private void ServerLog() // проверка на подключение к серверу
     {
+        if (!unityReady) return;
         while (true)
         {
         end:
@@ -103,10 +107,12 @@ public class Client : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        unityReady = false;
         CloseSocket();
     }
     private void OnDisable()
     {
+        unityReady = false;
         CloseSocket();
     }
     private void CloseSocket()
@@ -176,7 +182,6 @@ public class Client : MonoBehaviour
         {
             Data.interactive.GameMenu();
         }
-
     }
     private void REGOOD(string[] arg)
     {
@@ -195,15 +200,21 @@ public class Client : MonoBehaviour
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
 
-    public void AAA_in(string ss) //Пробный метод на вход
+    private void TEST(string[] arg)
     {
-        message = ss;
-        OnIncomingData();
+        foreach(string ag in arg)
+        {
+            Debug.LogWarning(ag);
+        }
     }
-    public void AAA_out(string st) //Пробный метод на выход
-    {
-        Send(st);
+    private void QUEST(string[] arg)
+    {     
+        foreach (string p in arg)
+        {
+            Debug.LogWarning(p);
+        }
     }
 
     #endregion
 }
+//Debug.LogWarning(ag);

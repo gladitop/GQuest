@@ -68,4 +68,12 @@ public class Interactive : MonoBehaviour
         Debug.Log("Start Game_Menu");       
         Data.client.Send($"%ULVL:{Data.ID}");
     }
+
+    private int? int_pf = null;
+
+    public void Change_int_pf(int it)
+    {
+        int_pf = it;
+        Debug.Log("Выбранно напрвление: " + it);
+    }
 }

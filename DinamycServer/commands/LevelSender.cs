@@ -39,7 +39,7 @@ namespace DinamycServer
                             {
                                 iq += $"{st}:";
                             }
-                            Function.SendClientMessage(client, $"%QUEST:{i+1}:{infotest[0]}:{l}:{iq}"); //отправка вопроса
+                            Function.SendClientMessage(client, $"%QUEST:{i+1}:{infotest[0]}:{l}:{iq}"); //отправка вопроса направление:тест:вопрос:сам вопрос
                         }
                     }
                 }

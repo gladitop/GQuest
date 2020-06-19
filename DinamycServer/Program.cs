@@ -142,11 +142,11 @@ namespace DinamycServer
                             var ComandClass = new Commands();
                             ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] { client, arguments });
                         }
-                        catch
+                        catch(Exception ex)
                         {
                             #region ERROR_3
 
-                            Function.WriteColorText("ERROR_3", ConsoleColor.Yellow);
+                            Function.WriteColorText("ERROR_3: " + ex, ConsoleColor.Yellow);
                             try
                             {
                                 string[] needArg = (string[])typeof(Commands).GetField($"arg{command}").GetValue(null);

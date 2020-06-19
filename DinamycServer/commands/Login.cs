@@ -20,10 +20,7 @@ namespace DinamycServer
                     {
                         var info = Database.GetClientInfo(email);
                         
-                        if(!info.IsAdmin)
-                            Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}");
-                        else 
-                            Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}:{info.IsAdmin}");  
+                        Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}");
                     }
                     else
                     {
