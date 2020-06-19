@@ -12,14 +12,18 @@ namespace DinamycServer
             string email = argumets[0];
             string password = argumets[1];
 
-            try{              
+            try
+            {              
                 if (Database.CheckEmail(email))
                 {
                     if (Database.CheckPassword(email, password))
                     {
                         var info = Database.GetClientInfo(email);
                         
-                        Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}");
+                        if(!info.IsAdmin)
+                            Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}");
+                        else 
+                            Function.SendClientMessage(client, $"%LOGOOD:{info.ID}:{info.Email}:{info.Nick}:{info.Coef}:{info.Level}:{info.IsAdmin}");  
                     }
                     else
                     {

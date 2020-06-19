@@ -70,6 +70,7 @@ namespace DinamycServer
             var coef = "";
             var level = "";
             var levelcomplete = "";
+            var isAdmin = false;
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -80,22 +81,33 @@ namespace DinamycServer
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
                 levelcomplete = reader.GetString("w_chek_level");
+                isAdmin = reader.GetBoolean("IsAdmin");
             }
             reader.Close();
             command.Dispose();
 
-            return new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
+            var info = new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
+            info.IsAdmin = true;
+            return info;
         }
 
         #endregion
 
         #region Account managment
 
-        public static void AddAccount(string email, string password, string nick) //Добавить аккаунт
+        public static void AddAccount(string email, string password, string nick) //Добавить аккаунт (просто добавление)
         {
             var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
             command.ExecuteNonQuery();
-            Console.WriteLine($"Add new client in BD: {email}, {password}, {nick}");
+            Function.WriteColorText($"Add new client in BD: {email}, {password}, {nick}");
+        }
+        
+        public static void AddAccount(string email, string password, string nick, string coef, string level, string levelcomplete,
+            bool isAdmin) //Добавить аккаунт (Для админов)
+        {
+            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);//TODO:Дописать!
+            command.ExecuteNonQuery();
+            Function.WriteColorText($"Add new client in BD: {email}, {password}, {nick}, {coef}, {level}, {levelcomplete}, {isAdmin}");
         }
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах

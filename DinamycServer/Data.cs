@@ -14,10 +14,15 @@ namespace DinamycServer
 
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
-            public ClientInfo(TcpClient socket, long id, string email, string password, string nick, string coef, string level, string levelcmpl) //Инфо о клиенте
+            public ClientInfo(TcpClient socket, long id, string email, string password, string nick, string coef,
+                string level, string levelcmpl) //Инфо о клиенте
             {
-                if(socket != null) {Socket = socket;}     
-                ID = id;   
+                if (socket != null)
+                {
+                    Socket = socket;
+                }
+
+                ID = id;
 
                 Email = email;
                 Password = password;
@@ -38,6 +43,7 @@ namespace DinamycServer
             public string Coef { get; set; }
             public string Level { get; set; }
             public string LevelComplete { get; set; }
+            public bool IsAdmin { get; set; }
         }
     }
 }
