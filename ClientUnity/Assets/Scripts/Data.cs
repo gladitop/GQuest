@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Data : MonoBehaviour
@@ -70,4 +67,3 @@ public class Data : MonoBehaviour
 
     #endregion
 }
-

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Net.Sockets;
 using System.IO;
-using UnityEngine.UI;
 using System;
 using System.Text;
 using System.Reflection;
@@ -200,19 +199,52 @@ public class Client : MonoBehaviour
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
 
+    /*private void LVL(string[] arg)
+    {
+        for(int i = 0; i < arg.Length; i++)
+        {
+            string[] str_arg = arg[i].Split(new[] { '|' });
+            int[] int_arg = new int[str_arg.Length];
+
+            for (int p = 0; p < str_arg.Length; p++)
+            {
+                int_arg[p] = int.Parse(str_arg[p]);
+            }
+
+            pf_lvl_id.Add(int_arg);
+        }
+    }*/
+
+    List<string[]> test = new List<string[]>();
+
+    private int it = 0;
     private void TEST(string[] arg)
     {
-        foreach(string ag in arg)
+        if(it != int.Parse(arg[0]))
         {
-            Debug.LogWarning(ag);
+            for(int i = 0; i < int.Parse(arg[0]); i++)
+            {
+                test.Add(new string[] { });
+                it++;
+            }
         }
+        else
+        {
+            test.Add(new string[3] { arg[0], arg[1], arg[3] });
+        }   
     }
+
+    List<string[][][]> question = new List<string[][][]>();
+    List<List<List<string>>> q3 = new List<List<List<string>>>();
+    List<string> q1 = new List<string>();
+    List<List<string[]>> q2 = new List<List<string[]>>();
+
     private void QUEST(string[] arg)
-    {     
-        foreach (string p in arg)
-        {
-            Debug.LogWarning(p);
-        }
+    {
+        q1.Add("");
+        string[] xfirf = { "" };
+
+       
     }
 
     #endregion
