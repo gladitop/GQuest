@@ -3,19 +3,15 @@ using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
 
-static class MyDataBase
+static class DataBase
 {
     private const string fileName = "db.db";
-    private static string DBPath;
+
     private static SqliteConnection connection;
     private static SqliteCommand command;
 
-    static MyDataBase()
-    {
-        DBPath = GetDatabasePath();
-    }
+    #region Путь к бд, открытие, закритие бд.
 
-    /// <summary> Возвращает путь к БД. Если её нет в нужной папке на Андроиде, то копирует её с исходного apk файла. </summary>
     private static string GetDatabasePath()
     {
     #if UNITY_EDITOR
@@ -29,10 +25,7 @@ static class MyDataBase
         if (!File.Exists(filePath)) UnpackDatabase(filePath);
         return filePath;
     #endif
-    }
-
-    /// <summary> Распаковывает базу данных в указанный путь. </summary>
-    /// <param name="toPath"> Путь в который нужно распаковать базу данных. </param>
+    } //Возвращает путь к БД, eсли её нет в нужной папке на андроиде, то копирует её с исходного apk файла
     private static void UnpackDatabase(string toPath)
     {
         string fromPath = Path.Combine(Application.streamingAssetsPath, fileName);
@@ -41,37 +34,33 @@ static class MyDataBase
         while (!reader.isDone) { }
 
         File.WriteAllBytes(toPath, reader.bytes);
-    }
+    } //Распаковывает базу данных в указанный путь.   
 
-    /// <summary> Этот метод открывает подключение к БД. </summary>
     private static void OpenConnection()
     {
-        connection = new SqliteConnection("Data Source=" + DBPath);
+        connection = new SqliteConnection("Data Source=" + GetDatabasePath());
         command = new SqliteCommand(connection);
         connection.Open();
-    }
-
-    /// <summary> Этот метод закрывает подключение к БД. </summary>
+    } //открывает подключение к БД.  
     public static void CloseConnection()
     {
         connection.Close();
         command.Dispose();
-    }
+    } //закрывает подключение к БД
 
-    /// <summary> Этот метод выполняет запрос query. </summary>
-    /// <param name="query"> Собственно запрос. </param>
-    public static void ExecuteQueryWithoutAnswer(string query)
+    #endregion
+
+    #region методы запроса
+
+    public static void ExecuteQueryAnswer(string query)
     {
         OpenConnection();
         command.CommandText = query;
         command.ExecuteNonQuery();
         CloseConnection();
-    }
-
-    /// <summary> Этот метод выполняет запрос query и возвращает ответ запроса. </summary>
-    /// <param name="query"> Собственно запрос. </param>
-    /// <returns> Возвращает значение 1 строки 1 столбца, если оно имеется. </returns>
-    public static string ExecuteQueryWithAnswer(string query)
+    } // выполняет запрос query(INSERT, UPDATE, DELETE)
+   
+    public static string ExecuteScalarAnswer(string query)
     {
         OpenConnection();
         command.CommandText = query;
@@ -80,10 +69,8 @@ static class MyDataBase
 
         if (answer != null) return answer.ToString();
         else return null;
-    }
-
-    /// <summary> Этот метод возвращает таблицу, которая является результатом выборки запроса query. </summary>
-    /// <param name="query"> Собственно запрос. </param>
+    } //возвращает значение 1 строки 1 столбца, если оно имеется.(SELECT)
+ 
     public static DataTable GetTable(string query)
     {
         OpenConnection();
@@ -97,5 +84,12 @@ static class MyDataBase
         CloseConnection();
 
         return DS.Tables[0];
-    }
+    } //возвращает таблицу, которая является результатом выборки запроса.(SELECT)
+
+    #endregion
+
+    //примеры
+    //DataTable info = DataBase.GetTable("SELECT * FROM Scores ORDER BY score DESC;");
+    //string str = info.Rows[0][1].ToString(); выбираем из таблицы(строк)
+    //string str = DataBase.ExecuteScalarAnswer($"SELECT nickname FROM Player WHERE id_player = {idBestPlayer};"); получаем строку
 }

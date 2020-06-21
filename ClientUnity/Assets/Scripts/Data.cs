@@ -37,6 +37,7 @@ public class Data : MonoBehaviour
     public static GameObject Test_0 { get { return Main_Canvas.transform.GetChild(1).GetChild(0).gameObject; } } //Объект-нулевой тест
     
     public static GameObject GameMenu { get { return Main_Canvas.transform.GetChild(1).GetChild(1).gameObject; } }//Игровое меню
+    public static GameObject TestMenu { get { return Main_Canvas.transform.GetChild(1).GetChild(2).gameObject; } }//Тестовое меню
 
     #region LoginFields
     public static string LF_Email

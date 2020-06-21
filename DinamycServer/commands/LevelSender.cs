@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace DinamycServer
 {
@@ -28,7 +29,7 @@ namespace DinamycServer
                     {                        
                         string[] infotest = Database.CheckTableTest(long.Parse(test[0]));
 
-                        Function.SendClientMessage(client, $"%TEST:{infotest[0]}:{infotest[1]}:{infotest[2]}:{infotest[3]}"); //отправка теста
+                        Function.SendClientMessage(client, $"%TEST:{(i+1)}:{infotest[0]}:{infotest[1]}:{infotest[2]}:{infotest[3]}"); //отправка теста
 
                         string[] question_id = infotest[3].Split(new[] { '|' });
                         for(int l = 0; l < question_id.Length; l++) //id вопроса
@@ -40,7 +41,8 @@ namespace DinamycServer
                             {
                                 iq += $"{st}:";
                             }
-                            Function.SendClientMessage(client, $"%QUEST:{(i + 1)}:{infotest[0]}:{question_id[l]}:{infoquestion[0]}:{iq}"); //отправка вопроса направление:тест:вопрос:сам вопрос
+                            Function.SendClientMessage(client, $"%QUEST:{(i + 1)}:{infotest[0]}:{question_id[l]}:{iq}"); //отправка вопроса направление:тест:вопрос:сам вопрос
+                            Task.Delay(10).Wait();
                         }
                     }
                 }

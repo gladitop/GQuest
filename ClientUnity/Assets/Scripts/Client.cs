@@ -19,7 +19,8 @@ public class Client : MonoBehaviour
     private StreamWriter writer;
     private StreamReader reader;
 
-    private string message;
+    private string cmd;
+    private List<string> comands = new List<string>();
 
     public Thread threadLOG;
     private void Start()
@@ -90,18 +91,30 @@ public class Client : MonoBehaviour
 
     private void Update()
     {
-        end:
+    end:
         if (socketReady)
         {
-            if (stream.DataAvailable)
+            if (stream.DataAvailable) //тут считываються сообщения и добавляються в commands list
             {
                 byte[] buffer = new byte[1024];
                 int i = socket.Client.Receive(buffer);
-                if (i == 1) goto end;
-                message = Encoding.UTF8.GetString(buffer, 0, i);
-                OnIncomingData();
+                if (i <= 1) goto end;
+
+                string message = Encoding.UTF8.GetString(buffer, 0, i);
+                Debug.Log("кол-во символов: " + message.Length);
+
+                string[] cmds = message.Split(new[] { '☼' }); //alt+165
+
+                foreach (string cmd in cmds)
+                {
+                    if (cmd.Length > 1)
+                    {
+                        comands.Add(cmd);
+                    }
+                }
             }
         }
+        OnIncomingData();
     }
 
     private void OnApplicationQuit()
@@ -118,6 +131,7 @@ public class Client : MonoBehaviour
     {
         socketReady = false;
     }
+
     #endregion
 
     #region Получение / Отправка
@@ -138,19 +152,24 @@ public class Client : MonoBehaviour
     }
     private void OnIncomingData() //принятие
     {
-        if (message != "")
+        if (comands.Count != 0)
         {
-            Debug.Log(message); //Входящее сообщение
-            var ch = ':'; //Разделяющий символ   
+            string message = comands[0];
+            comands.Remove(message);
+
+            Debug.Log("Входящая команда: " + message); //Входящее сообщение
+
+            var ch = ':'; //Разделяющий символ
             try
             {
-                var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                var command = message.Substring(1, message.IndexOf(ch) - 1);//Команда 
                 var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
                 this.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(this, new object[] { arguments });
             }
             catch (Exception ex) { Debug.Log(ex); }
         }
     }
+
 
     #endregion
 
@@ -167,10 +186,9 @@ public class Client : MonoBehaviour
         Data.LEVEL = int.Parse(arg[4]);
 
         string[] coef = arg[3].Split(new[] { '|' });
-        for(int i = 0; i < coef.Length; i++)
+        for (int i = 0; i < coef.Length; i++)
         {
             Data.COEFICENT[i] = int.Parse(coef[i]);
-            Debug.Log(coef[i]);
         }
 
         if (Data.COEF == "0")
@@ -199,54 +217,32 @@ public class Client : MonoBehaviour
         Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
 
-    /*private void LVL(string[] arg)
-    {
-        for(int i = 0; i < arg.Length; i++)
-        {
-            string[] str_arg = arg[i].Split(new[] { '|' });
-            int[] int_arg = new int[str_arg.Length];
 
-            for (int p = 0; p < str_arg.Length; p++)
-            {
-                int_arg[p] = int.Parse(str_arg[p]);
-            }
-
-            pf_lvl_id.Add(int_arg);
-        }
-    }*/
-
-    List<string[]> test = new List<string[]>();
-
-    private int it = 0;
     private void TEST(string[] arg)
     {
-        if(it != int.Parse(arg[0]))
+        try
         {
-            for(int i = 0; i < int.Parse(arg[0]); i++)
-            {
-                test.Add(new string[] { });
-                it++;
-            }
+            DataBase.ExecuteQueryAnswer($"INSERT INTO Tests (profile, test, name, text, questions) VALUES({arg[0]}, {arg[1]}, '{arg[2]}', '{arg[3]}', '{arg[4]}');");
+            Debug.Log($"Тест добавлен: {arg[0]} | {arg[1]}");
         }
-        else
+        catch (Exception ex)
         {
-            test.Add(new string[3] { arg[0], arg[1], arg[3] });
-        }   
+            Debug.Log($"Ошибка при добавлении теста: {ex}");
+        }
     }
-
-    List<string[][][]> question = new List<string[][][]>();
-    List<List<List<string>>> q3 = new List<List<List<string>>>();
-    List<string> q1 = new List<string>();
-    List<List<string[]>> q2 = new List<List<string[]>>();
 
     private void QUEST(string[] arg)
     {
-        q1.Add("");
-        string[] xfirf = { "" };
-
-       
+        try
+        {
+            DataBase.ExecuteQueryAnswer($"INSERT INTO Questions (profile, test, question, text, v1, v2, v3, v4, v5, v6, marks) VALUES({arg[0]}, {arg[1]}, {arg[2]}, '{arg[3]}', '{arg[4]}', '{arg[5]}', '{arg[6]}', '{arg[7]}', '{arg[8]}', '{arg[9]}', '{arg[10]}');");
+            Debug.Log($"вопрос добавлен: {arg[0]} | {arg[1]}| {arg[2]}");
+        }
+        catch (Exception ex)
+        {
+            Debug.Log($"Ошибка при добавлении вопроса: {ex}");
+        }
     }
 
     #endregion
 }
-//Debug.LogWarning(ag);

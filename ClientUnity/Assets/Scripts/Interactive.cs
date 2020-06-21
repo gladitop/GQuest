@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,15 +67,54 @@ public class Interactive : MonoBehaviour
         Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Data.Main_Canvas.transform.GetChild(1).gameObject.SetActive(true);
         Data.GameMenu.SetActive(true);
-        Debug.Log("Start Game_Menu");       
-        Data.client.Send($"%ULVL:{Data.ID}");
+        Debug.Log("Start Game_Menu");
+        //DataBase.ExecuteQueryAnswer("DELETE FROM Questions;");
+        //DataBase.ExecuteQueryAnswer("DELETE FROM Tests;");
+        //Data.client.Send($"%ULVL:{Data.ID}");
+        PreLunchTest(1);
     }
 
-    private int? int_pf = null;
-
-    public void Change_int_pf(int it)
+    private int now_id_quest = 0;
+    public void PreLunchTest(int profile)
     {
-        int_pf = it;
-        Debug.Log("Выбранно напрвление: " + it);
+        int countTest = int.Parse(DataBase.ExecuteScalarAnswer($"SELECT COUNT(*) FROM Tests WHERE profile == {profile};"));
+        Debug.LogError(countTest);
+
+        if (countTest == 0)
+        {
+            Debug.LogWarning("пусто");
+        }
+        else if(countTest == 1)
+        {
+            DataTable dt = DataBase.GetTable($"SELECT * FROM Tests WHERE profile == {profile};");
+            string[] quest_id_string = Convert.ToString(dt.Rows[0][5]).Split(new[] { '|' });
+
+            int[] quest_id_int = new int[quest_id_string.Length];
+            for(int i = 0; i < quest_id_string.Length; i++)
+            {
+                quest_id_int[i] = int.Parse(quest_id_string[i]);
+            }
+
+            //LunchTest(profile, quest_id_int);
+            now_id_quest = quest_id_int[0];
+            ChangeQuestion();
+        }   
+    }
+    
+    private void ChangeQuestion()
+    {
+
+    }
+    public void NextQuestion(int answer)
+    {
+
+
     }
 }
+    //for (int i = 0; i < id_questions.Length; i++)
+        //{
+        //    for (int p = 0; p < 6; p++)
+        //    {
+        //        Data.TestMenu.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = "";
+        //    }               
+        //}

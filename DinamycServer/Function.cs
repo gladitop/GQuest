@@ -11,10 +11,11 @@ namespace DinamycServer
     {
         public static void SendClientMessage(TcpClient client, string message) //Отравить клиенту сообщение
         {
-            Function.WriteColorText("Send: " + message);
+            Function.WriteColorText($"Send:{message}☼");
             try
             {
-                client.Client.Send(Encoding.UTF8.GetBytes(message));
+                
+                client.Client.Send(Encoding.UTF8.GetBytes($"{message}☼"));
             }
             catch
             {

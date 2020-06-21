@@ -62,8 +62,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Client.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
+    <Compile Include="Assets\Scripts\DataBase.cs" />
     <Compile Include="Assets\Scripts\Interactive.cs" />
-    <Compile Include="Assets\Scripts\MyDataBase.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Script_Test0.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
