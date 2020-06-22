@@ -16,6 +16,7 @@
 * Redir 2020
 * MySql
 * Visual Studio 2019
+* [YoutubeExtractor](https://github.com/flagbug/YoutubeExtractor)
 
 # Авторы
 
