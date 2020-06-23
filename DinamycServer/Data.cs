@@ -1,26 +1,21 @@
-using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 using System.IO;
+using System.Net.Sockets;
 
 namespace DinamycServer
 {
     public static class Data
     {
-        public const int Port = 908;//Порт сервера
+        public const int Port = 908; //Порт сервера
         public static List<TcpClient> TpClient = new List<TcpClient>(); //Инфа о подключённых сокетах
-        public static StreamWriter Logger;//Логи
+        public static StreamWriter Logger; //Логи
 
         public class ClientInfo //Инфо о клиенте (онлайн)
         {
             public ClientInfo(TcpClient socket, long id, string email, string password, string nick, string coef,
                 string level, string levelcmpl) //Инфо о клиенте
             {
-                if (socket != null)
-                {
-                    Socket = socket;
-                }
+                if (socket != null) Socket = socket;
 
                 ID = id;
 

@@ -17,10 +17,9 @@ namespace DinamycServer
                 Function.SendMessage(nick, msg);
                 Function.WriteColorText("Message= " + msg);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Function.WriteColorText($"MSG:{e.Message}", ConsoleColor.Red);
-
             }
         }
     }

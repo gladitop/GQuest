@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using MySql.Data.MySqlClient;
 
 namespace DinamycServer
 {
     public static class Database
     {
-        
         static Database() //Подключение к базе данных
         {
             var ihost = "37.29.78.130";
@@ -16,7 +13,8 @@ namespace DinamycServer
             var iusername = "admin";
             var ipassword = "030292";
 
-            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername + ";password=" + ipassword;
+            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername +
+                             ";password=" + ipassword;
 
             try //Проверка на поключение к бд
             {
@@ -31,7 +29,8 @@ namespace DinamycServer
 
         public static MySqlConnection connection { get; set; }
 
-        #region GetClientInfo      
+        #region GetClientInfo
+
         public static Data.ClientInfo GetClientInfo(string email) //Получение инфо о клиенте (по email)
         {
             var command = new MySqlCommand($"SELECT * FROM `accounts` WHERE w_email = '{email}';", connection);
@@ -55,12 +54,14 @@ namespace DinamycServer
                 level = reader.GetString("w_level");
                 levelcomplete = reader.GetString("w_chek_level");
             }
+
             reader.Close();
             command.Dispose();
 
-            var info = new Data.ClientInfo(null, id, email, password, nick,coef,level, levelcomplete);
-            return info;       
+            var info = new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
+            return info;
         }
+
         public static Data.ClientInfo GetClientInfo(long id) //Получение инфо о клиенте (по id)
         {
             var command = new MySqlCommand($"SELECT * FROM `accounts` WHERE w_id = {id};", connection);
@@ -82,6 +83,7 @@ namespace DinamycServer
                 level = reader.GetString("w_level");
                 levelcomplete = reader.GetString("w_chek_level");
             }
+
             reader.Close();
             command.Dispose();
 
@@ -95,26 +97,34 @@ namespace DinamycServer
 
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт (просто добавление)
         {
-            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
+            var command =
+                new MySqlCommand(
+                    $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');",
+                    connection);
             command.ExecuteNonQuery();
             Function.WriteColorText($"Add new client in BD: {email}, {password}, {nick}");
         }
-        
-        public static void AddAccount(string email, string password, string nick, string coef, string level, string levelcomplete,
+
+        public static void AddAccount(string email, string password, string nick, string coef, string level,
+            string levelcomplete,
             bool isAdmin) //Добавить аккаунт (Для админов)
         {
-            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);//TODO:Дописать!
+            var command =
+                new MySqlCommand(
+                    $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');",
+                    connection); //TODO:Дописать!
             command.ExecuteNonQuery();
-            Function.WriteColorText($"Add new client in BD: {email}, {password}, {nick}, {coef}, {level}, {levelcomplete}, {isAdmin}");
+            Function.WriteColorText(
+                $"Add new client in BD: {email}, {password}, {nick}, {coef}, {level}, {levelcomplete}, {isAdmin}");
         }
 
         public static bool CheckEmail(string email) //Проверка почты в аккаунтах
         {
             var command = new MySqlCommand($"SELECT COUNT(*) FROM accounts WHERE w_email = '{email}';", connection);
-            var count = (long)command.ExecuteScalar();
+            var count = (long) command.ExecuteScalar();
 
             if (count == 0) return false;
-            else return true;
+            return true;
         }
 
         public static bool CheckPassword(string email, string password) //Проверка пароля в аккаунтах
@@ -123,22 +133,24 @@ namespace DinamycServer
             var Ppassword = "";
             var reader = command.ExecuteReader();
 
-            while (reader.Read()) { Ppassword = reader.GetString("w_password"); }
+            while (reader.Read()) Ppassword = reader.GetString("w_password");
             reader.Close();
 
             if (password == Ppassword) return true;
-            else return false;
+            return false;
         }
 
         #endregion
 
         #region Interactive
+
         public static void UpdateCoefficients(long id, string coef) //Обновить очки
         {
             var command = new MySqlCommand($"UPDATE accounts SET coef = '{coef}' WHERE w_id = '{id}';", connection);
             command.ExecuteNonQuery();
             Function.WriteColorText($"Set coeficents: id= {id}, coeficent = {coef}");
         }
+
         public static void UpdateLevel(long id, string lvl)
         {
             var command = new MySqlCommand($"UPDATE accounts SET w_level = '{lvl}' WHERE w_id = '{id}';", connection);
@@ -150,7 +162,7 @@ namespace DinamycServer
         {
             var command = new MySqlCommand($"SELECT * FROM `level` WHERE w_id = {id};", connection);
 
-            string[] info = new string[6];
+            var info = new string[6];
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -162,55 +174,59 @@ namespace DinamycServer
                 info[4] = reader.GetString("pf_NANO");
                 info[5] = reader.GetString("pf_BIO");
             }
+
             reader.Close();
             command.Dispose();
 
             return info;
         }
+
         public static string[] CheckTableTest(long id)
         {
             var command = new MySqlCommand($"SELECT * FROM `tests` WHERE w_id = {id};", connection);
 
-            string[] info = new string[4];
+            var info = new string[4];
             info[0] = Convert.ToString(id);
 
             var reader = command.ExecuteReader();
             while (reader.Read())
-            {      
+            {
                 info[1] = reader.GetString("name");
                 info[2] = reader.GetString("text");
                 info[3] = reader.GetString("questions");
             }
-            reader.Close();
-            command.Dispose();
 
-            return info;
-        }       
-        public static string[] CheckTableQuestion(long id)
-        {
-            var command = new MySqlCommand($"SELECT * FROM `quest` WHERE w_id = {id};", connection);
-
-            string[] info = new string[8];
-
-            var reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                info[0] = reader.GetString("text"); 
-                info[1] = reader.GetString("f1"); 
-                info[2] = reader.GetString("f2"); 
-                info[3] = reader.GetString("f3"); 
-                info[4] = reader.GetString("f4"); 
-                info[5] = reader.GetString("f5"); 
-                info[6] = reader.GetString("f6"); 
-                info[7] = reader.GetString("mark"); 
-
-            }
             reader.Close();
             command.Dispose();
 
             return info;
         }
-        
+
+        public static string[] CheckTableQuestion(long id)
+        {
+            var command = new MySqlCommand($"SELECT * FROM `quest` WHERE w_id = {id};", connection);
+
+            var info = new string[8];
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                info[0] = reader.GetString("text");
+                info[1] = reader.GetString("f1");
+                info[2] = reader.GetString("f2");
+                info[3] = reader.GetString("f3");
+                info[4] = reader.GetString("f4");
+                info[5] = reader.GetString("f5");
+                info[6] = reader.GetString("f6");
+                info[7] = reader.GetString("mark");
+            }
+
+            reader.Close();
+            command.Dispose();
+
+            return info;
+        }
+
         #endregion
     }
 }

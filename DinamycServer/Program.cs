@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Org.BouncyCastle.Utilities.Collections;
 
 namespace DinamycServer
 {
@@ -24,10 +23,10 @@ namespace DinamycServer
             if (!Directory.Exists("LOG"))
                 Directory.CreateDirectory("LOG");
             */
-                
-            Data.Logger = new StreamWriter($"LOG.log", true);
+
+            Data.Logger = new StreamWriter("LOG.log", true);
             Data.Logger.AutoFlush = true;
-            
+
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -42,32 +41,30 @@ namespace DinamycServer
 
                 switch (answer.ToLower())
                 {
-                    case "stop"://Остановка сервера (После этого ctr + c)
+                    case "stop": //Остановка сервера (После этого ctr + c)
                         Function.WriteColorText("off server...");
-                        
-                        if(Data.TpClient.Count == 0)
+
+                        if (Data.TpClient.Count == 0)
                             goto Link;
 
                         foreach (var client in Data.TpClient)
-                        {
                             try
                             {
                                 client.Client.Close();
                                 Function.WriteColorText("off client");
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 Function.WriteColorText($"error: {e.Message}");
                             }
-                        }
-                        
+
                         server.Stop();
                         Link:
                         Function.WriteColorText("Done off server!", ConsoleColor.Green);
                         Data.Logger.Close();
                         Environment.Exit(0);
                         break;
-                    case "help"://хелб
+                    case "help": //хелб
                         Function.WriteColorText("stop - this is stop", ConsoleColor.Yellow);
                         break;
                 }
@@ -90,17 +87,15 @@ namespace DinamycServer
 
             static void ClientLog(object obj) //Поток клиента
             {
-                var client = (TcpClient)obj;
+                var client = (TcpClient) obj;
                 var buffer = new byte[1024];
 
                 Function.WriteColorText("new connect!");
                 Data.TpClient.Add(client);
-            end:
+                end:
                 while (true)
                 {
-                    
-
-                    string message = "";
+                    var message = "";
 
                     try
                     {
@@ -109,13 +104,13 @@ namespace DinamycServer
                         var i = client.Client.Receive(buffer);
                         if (i == 1) goto end;
 
-                        message = Encoding.UTF8.GetString(buffer, 0, i);                 
+                        message = Encoding.UTF8.GetString(buffer, 0, i);
                     }
                     catch (Exception ex)
                     {
                         Function.CheckEmptyClients(client);
                         Function.WriteColorText($"ERROR_1: {ex}");
-                        return;//Чтобы памяти было много)
+                        return; //Чтобы памяти было много)
                     }
 
                     if (message != "")
@@ -129,7 +124,8 @@ namespace DinamycServer
                         {
                             var ch = ':'; //Разделяющий символ
                             command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                            arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
+                            arguments = message.Substring(message.IndexOf(ch) + 1)
+                                .Split(new[] {ch}); //Массив аргументов
                         }
                         catch
                         {
@@ -140,41 +136,49 @@ namespace DinamycServer
                         try
                         {
                             var ComandClass = new Commands();
-                            ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic).Invoke(ComandClass, new object[] { client, arguments });
+                            ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
+                                .Invoke(ComandClass, new object[] {client, arguments});
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             #region ERROR_3
 
                             Function.WriteColorText("ERROR_3: " + ex, ConsoleColor.Yellow);
                             try
                             {
-                                string[] needArg = (string[])typeof(Commands).GetField($"arg{command}").GetValue(null);
+                                var needArg = (string[]) typeof(Commands).GetField($"arg{command}").GetValue(null);
 
                                 Function.WriteColorText("Expected argument | Incoming\n----------", ConsoleColor.White);
-                                for (int j = 0; j < needArg.Length; j++)
-                                {
+                                for (var j = 0; j < needArg.Length; j++)
                                     try
                                     {
-                                        if (arguments[j] == "" || arguments[j] == " " || arguments[j] == null) arguments[j] = "null";
+                                        if (arguments[j] == "" || arguments[j] == " " || arguments[j] == null)
+                                            arguments[j] = "null";
                                         Function.WriteColorText($"{needArg[j]} | {arguments[j]}", ConsoleColor.White);
                                     }
-                                    catch { Function.WriteColorText($"{needArg[j]} | null", ConsoleColor.White); }
-                                }
+                                    catch
+                                    {
+                                        Function.WriteColorText($"{needArg[j]} | null", ConsoleColor.White);
+                                    }
+
                                 Function.WriteColorText("----------", ConsoleColor.Yellow);
                             }
-                            catch { Function.WriteColorText("Could not find the list of required arguments!\nYou must add string [] {required arguments}!", ConsoleColor.DarkGray); }
+                            catch
+                            {
+                                Function.WriteColorText(
+                                    "Could not find the list of required arguments!\nYou must add string [] {required arguments}!",
+                                    ConsoleColor.DarkGray);
+                            }
 
                             #endregion
-                            goto end;
 
+                            goto end;
                         }
                     }
                 }
             }
 
             #endregion
-
         }
     }
 }

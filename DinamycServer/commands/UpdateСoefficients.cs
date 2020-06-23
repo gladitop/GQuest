@@ -1,5 +1,5 @@
-using System.Net.Sockets;
 using System;
+using System.Net.Sockets;
 
 namespace DinamycServer
 {
@@ -8,7 +8,7 @@ namespace DinamycServer
         private void UCOEF(TcpClient client, string[] arg)
         {
             Database.UpdateCoefficients(Convert.ToInt64(arg[0]), arg[1]);
-            Database.UpdateLevel(Convert.ToInt64(arg[0]),$"1");
+            Database.UpdateLevel(Convert.ToInt64(arg[0]), "1");
         }
     }
 }
