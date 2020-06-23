@@ -63,9 +63,10 @@
     <Compile Include="Assets\Scripts\Client.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\DataBase.cs" />
+    <Compile Include="Assets\Scripts\Func.cs" />
     <Compile Include="Assets\Scripts\Interactive.cs" />
-    <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Script_Test0.cs" />
+    <Compile Include="Assets\Scripts\test.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>E:/GitProjects/GQuest/ClientUnity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

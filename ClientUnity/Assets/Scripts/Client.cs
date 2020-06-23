@@ -55,7 +55,7 @@ public class Client : MonoBehaviour
                 try
                 {
                     socket.Client.Send(new byte[1]);
-                    Debug.Log("пинг");
+                    //Debug.Log("пинг");
                 }
                 catch
                 {
@@ -177,21 +177,15 @@ public class Client : MonoBehaviour
 
     private void LOGOOD(string[] arg)
     {
-        Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Login });
+        Func.Clearing_Fields(new GameObject[] { Data.M_Login });
 
         Data.ID = arg[0];
         Data.EMAIL = arg[1];
         Data.NICK = arg[2];
-        Data.COEF = arg[3];
-        Data.LEVEL = int.Parse(arg[4]);
+        Data.COEFICENT = Func.ConvertMassTo_int(arg[3].Split(new[] { '|' }));
+        Data.LEVEL = int.Parse(arg[4]);     
 
-        string[] coef = arg[3].Split(new[] { '|' });
-        for (int i = 0; i < coef.Length; i++)
-        {
-            Data.COEFICENT[i] = int.Parse(coef[i]);
-        }
-
-        if (Data.COEF == "0")
+        if (Data.COEFICENT.Length < 6)
         {
             Data.interactive.TEST0();
         }
@@ -209,12 +203,12 @@ public class Client : MonoBehaviour
     private void BLOG(string[] arg)
     {
         Data.ErrorText.text = "Неверный логин или пароль";
-        Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Login });
+        Func.Clearing_Fields(new GameObject[] { Data.M_Login });
     }
     private void BREG(string[] arg)
     {
         Data.ErrorText.text = "Данный email уже занят";
-        Data.interactive.Clearing_Fields(new GameObject[] { Data.M_Registration });
+        Func.Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
 
 

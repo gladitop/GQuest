@@ -10,7 +10,7 @@ static class DataBase
     private static SqliteConnection connection;
     private static SqliteCommand command;
 
-    #region Путь к бд, открытие, закритие бд.
+    #region Путь к бд, открытие, закрытие бд.
 
     private static string GetDatabasePath()
     {

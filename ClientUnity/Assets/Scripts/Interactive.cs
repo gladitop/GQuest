@@ -26,39 +26,22 @@ public class Interactive : MonoBehaviour
     {
         Data.M_Login.SetActive(true);
         Data.M_Registration.SetActive(false);
-        Clearing_Fields(new GameObject[] { Data.M_Registration });
+        Func.Clearing_Fields(new GameObject[] { Data.M_Registration });
     }
     public void GoRegistration()
     {
         Data.M_Login.SetActive(false);
         Data.M_Registration.SetActive(true);
-        Clearing_Fields(new GameObject[] { Data.M_Login });
+        Func.Clearing_Fields(new GameObject[] { Data.M_Login });
     }
-
-    public void Clearing_Fields(GameObject[] obj)
-    {
-        for (int i = 0; i <= obj.Length; i++)
-        {
-            try
-            {
-                for (int j = 0; j <= 2; j++) //очистит только 3 элемента
-                {
-                    try
-                    {
-                        obj[i].transform.GetChild(j).GetComponent<InputField>().text = "";
-                    }
-                    catch { }
-                }
-            }
-            catch { }
-        }
-    } //очистка полей
+   
 
     public void TEST0()
     {
         Debug.Log("Hello, Test 0 начался!");
-        Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
-        Data.Main_Canvas.transform.GetChild(1).gameObject.SetActive(true);
+        Data.Test_0.GetComponent<Script_Test0>().SSstartVideo();
+        Data.Registr_Login.gameObject.SetActive(false);
+        Data.M_Programm.gameObject.SetActive(true);
         Data.Test_0.SetActive(true);
     } //Тест для определения коэффицентов
 
@@ -67,54 +50,120 @@ public class Interactive : MonoBehaviour
         Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
         Data.Main_Canvas.transform.GetChild(1).gameObject.SetActive(true);
         Data.GameMenu.SetActive(true);
+
         Debug.Log("Start Game_Menu");
+
         //DataBase.ExecuteQueryAnswer("DELETE FROM Questions;");
         //DataBase.ExecuteQueryAnswer("DELETE FROM Tests;");
         //Data.client.Send($"%ULVL:{Data.ID}");
-        PreLunchTest(1);
+        //PreLunchTest(1);
     }
 
-    private int now_id_quest = 0;
+    int[] quest_id;
+    int check_quest = 0;
+    List<int> answers = new List<int>();
+
     public void PreLunchTest(int profile)
     {
         int countTest = int.Parse(DataBase.ExecuteScalarAnswer($"SELECT COUNT(*) FROM Tests WHERE profile == {profile};"));
-        Debug.LogError(countTest);
+        Debug.LogError("Кол-во тестов: " + countTest);
 
         if (countTest == 0)
         {
             Debug.LogWarning("пусто");
         }
-        else if(countTest == 1)
+        else if (countTest == 1)
         {
+            Data.GameMenu.SetActive(false);
+            Data.TestMenu.SetActive(true);
+            Data.PreTestMenu.SetActive(true);
+
             DataTable dt = DataBase.GetTable($"SELECT * FROM Tests WHERE profile == {profile};");
-            string[] quest_id_string = Convert.ToString(dt.Rows[0][5]).Split(new[] { '|' });
 
-            int[] quest_id_int = new int[quest_id_string.Length];
-            for(int i = 0; i < quest_id_string.Length; i++)
+            string name = Convert.ToString(dt.Rows[0][3]);
+            string text = Convert.ToString(dt.Rows[0][4]);
+            quest_id = Func.ConvertMassTo_int(Convert.ToString(dt.Rows[0][5]).Split(new[] { '|' }));
+
+            Data.PreTestMenu.transform.GetChild(0).GetComponent<Text>().text = name;
+            Data.PreTestMenu.transform.GetChild(1).GetComponent<Text>().text = text;
+        }
+        else
+        {
+            Debug.LogWarning("Тестов больше чем 1, эта часть ещё не доделанна!");
+        }
+    }
+
+    public void LunchTest()
+    {
+        Data.PreTestMenu.SetActive(false);
+        Data.Questions_M.SetActive(true);
+
+        DataTable dt = DataBase.GetTable($"SELECT * FROM Questions WHERE question == {quest_id[check_quest]};");
+
+        Data.Questions_M.transform.GetChild(0).GetComponent<Text>().text = (string)dt.Rows[0][4];
+        for (int i = 0; i < 6; i++)
+        {
+            Data.Questions_M.transform.GetChild(i + 1).GetChild(0).GetComponent<Text>().text = (string)dt.Rows[0][i + 5];
+        }
+
+        check_quest++;
+    }
+
+    public void ChangeQuestion(int answer)
+    {
+        answers.Add(answer);       
+
+        if (check_quest < quest_id.Length)
+        {
+            DataTable dt = DataBase.GetTable($"SELECT * FROM Questions WHERE question == {quest_id[check_quest]};");
+
+            Data.Questions_M.transform.GetChild(0).GetComponent<Text>().text = (string)dt.Rows[0][4];
+            for (int i = 0; i < 6; i++)
             {
-                quest_id_int[i] = int.Parse(quest_id_string[i]);
+                Data.Questions_M.transform.GetChild(i + 1).GetChild(0).GetComponent<Text>().text = (string)dt.Rows[0][i + 5];
             }
+            check_quest++;
+        }
+        else if (check_quest == quest_id.Length)
+        {
+            end();
+        }
+        
+        void end()
+        {
+            check_quest = 0;
+            int points = 0;
+            Debug.Log($"{answers[0]} {answers[1]} {answers[2]} {answers[3]} {answers[4]}");
 
-            //LunchTest(profile, quest_id_int);
-            now_id_quest = quest_id_int[0];
-            ChangeQuestion();
-        }   
-    }
-    
-    private void ChangeQuestion()
-    {
+            for (int i = 0; i < quest_id.Length; i++)
+            {
+                DataTable dt = DataBase.GetTable($"SELECT * FROM Questions WHERE question == {quest_id[i]};");
+                int[] marks = Func.ConvertMassTo_int(Convert.ToString(dt.Rows[0][11]).Split(new[] { '|' }));
 
-    }
-    public void NextQuestion(int answer)
-    {
+                //Debug.Log("массив маркс: ");
+                //foreach(int u in marks)
+                //{
+                //    Debug.Log(u);
+                //}
+                //Debug.Log("массив ответов ");
+                //foreach (int o in answers)
+                //{
+                //    Debug.Log(o);
+                //}
+                //Debug.Log("answers[i]: " + answers[i]);
+                //Debug.Log(marks[answers[i]]);
 
+                points += marks[answers[i]];
+                Debug.LogWarning(marks[answers[i]]);
+                
+            }
+            Debug.LogError(points);
+            answers = new List<int>();
 
-    }
+            Data.GameMenu.SetActive(true);
+            Data.Questions_M.SetActive(false);
+            Data.TestMenu.SetActive(false);
+            Data.PreTestMenu.SetActive(false);
+        }
+    }    
 }
-    //for (int i = 0; i < id_questions.Length; i++)
-        //{
-        //    for (int p = 0; p < 6; p++)
-        //    {
-        //        Data.TestMenu.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = "";
-        //    }               
-        //}
