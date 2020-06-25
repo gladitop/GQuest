@@ -18,6 +18,7 @@
 * Visual Studio 2019
 * [YoutubeExtractor](https://github.com/flagbug/YoutubeExtractor)
 * SqlLite
+* .Net Core 3.0
 
 # Авторы
 
