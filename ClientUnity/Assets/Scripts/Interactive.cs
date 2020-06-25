@@ -39,12 +39,13 @@ public class Interactive : MonoBehaviour
     public void TEST0()
     {
         Debug.Log("Hello, Test 0 начался!");
-        Data.Test_0.GetComponent<Script_Test0>().SSstartVideo();
+        Data.Test_0.GetComponent<Script_Test0>().StartVideo();
         Data.Registr_Login.gameObject.SetActive(false);
         Data.M_Programm.gameObject.SetActive(true);
         Data.Test_0.SetActive(true);
     } //Тест для определения коэффицентов
 
+    public Text tt;
     public void GameMenu()
     {
         Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
@@ -53,10 +54,23 @@ public class Interactive : MonoBehaviour
 
         Debug.Log("Start Game_Menu");
 
-        //DataBase.ExecuteQueryAnswer("DELETE FROM Questions;");
-        //DataBase.ExecuteQueryAnswer("DELETE FROM Tests;");
-        //Data.client.Send($"%ULVL:{Data.ID}");
-        //PreLunchTest(1);
+        DataBase.ExecuteQueryAnswer("DELETE FROM Questions;");
+        DataBase.ExecuteQueryAnswer("DELETE FROM Tests;");
+        Data.client.Send($"%ULVL:{Data.ID}");
+
+        tt.text = $"Данные:\n" +
+            $"email: {Data.EMAIL}\n" +
+            $"nick: {Data.NICK}\n" +
+            $"ID: {Data.ID}\n" +
+            $"Level: {Data.LEVEL}\n" +
+            $"\n" +
+            $"Коэфиценты:\n" +
+            $"Nano: {Data.COEFICENT[0]}\n" +
+            $"Bio: {Data.COEFICENT[1]}\n" +
+            $"IT: {Data.COEFICENT[2]}\n" +
+            $"Robo: {Data.COEFICENT[3]}\n" +
+            $"HiTech: {Data.COEFICENT[4]}\n" +
+            $"Promdiz: {Data.COEFICENT[5]}";
     }
 
     int[] quest_id;

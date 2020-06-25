@@ -6,9 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class Script_Test0 : MonoBehaviour
-{
-    public GameObject VideoCanvas;
-
+{  
     public GameObject[] but;
     private Vector3[] vector_but = new Vector3[6];
 
@@ -41,13 +39,8 @@ public class Script_Test0 : MonoBehaviour
 
         for (int j = 0; j < but.Length; j++)
         {
-            but[j].transform.GetChild(0).GetComponent<Text>().text = quest[question-1][j];
+            but[j].transform.GetChild(0).GetComponent<Text>().text = quest[question - 1][j];
         }
-    }
-    public void SSstartVideo()
-    {
-        VideoCanvas.SetActive(true);
-        StartVideo();
     }
 
     public void evaluate(string str)
@@ -68,9 +61,9 @@ public class Script_Test0 : MonoBehaviour
         if (active_obj == 0 && question <= 5)
         {
             question++;
-            if(question <=5)
+            if (question <= 5)
             {
-                SSstartVideo();
+                StartVideo();
                 for (int j = 0; j < but.Length; j++)
                 {
                     ClearFied(0, true);
@@ -82,12 +75,12 @@ public class Script_Test0 : MonoBehaviour
                     but[j].transform.GetChild(7).gameObject.SetActive(false);
                 }
                 active_obj = 6;
-            }           
+            }
         }
         if (question == 6)
         {
             end();
-        }      
+        }
     }
     private void ClearFied(int var, bool kolab)
     {
@@ -102,10 +95,10 @@ public class Script_Test0 : MonoBehaviour
         {
             for (int p = 0; p < but.Length; p++)
             {
-                for(int j = 0; j < 7; j++)
+                for (int j = 0; j < 7; j++)
                 {
                     but[p].transform.GetChild(j).gameObject.SetActive(kolab);
-                }              
+                }
             }
         }
     }
@@ -113,29 +106,34 @@ public class Script_Test0 : MonoBehaviour
     {
         Data.COEFICENT = new int[6];
         for (int l = 0; l <= 5; l++)
-        {         
-            Data.COEFICENT[l] = (marks[l] * 100 / 30);           
+        {
+            Data.COEFICENT[l] = (marks[l] * 100 / 30);
         }
 
-        Debug.Log("Сумма: " + (Data.COEFICENT[0] + Data.COEFICENT[1] + Data.COEFICENT[2] + Data.COEFICENT[3] + Data.COEFICENT[4] + Data.COEFICENT[5]));      
+        Debug.Log("Сумма: " + (Data.COEFICENT[0] + Data.COEFICENT[1] + Data.COEFICENT[2] + Data.COEFICENT[3] + Data.COEFICENT[4] + Data.COEFICENT[5]));
         Data.client.Send($"%UCOEF:{Data.ID}:{Data.COEFICENT[0]}|{Data.COEFICENT[1]}|{Data.COEFICENT[2]}|{Data.COEFICENT[3]}|{Data.COEFICENT[4]}|{Data.COEFICENT[5]}");//отправка id коэффиценты
         Data.LEVEL = 1;
         Data.Test_0.SetActive(false);
         Data.interactive.GameMenu();
     }
 
+    //видео
+    public GameObject VideoCanvas;
+    public VideoClip VidClip;
     VideoPlayer videoPlayer;
-
-    void StartVideo()
+    public void StartVideo()
     {
+        VideoCanvas.SetActive(true);
         GameObject camera = GameObject.Find("Camera");
         videoPlayer = camera.AddComponent<UnityEngine.Video.VideoPlayer>();
         videoPlayer.playOnAwake = true;
         videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.CameraNearPlane;
         videoPlayer.targetCameraAlpha = 1F;
-        videoPlayer.url = "https://r17---sn-n8v7knez.googlevideo.com/videoplayback?expire=1592944531&ei=MhPyXsTqO-uy-gbtsJeQBA&ip=51.254.35.77&id=90aaaa543ffee8ab&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=9.520&lmt=1471339053546408&fvip=3&c=WEB&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAOLaLXQaoW6cjobTeHas80QOMjVHQ-UuqM2BLlmrWGpbAiA4iLHV9PgqMXamX96sYWvm9mK2-z85BmgRvWUGw2F-HA%3D%3D&contentlength=1634661&video_id=kKqqVD_-6Ks&title=%D0%AF+-+%D0%A7%D0%B0%D0%BF%D0%B0%D0%B5%D0%B2%21+%D0%90+%D1%82%D1%8B+%D0%9A%D1%82%D0%BE+%D1%82%D1%8B+%D1%82%D0%B0%D0%BA%D0%BE%D0%B9%21%21%21&rm=sn-25gks7s&req_id=df41d598ad76a3ee&ipbypass=yes&cm2rm=sn-gvnuxaxjvh-2x1l7e,sn-gvnuxaxjvh-bvw67s&redirect_counter=3&cms_redirect=yes&mh=og&mip=95.152.54.36&mm=30&mn=sn-n8v7knez&ms=nxu&mt=1592922860&mv=m&mvi=16&pl=18&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRQIhALaydxxCrL3fDlKDBPUvaK0QRwyd28qJ0wi4KaceFEjRAiAnL2ttBGGPZw7wM4IeXmo6Lx42_aPQp6ivE4vrAZeKiA%3D%3D";
+
+        //videoPlayer.url = "/Assets/Chapaev";
+        videoPlayer.clip = VidClip;
         videoPlayer.frame = 0;
-        videoPlayer.isLooping = true;
+        videoPlayer.isLooping = false;
         videoPlayer.loopPointReached += EndReached;
         videoPlayer.errorReceived += ErrorDownload;
 
@@ -144,13 +142,18 @@ public class Script_Test0 : MonoBehaviour
             videoPlayer.Play();
         }
     }
-    void ErrorDownload(UnityEngine.Video.VideoPlayer vp, string message)
-    {
-        StartVideo();
-        VideoCanvas.transform.GetChild(2).GetComponent<Text>().text = "Ошибка при загрузке, пробуем загрузить снова";
-    }
 
-    void EndReached(UnityEngine.Video.VideoPlayer vp)
+    public void StopVideo()
+    {
+        VideoCanvas.SetActive(false);
+        videoPlayer.Stop();
+    }
+    void ErrorDownload(UnityEngine.Video.VideoPlayer vp, string message)
+    {       
+        StartVideo();
+        VideoCanvas.transform.GetChild(2).GetComponent<Text>().text = "Ошибка при загрузке, пробуем загрузить снова загрузить снова";
+    }
+    public void EndReached(UnityEngine.Video.VideoPlayer vp)
     {
         vp.Stop();
         Debug.Log("стоп");

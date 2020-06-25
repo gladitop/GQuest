@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class Client : MonoBehaviour
     private StreamWriter writer;
     private StreamReader reader;
 
-    private string cmd;
     private List<string> comands = new List<string>();
+    private GameObject Indicator;
 
     public Thread threadLOG;
     private void Start()
@@ -46,7 +47,7 @@ public class Client : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.Log("Не удалось подключиться к серверу");
+                    //Debug.Log("Не удалось подключиться к серверу");
                     goto end;
                 }
             }
@@ -85,7 +86,7 @@ public class Client : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Ну удалось подключиться к серверу");
+            //Debug.Log("Ну удалось подключиться к серверу");
         }
     }
 
@@ -94,6 +95,8 @@ public class Client : MonoBehaviour
     end:
         if (socketReady)
         {
+            GameObject.Find("Indicator").GetComponent<Image>().color = Color.green;
+
             if (stream.DataAvailable) //тут считываються сообщения и добавляються в commands list
             {
                 byte[] buffer = new byte[1024];
@@ -114,6 +117,7 @@ public class Client : MonoBehaviour
                 }
             }
         }
+        else { GameObject.Find("Indicator").GetComponent<Image>().color = Color.red; }
         OnIncomingData();
     }
 
