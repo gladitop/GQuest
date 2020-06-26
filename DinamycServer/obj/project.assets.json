@@ -5951,19 +5951,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Qlioo\\.nuget\\packages\\": {}
+    "/home/gladi/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\GitProjects\\GQuest\\DinamycServer\\DinamycServer.csproj",
+      "projectUniqueName": "/home/gladi/GitHub/GQuest/DinamycServer/DinamycServer.csproj",
       "projectName": "DinamycServer",
-      "projectPath": "E:\\GitProjects\\GQuest\\DinamycServer\\DinamycServer.csproj",
-      "packagesPath": "C:\\Users\\Qlioo\\.nuget\\packages\\",
-      "outputPath": "E:\\GitProjects\\GQuest\\DinamycServer\\obj\\",
+      "projectPath": "/home/gladi/GitHub/GQuest/DinamycServer/DinamycServer.csproj",
+      "packagesPath": "/home/gladi/.nuget/packages/",
+      "outputPath": "/home/gladi/GitHub/GQuest/DinamycServer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Qlioo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/gladi/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -6005,7 +6005,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.103/RuntimeIdentifierGraph.json"
       }
     }
   }

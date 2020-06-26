@@ -19,11 +19,6 @@ namespace DinamycServer
 
             Console.WriteLine("Start server...");
 
-            /*
-            if (!Directory.Exists("LOG"))
-                Directory.CreateDirectory("LOG");
-            */
-
             Data.Logger = new StreamWriter("LOG.log", true);
             Data.Logger.AutoFlush = true;
 

@@ -77,3 +77,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 DinamycServer/obj/
+
+DinamycServer/LOG.log
