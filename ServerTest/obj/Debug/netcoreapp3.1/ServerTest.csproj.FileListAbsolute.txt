@@ -1,0 +1,4 @@
+E:\GitProjects\GQuest\ServerTest\obj\Debug\netcoreapp3.1\ServerTest.csprojAssemblyReference.cache
+E:\GitProjects\GQuest\ServerTest\obj\Debug\netcoreapp3.1\ServerTest.AssemblyInfoInputs.cache
+E:\GitProjects\GQuest\ServerTest\obj\Debug\netcoreapp3.1\ServerTest.AssemblyInfo.cs
+E:\GitProjects\GQuest\ServerTest\obj\Debug\netcoreapp3.1\ServerTest.csproj.CoreCompileInputs.cache
