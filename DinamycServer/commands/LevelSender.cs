@@ -8,7 +8,7 @@ namespace DinamycServer
     {
         public static string[] argULVL = {"id"}; // строка-подсказка с необходимыми аргументами
 
-        private void ULVL(TcpClient client, string[] argumets)
+        public void ULVL(object client, string[] argumets)
         {
             var id = long.Parse(argumets[0]); //получаю id клиента
 

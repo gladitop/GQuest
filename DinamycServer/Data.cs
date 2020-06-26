@@ -1,44 +1,48 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace DinamycServer
 {
     public static class Data
     {
         public const int Port = 908; //Порт сервера
-        public static List<TcpClient> TpClient = new List<TcpClient>(); //Инфа о подключённых сокетах
-        public static StreamWriter Logger; //Логи
 
-        public class ClientInfo //Инфо о клиенте (онлайн)
+        //public static StreamWriter Logger; //TODO: доделать логи
+        
+        public static List<ThreadClient> Clients = new List<ThreadClient>(); //Инфа о подключённых сокетах(и потоках)
+        public class ThreadClient
         {
-            public ClientInfo(TcpClient socket, long id, string email, string password, string nick, string coef,
-                string level, string levelcmpl) //Инфо о клиенте
+            public ThreadClient(TcpClient tpCl, Thread TrCl)
             {
-                if (socket != null) Socket = socket;
+                TpClient = tpCl;
+                ThrClient = TrCl;
+            }
+            public TcpClient TpClient{get;}
+            public Thread ThrClient{get;}
+        }
 
+        public class ClientInfo //Инфа о клиенте
+        {
+            public ClientInfo(long id, string email, string password, string nick, string coef,string level)
+            {
                 ID = id;
-
                 Email = email;
                 Password = password;
 
                 Nick = nick;
                 Coef = coef;
                 Level = level;
-                LevelComplete = levelcmpl;
             }
-
-            public TcpClient Socket { get; set; }
+            
             public long ID { get; set; }
-
             public string Email { get; set; }
-            public string Password { get; set; }
-
+            public string Password { get; set; }        
+              
             public string Nick { get; set; }
             public string Coef { get; set; }
             public string Level { get; set; }
-            public string LevelComplete { get; set; }
-            public bool IsAdmin { get; set; }
         }
     }
 }

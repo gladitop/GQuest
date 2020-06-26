@@ -5,23 +5,13 @@ namespace DinamycServer
 {
     public partial class Commands
     {
-        private void REG(TcpClient client, string[] argumets) // %REG:email:pass:nick
+        public void REG(object client, string[] argumets) // %REG:email:pass:nick
         {
             try
             {
-                string email = null;
-                string password = null;
-                string nick = null;
-                try
-                {
-                    email = argumets[0];
-                    password = argumets[1];
-                    nick = argumets[2];
-                }
-                catch (Exception ex)
-                {
-                    Function.WriteColorText("\nError checking arguments:\n----------\n" + ex + "\n----------");
-                }
+                string email = argumets[0];
+                string password = argumets[1];
+                string nick = argumets[2];
 
                 if (!Database.CheckEmail(email))
                 {
@@ -35,7 +25,7 @@ namespace DinamycServer
             }
             catch (Exception e)
             {
-                Function.WriteColorText($"REG:{e.Message}", ConsoleColor.Red);
+                Function.WriteConsole($"REG:{e.Message}", ConsoleColor.Red);
             }
         }
     }

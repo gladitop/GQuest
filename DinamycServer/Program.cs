@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace DinamycServer
 {
@@ -19,15 +21,12 @@ namespace DinamycServer
 
             Console.WriteLine("Start server...");
 
-            Data.Logger = new StreamWriter("LOG.log", true);
-            Data.Logger.AutoFlush = true;
-
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
             thread.Start();
 
-            Function.WriteColorText("Done server!", ConsoleColor.Green);
+            Function.WriteConsole("Done server!", ConsoleColor.Green);
 
             var answer = "";
             while (true)
@@ -37,143 +36,74 @@ namespace DinamycServer
                 switch (answer.ToLower())
                 {
                     case "stop": //Остановка сервера (После этого ctr + c)
-                        Function.WriteColorText("off server...");
-
-                        if (Data.TpClient.Count == 0)
-                            goto Link;
-
-                        foreach (var client in Data.TpClient)
-                            try
-                            {
-                                client.Client.Close();
-                                Function.WriteColorText("off client");
-                            }
-                            catch (Exception e)
-                            {
-                                Function.WriteColorText($"error: {e.Message}");
-                            }
-
+                        Function.WriteConsole("off server...");
                         server.Stop();
-                        Link:
-                        Function.WriteColorText("Done off server!", ConsoleColor.Green);
-                        Data.Logger.Close();
+                        Function.WriteConsole("Done off server!", ConsoleColor.Green);
+                        //Data.Logger.Close(); TODO: доделать
                         Environment.Exit(0);
-                        break;
-                    case "help": //хелб
-                        Function.WriteColorText("stop - this is stop", ConsoleColor.Yellow);
-                        break;
+                    break;
                 }
             }
 
             #endregion
 
-            #region Клиенты
+            #region Клиент
 
             static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
             {
                 while (true)
                 {
-                    Task.Delay(10).Wait(); //Задержка
-                    var client = server.AcceptTcpClient();
-                    var thread = new Thread(ClientLog);
-                    thread.Start(client);
+                    Task.Delay(10).Wait();
+
+                    var client = server.AcceptTcpClient(); //клиент
+                    var thread = new Thread(ClientLog); //поток
+
+                    Data.Clients.Add(new Data.ThreadClient(client, thread)); //заносим в массив
+                    thread.Start(new Data.ThreadClient(client, thread));
                 }
             }
 
             static void ClientLog(object obj) //Поток клиента
             {
-                var client = (TcpClient) obj;
+                var info = (Data.ThreadClient) obj;
+                var TpClient = info.TpClient;
+                var TrClient = info.ThrClient;
                 var buffer = new byte[1024];
 
-                Function.WriteColorText("new connect!");
-                Data.TpClient.Add(client);
-                end:
+                Function.WriteConsole("new connect!", ConsoleColor.Cyan);
+
                 while (true)
                 {
-                    var message = "";
+                    end:
+                    Task.Delay(10).Wait();
 
-                    try
+                    var i = TpClient.Client.Receive(buffer);
+                    var message = Encoding.UTF8.GetString(buffer, 0, i);
+
+                    if(!message.Contains("%")) goto end; //проверка на пустое сообщение
+                    message.Substring(message.IndexOf('%'));
+                    Function.WriteConsole(message);
+
+                    var ch = ':'; //Разделяющий символ
+                    var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
+                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+
+                    var ComandClass = new Commands();
+
+                    foreach (var method in ComandClass.GetType().GetTypeInfo().GetMethods())
                     {
-                        Task.Delay(10).Wait();
-
-                        var i = client.Client.Receive(buffer);
-                        if (i == 1) goto end;
-
-                        message = Encoding.UTF8.GetString(buffer, 0, i);
-                    }
-                    catch (Exception ex)
-                    {
-                        Function.CheckEmptyClients(client);
-                        Function.WriteColorText($"ERROR_1: {ex}");
-                        return; //Чтобы памяти было много)
-                    }
-
-                    if (message != "")
-                    {
-                        Function.WriteColorText(message);
-
-                        string command;
-                        string[] arguments;
-
-                        try
+                        if(method.Name == command)
                         {
-                            var ch = ':'; //Разделяющий символ
-                            command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                            arguments = message.Substring(message.IndexOf(ch) + 1)
-                                .Split(new[] {ch}); //Массив аргументов
-                        }
-                        catch
-                        {
-                            Function.WriteColorText($"ERROR_2\n Incoming message: {message}", ConsoleColor.Yellow);
-                            goto end;
-                        }
-
-                        try
-                        {
-                            var ComandClass = new Commands();
-                            ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.NonPublic)
-                                .Invoke(ComandClass, new object[] {client, arguments});
-                        }
-                        catch (Exception ex)
-                        {
-                            #region ERROR_3
-
-                            Function.WriteColorText("ERROR_3: " + ex, ConsoleColor.Yellow);
-                            try
-                            {
-                                var needArg = (string[]) typeof(Commands).GetField($"arg{command}").GetValue(null);
-
-                                Function.WriteColorText("Expected argument | Incoming\n----------", ConsoleColor.White);
-                                for (var j = 0; j < needArg.Length; j++)
-                                    try
-                                    {
-                                        if (arguments[j] == "" || arguments[j] == " " || arguments[j] == null)
-                                            arguments[j] = "null";
-                                        Function.WriteColorText($"{needArg[j]} | {arguments[j]}", ConsoleColor.White);
-                                    }
-                                    catch
-                                    {
-                                        Function.WriteColorText($"{needArg[j]} | null", ConsoleColor.White);
-                                    }
-
-                                Function.WriteColorText("----------", ConsoleColor.Yellow);
-                            }
-                            catch
-                            {
-                                Function.WriteColorText(
-                                    "Could not find the list of required arguments!\nYou must add string [] {required arguments}!",
-                                    ConsoleColor.DarkGray);
-                            }
-
-                            #endregion
-
+                            ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.Public).Invoke(ComandClass, new object[] {obj, arguments});
+                            Function.WriteConsole(message, ConsoleColor.Green);
                             goto end;
                         }
                     }
+                    Function.WriteConsole($"Error_1: команда:{command}", ConsoleColor.Red);    
                 }
-            }
+            }  
 
-            #endregion
+            #endregion       
         }
     }
 }

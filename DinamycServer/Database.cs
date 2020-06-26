@@ -13,8 +13,7 @@ namespace DinamycServer
             var iusername = "admin";
             var ipassword = "030292";
 
-            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername +
-                             ";password=" + ipassword;
+            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername +";password=" + ipassword;
 
             try //Проверка на поключение к бд
             {
@@ -23,7 +22,7 @@ namespace DinamycServer
             }
             catch (Exception ex)
             {
-                Function.WriteColorText("Error to connected BD: \n" + ex, ConsoleColor.DarkYellow);
+                Function.WriteConsole("Error to connected BD: \n" + ex, ConsoleColor.Red);
             }
         }
 
@@ -41,32 +40,21 @@ namespace DinamycServer
             var nick = "";
             var coef = "";
             var level = "";
-            var levelcomplete = "";
 
-            try
+            var reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    id = reader.GetInt64("w_id");
-                    emailInfo = reader.GetString("w_email");
-                    password = reader.GetString("w_password");
-                    nick = reader.GetString("w_nick");
-                    coef = reader.GetString("coef");
-                    level = reader.GetString("w_level");
-                    levelcomplete = reader.GetString("w_chek_level");
-                }
-                reader.Close();
+                id = reader.GetInt64("w_id");
+                emailInfo = reader.GetString("w_email");
+                password = reader.GetString("w_password");
+                nick = reader.GetString("w_nick");
+                coef = reader.GetString("coef");
+                level = reader.GetString("w_level");
             }
-            catch
-            {
-                Function.WriteColorText("ERRGETCLINF", ConsoleColor.Red);
-                command.Dispose();
-            }
-            
+            reader.Close();    
             command.Dispose();
 
-            var info = new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
+            var info = new Data.ClientInfo(id, email, password, nick, coef, level);
             return info;
         }
 
@@ -79,31 +67,20 @@ namespace DinamycServer
             var nick = "";
             var coef = "";
             var level = "";
-            var levelcomplete = "";
 
-            try
+            var reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    email = reader.GetString("w_email");
-                    password = reader.GetString("w_password");
-                    nick = reader.GetString("w_nick");
-                    coef = reader.GetString("coef");
-                    level = reader.GetString("w_level");
-                    levelcomplete = reader.GetString("w_chek_level");
-                }
-                reader.Close();
+                email = reader.GetString("w_email");
+                password = reader.GetString("w_password");
+                nick = reader.GetString("w_nick");
+                coef = reader.GetString("coef");
+                level = reader.GetString("w_level");
             }
-            catch
-            {
-                Function.WriteColorText("ERRGETCLINF", ConsoleColor.Red);
-                command.Dispose();
-            }
-            
+            reader.Close(); 
             command.Dispose();
 
-            var info = new Data.ClientInfo(null, id, email, password, nick, coef, level, levelcomplete);
+            var info = new Data.ClientInfo( id, email, password, nick, coef, level);
             return info;
         }
 
@@ -113,10 +90,7 @@ namespace DinamycServer
 
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт (просто добавление)
         {
-            var command =
-                new MySqlCommand(
-                    $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');",
-                    connection);
+            var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
 
             try
             {
@@ -124,26 +98,11 @@ namespace DinamycServer
             }
             catch
             {
-                Function.WriteColorText("ERRADDACC", ConsoleColor.Red);
+                Function.WriteConsole("ERRADDACC", ConsoleColor.Red);
                 command.Dispose();
             }
 
-            Function.WriteColorText($"Add new client in BD: {email}, {password}, {nick}");
-            
-            command.Dispose();
-        }
-
-        public static void AddAccount(string email, string password, string nick, string coef, string level,
-            string levelcomplete,
-            bool isAdmin) //Добавить аккаунт (Для админов)
-        {
-            var command =
-                new MySqlCommand(
-                    $"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');",
-                    connection); //TODO:Дописать!
-            command.ExecuteNonQuery();
-            Function.WriteColorText(
-                $"Add new client in BD: {email}, {password}, {nick}, {coef}, {level}, {levelcomplete}, {isAdmin}");
+            Function.WriteConsole($"Add new client in BD: {email}, {password}, {nick}");
             
             command.Dispose();
         }
@@ -159,7 +118,7 @@ namespace DinamycServer
             }
             catch
             {
-                Function.WriteColorText("ERRCHECKEMAIL", ConsoleColor.Red);
+                Function.WriteConsole("ERRCHECKEMAIL", ConsoleColor.Red);
                 command.Dispose();
             }
 
@@ -177,14 +136,12 @@ namespace DinamycServer
             try
             {
                 var reader = command.ExecuteReader();
-
                 while (reader.Read()) Ppassword = reader.GetString("w_password");
                 reader.Close();
             }
             catch
             {
-                //TODO:Что это за херня?
-                //reader.Close();
+                Function.WriteConsole("ERRCHECKPASS", ConsoleColor.Red);
             }
             
             command.Dispose();
@@ -204,11 +161,11 @@ namespace DinamycServer
             try
             {
                 command.ExecuteNonQuery();
-                Function.WriteColorText($"Set coeficents: id= {id}, coeficent = {coef}");
+                Function.WriteConsole($"Set coeficents: id= {id}, coeficent = {coef}");
             }
             catch
             {
-                Function.WriteColorText("ERRUPCOEF", ConsoleColor.Red);
+                Function.WriteConsole("ERRUPCOEF", ConsoleColor.Red);
                 command.Dispose();
             }
 
@@ -222,11 +179,11 @@ namespace DinamycServer
             try
             {
                 command.ExecuteNonQuery();
-                Function.WriteColorText($"Set level: id= {id}, level= {lvl}");
+                Function.WriteConsole($"Set level: id= {id}, level= {lvl}");
             }
             catch
             {
-                Function.WriteColorText("ERRUPDLEV", ConsoleColor.Red);
+                Function.WriteConsole("ERRUPDLEV", ConsoleColor.Red);
                 command.Dispose();
             }
 
@@ -255,7 +212,7 @@ namespace DinamycServer
             }
             catch
             {
-                Function.WriteColorText("ERRCHECKTABLEV", ConsoleColor.Red);
+                Function.WriteConsole("ERRCHECKTABLEV", ConsoleColor.Red);
                 command.Dispose();
             }
             
@@ -284,7 +241,7 @@ namespace DinamycServer
             }
             catch
             {
-                Function.WriteColorText("CHECKTABTEST", ConsoleColor.Red);
+                Function.WriteConsole("CHECKTABTEST", ConsoleColor.Red);
                 command.Dispose();
             }
             
@@ -317,7 +274,7 @@ namespace DinamycServer
             }
             catch
             {
-                Function.WriteColorText("ERRCHECKTABQU", ConsoleColor.Red);
+                Function.WriteConsole("ERRCHECKTABQU", ConsoleColor.Red);
                 command.Dispose();
             }
             

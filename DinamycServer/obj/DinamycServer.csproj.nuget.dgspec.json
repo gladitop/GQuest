@@ -1,25 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "/home/gladi/GitHub/GQuest/DinamycServer/DinamycServer.csproj": {}
+    "E:\\GitProjects\\GQuest\\DinamycServer\\DinamycServer.csproj": {}
   },
   "projects": {
-    "/home/gladi/GitHub/GQuest/DinamycServer/DinamycServer.csproj": {
+    "E:\\GitProjects\\GQuest\\DinamycServer\\DinamycServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gladi/GitHub/GQuest/DinamycServer/DinamycServer.csproj",
+        "projectUniqueName": "E:\\GitProjects\\GQuest\\DinamycServer\\DinamycServer.csproj",
         "projectName": "DinamycServer",
-        "projectPath": "/home/gladi/GitHub/GQuest/DinamycServer/DinamycServer.csproj",
-        "packagesPath": "/home/gladi/.nuget/packages/",
-        "outputPath": "/home/gladi/GitHub/GQuest/DinamycServer/obj/",
+        "projectPath": "E:\\GitProjects\\GQuest\\DinamycServer\\DinamycServer.csproj",
+        "packagesPath": "C:\\Users\\Qlioo\\.nuget\\packages\\",
+        "outputPath": "E:\\GitProjects\\GQuest\\DinamycServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/gladi/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Qlioo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Users\\Qlioo\\AppData\\Roaming\\NuGet\\MySql.Data": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -56,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.103/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
