@@ -20,7 +20,8 @@ namespace DinamycServer
             #region Запуск сервера + консольные команды
 
             Console.WriteLine("Start server...");
-
+            Data.Logger = new StreamWriter("LOG.txt", true);
+            Data.Logger.AutoFlush = true;
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var thread = new Thread(ListenClients);
@@ -37,9 +38,18 @@ namespace DinamycServer
                 {
                     case "stop": //Остановка сервера (После этого ctr + c)
                         Function.WriteConsole("off server...");
+
+                        start:
+                        if (server.Pending())
+                        {
+                            Function.WriteConsole("Waiting...", ConsoleColor.Yellow);
+                            Task.Delay(100).Wait();
+                            goto start;
+                        }
+
                         server.Stop();
                         Function.WriteConsole("Done off server!", ConsoleColor.Green);
-                        //Data.Logger.Close(); TODO: доделать
+                        Data.Logger.Close();
                         Environment.Exit(0);
                     break;
                 }
@@ -53,7 +63,14 @@ namespace DinamycServer
             {
                 while (true)
                 {
+                    start:
                     Task.Delay(10).Wait();
+
+                    if (!server.Pending())
+                    {
+                        Task.Delay(500).Wait(); //TODO:Проверить
+                        goto start;
+                    }
 
                     var client = server.AcceptTcpClient(); //клиент
                     var thread = new Thread(ClientLog); //поток

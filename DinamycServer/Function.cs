@@ -54,13 +54,13 @@ namespace DinamycServer
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
-            //Data.Logger.WriteLine($"{DateTime.Now}:{text}"); /TODO: доделать
+            Data.Logger.WriteLine($"{DateTime.Now}:{text}");
             Console.ResetColor();
         }
         public static void WriteConsole(string text) //Отправка сообщения в консоль
         {
             Console.WriteLine(text);
-            //Data.Logger.WriteLine($"{DateTime.Now}:{text}"); /TODO: доделать
+            Data.Logger.WriteLine($"{DateTime.Now}:{text}");
         }      
     }
 }
