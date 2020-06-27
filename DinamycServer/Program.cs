@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -85,7 +86,7 @@ namespace DinamycServer
                 var info = (Data.ThreadClient) obj;
                 var TpClient = info.TpClient;
                 var TrClient = info.ThrClient;
-                var buffer = new byte[1024];
+                List<byte> buffer = new List<byte>();
 
                 Function.WriteConsole("new connect!", ConsoleColor.Cyan);
 
@@ -94,8 +95,8 @@ namespace DinamycServer
                     end:
                     Task.Delay(10).Wait();
 
-                    var i = TpClient.Client.Receive(buffer);
-                    var message = Encoding.UTF8.GetString(buffer, 0, i);
+                    var i = TpClient.Client.Receive(buffer.ToArray());
+                    var message = Encoding.UTF8.GetString(buffer.ToArray(), 0, i);
 
                     if(!message.Contains("%")) goto end; //проверка на пустое сообщение
                     message.Substring(message.IndexOf('%'));

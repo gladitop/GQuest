@@ -9,7 +9,7 @@ namespace DinamycServer
     {
         public const int Port = 908; //Порт сервера
 
-        public static StreamWriter Logger; //TODO: доделать логи
+        public static StreamWriter Logger;
         
         public static List<ThreadClient> Clients = new List<ThreadClient>(); //Инфа о подключённых сокетах(и потоках)
         public class ThreadClient
