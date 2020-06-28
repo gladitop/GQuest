@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
@@ -8,10 +9,10 @@ namespace DinamycServer
     public static class Data
     {
         public const int Port = 908; //Порт сервера
-
         public static StreamWriter Logger;
-        
         public static List<ThreadClient> Clients = new List<ThreadClient>(); //Инфа о подключённых сокетах(и потоках)
+        public static List<TcpClient> AdminSocket = new List<TcpClient>();// Сокеты подключеных админов (для проверки)
+        
         public class ThreadClient
         {
             public ThreadClient(TcpClient tpCl, Thread TrCl)

@@ -88,6 +88,8 @@ namespace DinamycServer
 
         #region Account managment
 
+        #region User
+
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт (просто добавление)
         {
             var command = new MySqlCommand($"INSERT INTO `accounts` (`w_email`, `w_password`, `w_nick`) VALUES ('{email}', '{password}', '{nick}');", connection);
@@ -142,6 +144,7 @@ namespace DinamycServer
             catch
             {
                 Function.WriteConsole("ERRCHECKPASS", ConsoleColor.Red);
+                command.Dispose();
             }
             
             command.Dispose();
@@ -150,6 +153,56 @@ namespace DinamycServer
             return false;
         }
 
+        #endregion
+
+        #region Admin
+
+        public static bool CheckLogin(string login) //Проверка логина (Для админа)
+        {
+            var command = new MySqlCommand($"SELECT COUNT(*) FROM adminacc WHERE w_login = '{login}';", connection);
+            long count = 0;
+
+            try
+            {
+                count = (long) command.ExecuteScalar();
+            }
+            catch
+            {
+                Function.WriteConsole("ERRCHECKELOGIN", ConsoleColor.Red);
+                command.Dispose();
+            }
+
+            command.Dispose();
+            
+            if (count == 0) return false;
+            return true;
+        }
+
+        public static bool CheckPasswordAdmin(string login, string password) //Проверка пароля (Для админа)
+        {
+            var command = new MySqlCommand($"SELECT w_pass FROM adminacc WHERE w_login = '{login}';", connection);
+            var Ppassword = "";
+
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read()) Ppassword = reader.GetString("w_password");
+                reader.Close();
+            }
+            catch
+            {
+                Function.WriteConsole("ERRCHECKPASS", ConsoleColor.Red);
+                command.Dispose();
+            }
+            
+            command.Dispose();
+            
+            if (password == Ppassword) return true;
+            return false;
+        }
+
+        #endregion
+        
         #endregion
 
         #region Interactive

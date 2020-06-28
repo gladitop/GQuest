@@ -69,7 +69,7 @@ namespace DinamycServer
 
                     if (!server.Pending())
                     {
-                        Task.Delay(500).Wait(); //TODO:Проверить
+                        Task.Delay(500).Wait();
                         goto start;
                     }
 

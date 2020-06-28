@@ -6,7 +6,7 @@ namespace DinamycServer
 {
     public static class Function //Функции
     {
-        public static void SendClientMessage(object  client, string message) //Отравить клиенту сообщение
+        public static void SendClientMessage(object client, string message) //Отравить клиенту сообщение
         {
             try
             {
