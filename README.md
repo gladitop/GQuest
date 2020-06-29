@@ -26,6 +26,14 @@
 2. [Qliook](https://github.com/Qliook) `Программист 5.4.46-1-lts`
 3. [SimonGR92](https://github.com/SimonGR92) `Сэр`
 
+# Файлы
+
+| Имя             | Описание       |
+|-----------------|:--------------:|
+| `AdminGQuest`   | Админ панель   |
+| `ClientUnity`   | Клиент (Unity) |
+| `DinamycServer` | Сервер         |
+
 # Лицензия
 
    GQuest - свободная программа: вы можете перераспространять ее и/или
