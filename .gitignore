@@ -1,11 +1,13 @@
 # Другое
 
-AdminPanel/.idea/
 DinamycServer/obj/
 DinamycServer/LOG.txt
 DinamycServer/.idea/
 DinamycServer/.vscode/
 ClientUnity/.vscode/
+AdminGQuest/AdminGQuest/bin/
+AdminGQuest/AdminGQuest/obj/
+AdminGQuest/packages/
 
 # Unity
 
