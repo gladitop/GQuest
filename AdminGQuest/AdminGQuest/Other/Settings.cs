@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.IO;
 
 namespace AdminGQuest.Other
@@ -27,7 +22,7 @@ namespace AdminGQuest.Other
 
         public void Save(SettingsData data)
         {
-            var i = new SettingsData { Login = data.Login, Password = data.Password };//Так надо!
+            SettingsData i = new SettingsData { Login = data.Login, Password = data.Password };//Так надо!
             File.WriteAllText(Path, JsonConvert.SerializeObject(i));
         }
 
@@ -35,13 +30,13 @@ namespace AdminGQuest.Other
         {
             if (!File.Exists(Path))
             {
-                var i = new SettingsData { Login = null, Password = null };
+                SettingsData i = new SettingsData { Login = null, Password = null };
                 Save(i);
                 return i;
             }
             else
             {
-                var i = JsonConvert.DeserializeObject<SettingsData>(File.ReadAllText(Path));
+                SettingsData i = JsonConvert.DeserializeObject<SettingsData>(File.ReadAllText(Path));
                 return i;
             }
         }
