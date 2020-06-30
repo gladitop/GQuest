@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminGQuest"
         mc:Ignorable="d"
-        Title="Main" Height="450" Width="800" Closing="main_Closing">
+        Title="AdminGQuest: Главная" Icon="Resources/GQuestIcon.ico" Height="450" Width="800" Closing="main_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         
     </Grid>

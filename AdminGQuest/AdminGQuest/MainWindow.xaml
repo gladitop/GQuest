@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminGQuest"
         mc:Ignorable="d"
-        Title="AdminGQuest: Вход" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Height="236.531" Width="348.449" Closing="main_Closing">
+        Title="AdminGQuest: Вход" Icon="Resources/GQuestIcon.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Height="236.531" Width="348.449" Closing="main_Closing">
     <Grid>
         <Label Content="Логин" FontSize="30" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tblogin" HorizontalAlignment="Left" FontSize="35" Height="46" Margin="119,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="198" Grid.ColumnSpan="2"/>

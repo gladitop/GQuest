@@ -1,5 +1,6 @@
 ﻿using AdminGQuest.Other;
 using System;
+using System.Net.Sockets;
 using System.Windows;
 
 namespace AdminGQuest
@@ -15,6 +16,7 @@ namespace AdminGQuest
 
             try
             {
+                Data.Client = new TcpClient();
                 Data.Client.Connect(Data.IPServer, Data.PortServer);
             }
             catch (Exception e)
