@@ -211,3 +211,25 @@
 27.06.2020 16:52:01:Done server!
 27.06.2020 16:52:03:off server...
 27.06.2020 16:52:03:Done off server!
+01.07.2020 14:41:28:Done server!
+01.07.2020 14:42:15:Done server!
+01.07.2020 14:43:19:Done server!
+01.07.2020 14:43:39:off server...
+01.07.2020 14:43:39:Done off server!
+01.07.2020 14:48:23:Done server!
+01.07.2020 14:48:44:off server...
+01.07.2020 14:48:44:Done off server!
+01.07.2020 14:53:26:Done server!
+01.07.2020 14:53:40:off server...
+01.07.2020 14:53:40:Done off server!
+01.07.2020 14:55:17:Done server!
+01.07.2020 14:55:20:No command!
+01.07.2020 14:55:21:No command!
+01.07.2020 14:55:22:No command!
+01.07.2020 14:55:22:No command!
+01.07.2020 14:55:25:No command!
+01.07.2020 14:55:30:off server...
+01.07.2020 14:55:30:Done off server!
+01.07.2020 14:59:56:Done server!
+01.07.2020 15:00:02:off server...
+01.07.2020 15:00:02:Done off server!

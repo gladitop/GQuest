@@ -6,7 +6,7 @@ namespace DinamycServer
 {
     public partial class Commands
     {
-        public static string[] argULVL = {"id"}; // строка-подсказка с необходимыми аргументами
+        public static string[] argULVL = { "id" }; // строка-подсказка с необходимыми аргументами
 
         public void ULVL(object client, string[] argumets)
         {
@@ -20,9 +20,10 @@ namespace DinamycServer
                 Database.CheckTableLevel(long.Parse(info.Level)); //id всех тестов по профилям на уровне
 
             for (var i = 0; i < tableinfolevel.Length; i++)
+            {
                 if (tableinfolevel[i] != "0")
                 {
-                    var test = tableinfolevel[i].Split(new[] {'|'}); //id теста
+                    var test = tableinfolevel[i].Split(new[] { '|' }); //id теста
 
                     for (var p = 0; p < test.Length; p++)
                     {
@@ -31,7 +32,7 @@ namespace DinamycServer
                         Function.SendClientMessage(client,
                             $"%TEST:{i + 1}:{infotest[0]}:{infotest[1]}:{infotest[2]}:{infotest[3]}"); //отправка теста
 
-                        var question_id = infotest[3].Split(new[] {'|'});
+                        var question_id = infotest[3].Split(new[] { '|' });
                         for (var l = 0; l < question_id.Length; l++) //id вопроса
                         {
                             var infoquestion = Database.CheckTableQuestion(long.Parse(question_id[l])); //вопрос
@@ -48,6 +49,7 @@ namespace DinamycServer
                 {
                     Console.WriteLine($"Направление: {i + 1} пусто");
                 }
+            }
         }
     }
 }

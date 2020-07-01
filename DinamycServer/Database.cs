@@ -13,7 +13,7 @@ namespace DinamycServer
             var iusername = "admin";
             var ipassword = "030292";
 
-            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername +";password=" + ipassword;
+            var connString = "Server=" + ihost + ";Database=" + idatabase + ";port=" + iport + ";User=" + iusername + ";password=" + ipassword;
 
             try //Проверка на поключение к бд
             {
@@ -51,7 +51,7 @@ namespace DinamycServer
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
             }
-            reader.Close();    
+            reader.Close();
             command.Dispose();
 
             var info = new Data.ClientInfo(id, email, password, nick, coef, level);
@@ -77,10 +77,10 @@ namespace DinamycServer
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
             }
-            reader.Close(); 
+            reader.Close();
             command.Dispose();
 
-            var info = new Data.ClientInfo( id, email, password, nick, coef, level);
+            var info = new Data.ClientInfo(id, email, password, nick, coef, level);
             return info;
         }
 
@@ -105,7 +105,7 @@ namespace DinamycServer
             }
 
             Function.WriteConsole($"Add new client in BD: {email}, {password}, {nick}");
-            
+
             command.Dispose();
         }
 
@@ -116,7 +116,7 @@ namespace DinamycServer
 
             try
             {
-                count = (long) command.ExecuteScalar();
+                count = (long)command.ExecuteScalar();
             }
             catch
             {
@@ -125,7 +125,7 @@ namespace DinamycServer
             }
 
             command.Dispose();
-            
+
             if (count == 0) return false;
             return true;
         }
@@ -146,9 +146,9 @@ namespace DinamycServer
                 Function.WriteConsole("ERRCHECKPASS", ConsoleColor.Red);
                 command.Dispose();
             }
-            
+
             command.Dispose();
-            
+
             if (password == Ppassword) return true;
             return false;
         }
@@ -157,14 +157,20 @@ namespace DinamycServer
 
         #region Admin
 
-        public static bool CheckLogin(string login) //Проверка логина (Для админа)
+        public static Data.AdminInfo AddAdminAccount()
+        {
+            //TODO:Дописать!
+            return new Data.AdminInfo("12");
+        }
+
+        public static bool CheckLoginAdmin(string login) //Проверка логина (Для админа)
         {
             var command = new MySqlCommand($"SELECT COUNT(*) FROM adminacc WHERE w_login = '{login}';", connection);
             long count = 0;
 
             try
             {
-                count = (long) command.ExecuteScalar();
+                count = (long)command.ExecuteScalar();
             }
             catch
             {
@@ -173,7 +179,7 @@ namespace DinamycServer
             }
 
             command.Dispose();
-            
+
             if (count == 0) return false;
             return true;
         }
@@ -194,15 +200,15 @@ namespace DinamycServer
                 Function.WriteConsole("ERRCHECKPASS", ConsoleColor.Red);
                 command.Dispose();
             }
-            
+
             command.Dispose();
-            
+
             if (password == Ppassword) return true;
             return false;
         }
 
         #endregion
-        
+
         #endregion
 
         #region Interactive
@@ -268,7 +274,7 @@ namespace DinamycServer
                 Function.WriteConsole("ERRCHECKTABLEV", ConsoleColor.Red);
                 command.Dispose();
             }
-            
+
             command.Dispose();
 
             return info;
@@ -297,7 +303,7 @@ namespace DinamycServer
                 Function.WriteConsole("CHECKTABTEST", ConsoleColor.Red);
                 command.Dispose();
             }
-            
+
             command.Dispose();
 
             return info;
@@ -330,7 +336,7 @@ namespace DinamycServer
                 Function.WriteConsole("ERRCHECKTABQU", ConsoleColor.Red);
                 command.Dispose();
             }
-            
+
             command.Dispose();
 
             return info;

@@ -9,7 +9,7 @@ namespace DinamycServer
             var login = argumets[0];
             var password = argumets[1];
 
-            if (Database.CheckLogin(login))
+            if (Database.CheckLoginAdmin(login))
             {
                 if (Database.CheckPassword(login, password))
                 {

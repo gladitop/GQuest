@@ -10,7 +10,7 @@ namespace DinamycServer
         {
             try
             {
-                ((Data.ThreadClient) client).TpClient.Client.Send(Encoding.UTF8.GetBytes($"{message}☼"));
+                ((Data.ThreadClient)client).TpClient.Client.Send(Encoding.UTF8.GetBytes($"{message}☼"));
                 WriteConsole($"Send: {message}☼");
             }
             catch
@@ -61,6 +61,6 @@ namespace DinamycServer
         {
             Console.WriteLine(text);
             Data.Logger.WriteLine($"{DateTime.Now}:{text}");
-        }      
+        }
     }
 }

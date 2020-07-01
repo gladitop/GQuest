@@ -40,7 +40,7 @@ namespace DinamycServer
                     case "stop": //Остановка сервера (После этого ctr + c)
                         Function.WriteConsole("off server...");
 
-                        start:
+                    start:
                         if (server.Pending())
                         {
                             Function.WriteConsole("Waiting...", ConsoleColor.Yellow);
@@ -52,7 +52,10 @@ namespace DinamycServer
                         Function.WriteConsole("Done off server!", ConsoleColor.Green);
                         Data.Logger.Close();
                         Environment.Exit(0);
-                    break;
+                        break;
+                    default:
+                        Function.WriteConsole("No command!", ConsoleColor.Red);
+                        break;
                 }
             }
 
@@ -64,7 +67,7 @@ namespace DinamycServer
             {
                 while (true)
                 {
-                    start:
+                start:
                     Task.Delay(10).Wait();
 
                     if (!server.Pending())
@@ -76,6 +79,8 @@ namespace DinamycServer
                     var client = server.AcceptTcpClient(); //клиент
                     var thread = new Thread(ClientLog); //поток
 
+                    /*TODO:Антон сделай сортировку нормальную!
+                      Типо временную зону*/
                     Data.Clients.Add(new Data.ThreadClient(client, thread)); //заносим в массив
                     thread.Start(new Data.ThreadClient(client, thread));
                 }
@@ -83,7 +88,7 @@ namespace DinamycServer
 
             static void ClientLog(object obj) //Поток клиента
             {
-                var info = (Data.ThreadClient) obj;
+                var info = (Data.ThreadClient)obj;
                 var TpClient = info.TpClient;
                 var TrClient = info.ThrClient;
                 List<byte> buffer = new List<byte>();
@@ -92,36 +97,36 @@ namespace DinamycServer
 
                 while (true)
                 {
-                    end:
+                end:
                     Task.Delay(10).Wait();
 
                     var i = TpClient.Client.Receive(buffer.ToArray());
                     var message = Encoding.UTF8.GetString(buffer.ToArray(), 0, i);
 
-                    if(!message.Contains("%")) goto end; //проверка на пустое сообщение
+                    if (!message.Contains("%")) goto end; //проверка на пустое сообщение
                     message.Substring(message.IndexOf('%'));
                     Function.WriteConsole(message);
 
                     var ch = ':'; //Разделяющий символ
                     var command = message.Substring(1, message.IndexOf(ch) - 1); //Команда 
-                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] {ch}); //Массив аргументов
+                    var arguments = message.Substring(message.IndexOf(ch) + 1).Split(new[] { ch }); //Массив аргументов
 
                     var ComandClass = new Commands();
 
                     foreach (var method in ComandClass.GetType().GetTypeInfo().GetMethods())
                     {
-                        if(method.Name == command)
+                        if (method.Name == command)
                         {
-                            ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.Public).Invoke(ComandClass, new object[] {obj, arguments});
+                            ComandClass.GetType().GetMethod(command, BindingFlags.Instance | BindingFlags.Public).Invoke(ComandClass, new object[] { obj, arguments });
                             Function.WriteConsole(message, ConsoleColor.Green);
                             goto end;
                         }
                     }
-                    Function.WriteConsole($"Error_1: команда:{command}", ConsoleColor.Red);    
+                    Function.WriteConsole($"Error_1: команда:{command}", ConsoleColor.Red);
                 }
-            }  
+            }
 
-            #endregion       
+            #endregion
         }
     }
 }
