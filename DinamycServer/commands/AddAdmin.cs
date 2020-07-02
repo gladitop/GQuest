@@ -10,7 +10,7 @@ namespace DinamycServer.commands
     public partial class Commands
     {
         /* Добавить админа (может только админ)
-           %ФADDAD:login */
+           %ADDAD:login */
         public void ADDAD(object client, string[] argumets)
         {
             string login = argumets[0];
