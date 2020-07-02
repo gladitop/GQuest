@@ -45,7 +45,7 @@ public class Interactive : MonoBehaviour
         Data.Test_0.SetActive(true);
     } //Тест для определения коэффицентов
 
-    public Text tt;
+    public GameObject InfoText;
     public void GameMenu()
     {
         Data.Main_Canvas.transform.GetChild(0).gameObject.SetActive(false);
@@ -57,20 +57,22 @@ public class Interactive : MonoBehaviour
         DataBase.ExecuteQueryAnswer("DELETE FROM Questions;");
         DataBase.ExecuteQueryAnswer("DELETE FROM Tests;");
         Data.client.Send($"%ULVL:{Data.ID}");
-
-        tt.text = $"Данные:\n" +
-            $"email: {Data.EMAIL}\n" +
-            $"nick: {Data.NICK}\n" +
-            $"ID: {Data.ID}\n" +
-            $"Level: {Data.LEVEL}\n" +
-            $"\n" +
-            $"Коэфиценты:\n" +
-            $"Nano: {Data.COEFICENT[0]}\n" +
-            $"Bio: {Data.COEFICENT[1]}\n" +
-            $"IT: {Data.COEFICENT[2]}\n" +
-            $"Robo: {Data.COEFICENT[3]}\n" +
-            $"HiTech: {Data.COEFICENT[4]}\n" +
-            $"Promdiz: {Data.COEFICENT[5]}";
+    }
+    public void ChecInfo()
+    {
+        InfoText.GetComponent<Text>().text = $"Данные:\n" +
+        $"email: {Data.EMAIL}\n" +
+        $"nick: {Data.NICK}\n" +
+        $"ID: {Data.ID}\n" +
+        $"Level: {Data.LEVEL}\n" +
+        $"\n" +
+        $"Коэфиценты:\n" +
+        $"Nano: {Data.COEFICENT[0]}\n" +
+        $"Bio: {Data.COEFICENT[1]}\n" +
+        $"IT: {Data.COEFICENT[2]}\n" +
+        $"Robo: {Data.COEFICENT[3]}\n" +
+        $"HiTech: {Data.COEFICENT[4]}\n" +
+        $"Promdiz: {Data.COEFICENT[5]}";
     }
 
     int[] quest_id;

@@ -9550,7 +9550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20f77cac7d3e454693175efbbb09439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tt: {fileID: 1519324907}
+  InfoText: {fileID: 1519324905}
 --- !u!114 &1361004245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13984,6 +13984,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1665053556}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1361004244}
+        m_MethodName: ChecInfo
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
