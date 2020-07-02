@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 using MySql.Data.MySqlClient;
 
 namespace DinamycServer
@@ -157,10 +158,20 @@ namespace DinamycServer
 
         #region Admin
 
-        public static Data.AdminInfo AddAdminAccount()
-        {
-            //TODO:Дописать!
-            return new Data.AdminInfo("12");
+        public static void AddAdminAccount(string login, string password) //Добавить админа (Для админа)
+        { 
+            var command = new MySqlCommand($"INSERT INTO `adminacc` (`w_login`, `w_pass`) VALUES ('{login}', '{password}');", connection);
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                Function.WriteConsole("ERRADDAADMINACC", ConsoleColor.Red);
+                command.Dispose();
+            }
+            command.Dispose();
         }
 
         public static bool CheckLoginAdmin(string login) //Проверка логина (Для админа)

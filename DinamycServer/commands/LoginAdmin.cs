@@ -1,3 +1,4 @@
+using System;
 using System.Net.Sockets;
 
 namespace DinamycServer
@@ -14,7 +15,16 @@ namespace DinamycServer
                 if (Database.CheckPassword(login, password))
                 {
                     Function.SendClientMessage(obj,$"%LOGOOD");
-                    Data.AdminSocket.Add((TcpClient)obj);
+                    Function.WriteConsole($"LOGOODP {Function.GetSocketIP((TcpClient)obj)}");
+
+                    foreach (var i in Data.Clients)
+                    {
+                        if (i.TpClient == obj)
+                        {
+                            i.Admin = true;
+                            break;
+                        }
+                    }
                 }
                 else
                 {

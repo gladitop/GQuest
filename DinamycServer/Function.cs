@@ -1,4 +1,6 @@
+using Org.BouncyCastle.Utilities.Net;
 using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -48,6 +50,24 @@ namespace DinamycServer
                     WriteConsole("Client removed", ConsoleColor.Yellow);
                 }
             }
+        }
+
+        public static IPEndPoint GetSocketIP(object client)
+        {
+            return (IPEndPoint)((TcpClient)client).Client.RemoteEndPoint;
+        }
+
+        public static bool CheckAdmin(object client)//Клиент админ?
+        {
+            foreach (var i in Data.Clients)
+            {
+                if (i.TpClient == client)
+                {
+                    return i.Admin;
+                }
+            }
+
+            return false;
         }
 
         public static void WriteConsole(string text, ConsoleColor color) //Отправка цветного сообщения в консоль

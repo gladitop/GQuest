@@ -9,6 +9,10 @@ AdminGQuest/AdminGQuest/obj/
 AdminGQuest/packages/
 AdminGQuest/.vs/
 DinamycServer/.vs/
+DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer.pdb
+DinamycServer/bin/Debug/netcoreapp3.1/LOG.txt
+DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer.deps.json
+DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer
 
 # Unity
 

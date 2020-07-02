@@ -15,18 +15,19 @@ namespace DinamycServer
         public const int Port = 908; //Порт сервера
         public static StreamWriter Logger;
         public static List<ThreadClient> Clients = new List<ThreadClient>(); //Инфа о подключённых сокетах(и потоках)
-        public static List<TcpClient> AdminSocket = new List<TcpClient>();// Сокеты подключеных админов (для проверки)
 
         public class ThreadClient
         {
-            public ThreadClient(TcpClient tpCl, Thread TrCl)
+            public ThreadClient(TcpClient tpCl, Thread TrCl, bool admin = false)
             {
                 TpClient = tpCl;
                 ThrClient = TrCl;
+                Admin = admin;
             }
 
             public TcpClient TpClient { get; }
             public Thread ThrClient { get; }
+            public bool Admin { get; set; }//Это админ?
         }
 
         public class AdminInfo
@@ -41,14 +42,15 @@ namespace DinamycServer
                     string password = Convert.ToString(rand.Next(1242, 99999));
                     byte[] passbyte = Encoding.UTF8.GetBytes(password);
                     byte[] hashbyte = sha.ComputeHash(passbyte);
-                    Password = BitConverter.ToString(hashbyte).Replace("-", string.Empty);
-                    Console.WriteLine(Password);
-                    Console.WriteLine(password);
+                    SHAPassword = BitConverter.ToString(hashbyte).Replace("-", string.Empty);
+
+                    Password = password; 
                 }
             }
 
             public string Login { get; set; }
-            public string Password { get; set; } // sha1
+            public string SHAPassword { get; set; } // sha1
+            public string Password { get; set; } // Без sha1
         }
 
         public class ClientInfo //Инфа о клиенте

@@ -79,8 +79,6 @@ namespace DinamycServer
                     var client = server.AcceptTcpClient(); //клиент
                     var thread = new Thread(ClientLog); //поток
 
-                    /*TODO:Антон сделай сортировку нормальную!
-                      Типо временную зону*/
                     Data.Clients.Add(new Data.ThreadClient(client, thread)); //заносим в массив
                     thread.Start(new Data.ThreadClient(client, thread));
                 }
