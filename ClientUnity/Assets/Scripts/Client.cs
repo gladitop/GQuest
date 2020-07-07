@@ -21,8 +21,8 @@ public class Client : MonoBehaviour
     private StreamReader reader;
 
     private List<string> comands = new List<string>();
-    private bool massmsg = false;
-    private string bmassmsg = "";
+    private bool bmassmsg = false;
+    private string massmsg = "";
     private GameObject Indicator;
 
     public Thread threadLOG;
@@ -75,8 +75,8 @@ public class Client : MonoBehaviour
         try
         {
             //Defalt host / post values
-            //string host = "37.29.78.130";
-            string host = "127.0.0.1";
+            string host = "37.29.78.130";
+            //string host = "127.0.0.1";
             int port = 908;
 
             //Create the socket
@@ -106,24 +106,31 @@ public class Client : MonoBehaviour
                 if (i <= 1) goto end;
 
                 string message = Encoding.UTF8.GetString(buffer, 0, i);
-                Debug.Log("кол-во символов: " + message.Length);
 
-                if(message.Contains("%CMSG")) { massmsg = true; }
-
-                if ( massmsg) { bmassmsg += message; }
-                else{ CutMsg(); }
-
-                if (message.Contains("%EMSG"))
+                if(message.Contains("%CMSG"))
                 {
-                    massmsg = false;
-                    int indexOfSubstring = bmassmsg.IndexOf("%EMSG"); // равно 6
-                    var msg = bmassmsg.Substring(5, indexOfSubstring);
-                    Debug.Log(msg);
-                    CutMsg();
+                    bmassmsg = true;
                 }
-                void CutMsg()
+                else if (message.Contains("%EMSG"))
                 {
-                    string[] cmds = message.Split(new[] { '☼' }); //alt+165
+                    bmassmsg = false;
+
+                    string[] cmds = massmsg.Split(new[] { '☼' });
+                    foreach (string cmd in cmds)
+                    {
+                        if (cmd.Length > 1)
+                        {
+                            comands.Add(cmd);
+                        }
+                    }
+                }
+                else if (bmassmsg)
+                {
+                    massmsg += message;
+                }
+                else
+                {
+                    string[] cmds = message.Split(new[] { '☼' });
 
                     foreach (string cmd in cmds)
                     {

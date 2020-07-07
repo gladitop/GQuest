@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DinamycServer
 {
@@ -28,13 +29,17 @@ namespace DinamycServer
             {
                 var cl = ((Data.ThreadClient)client).TpClient;
                 cl.Client.Send(Encoding.UTF8.GetBytes("%CMSG"));
+                Task.Delay(10).Wait();
 
                 foreach(var msg in message)
                 {
                     cl.Client.Send(Encoding.UTF8.GetBytes($"{msg}☼"));
+                    WriteConsole(msg);
+                    Task.Delay(10).Wait();
                 }
 
                 cl.Client.Send(Encoding.UTF8.GetBytes("%EMSG"));
+                Task.Delay(10).Wait();
             }
             catch(Exception ex)
             {

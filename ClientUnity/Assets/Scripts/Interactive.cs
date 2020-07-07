@@ -154,19 +154,6 @@ public class Interactive : MonoBehaviour
                 DataTable dt = DataBase.GetTable($"SELECT * FROM Questions WHERE question == {quest_id[i]};");
                 int[] marks = Func.ConvertMassTo_int(Convert.ToString(dt.Rows[0][11]).Split(new[] { '|' }));
 
-                //Debug.Log("массив маркс: ");
-                //foreach(int u in marks)
-                //{
-                //    Debug.Log(u);
-                //}
-                //Debug.Log("массив ответов ");
-                //foreach (int o in answers)
-                //{
-                //    Debug.Log(o);
-                //}
-                //Debug.Log("answers[i]: " + answers[i]);
-                //Debug.Log(marks[answers[i]]);
-
                 points += marks[answers[i]];
                 Debug.LogWarning(marks[answers[i]]);
                 
