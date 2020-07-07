@@ -1,12 +1,13 @@
 using Org.BouncyCastle.Utilities.Net;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
 namespace DinamycServer
 {
-    public static class Function //Функции
+    public static class Function
     {
         public static void SendClientMessage(object client, string message) //Отравить клиенту сообщение
         {
@@ -19,6 +20,26 @@ namespace DinamycServer
             {
                 CheckEmptyClients(client);
                 WriteConsole($"ERRMESS: {message}", ConsoleColor.Yellow);
+            }
+        }
+        public static void SendClientMessage(object client, List<string> message) //Отравить клиенту большое сообщение
+        {
+            try
+            {
+                var cl = ((Data.ThreadClient)client).TpClient;
+                cl.Client.Send(Encoding.UTF8.GetBytes("%CMSG"));
+
+                foreach(var msg in message)
+                {
+                    cl.Client.Send(Encoding.UTF8.GetBytes($"{msg}☼"));
+                }
+
+                cl.Client.Send(Encoding.UTF8.GetBytes("%EMSG"));
+            }
+            catch(Exception ex)
+            {
+                CheckEmptyClients(client);
+                WriteConsole($"ERROR_SCM: {ex}", ConsoleColor.Red);
             }
         }
 
@@ -52,24 +73,6 @@ namespace DinamycServer
             }
         }
 
-        public static IPEndPoint GetSocketIP(object client)
-        {
-            return (IPEndPoint)((TcpClient)client).Client.RemoteEndPoint;
-        }
-
-        public static bool CheckAdmin(object client)//Клиент админ?
-        {
-            foreach (var i in Data.Clients)
-            {
-                if (i.TpClient == client)
-                {
-                    return i.Admin;
-                }
-            }
-
-            return false;
-        }
-
         public static void WriteConsole(string text, ConsoleColor color) //Отправка цветного сообщения в консоль
         {
             Console.ForegroundColor = color;
@@ -77,6 +80,7 @@ namespace DinamycServer
             Data.Logger.WriteLine($"{DateTime.Now}:{text}");
             Console.ResetColor();
         }
+
         public static void WriteConsole(string text) //Отправка сообщения в консоль
         {
             Console.WriteLine(text);

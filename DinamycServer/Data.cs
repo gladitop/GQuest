@@ -18,61 +18,38 @@ namespace DinamycServer
 
         public class ThreadClient
         {
-            public ThreadClient(TcpClient tpCl, Thread TrCl, bool admin = false)
+            public ThreadClient(TcpClient tpCl, Thread TrCl)
             {
                 TpClient = tpCl;
                 ThrClient = TrCl;
-                Admin = admin;
             }
 
             public TcpClient TpClient { get; }
             public Thread ThrClient { get; }
-            public bool Admin { get; set; }//Это админ?
-        }
-
-        public class AdminInfo
-        {
-            public AdminInfo(string login)
-            {
-                Login = login;
-
-                using (SHA1 sha = SHA1.Create())
-                {
-                    var rand = new Random();
-                    string password = Convert.ToString(rand.Next(1242, 99999));
-                    byte[] passbyte = Encoding.UTF8.GetBytes(password);
-                    byte[] hashbyte = sha.ComputeHash(passbyte);
-                    SHAPassword = BitConverter.ToString(hashbyte).Replace("-", string.Empty);
-
-                    Password = password; 
-                }
-            }
-
-            public string Login { get; set; }
-            public string SHAPassword { get; set; } // sha1
-            public string Password { get; set; } // Без sha1
         }
 
         public class ClientInfo //Инфа о клиенте
         {
-            public ClientInfo(long id, string email, string password, string nick, string coef, string level)
+            public ClientInfo(long id, string email, string password, string nick, string coef, string level, string checklevel)
             {
                 ID = id;
-                Email = email;
-                Password = password;
+                EMAIL = email;
+                PASSWORD = password;
 
-                Nick = nick;
-                Coef = coef;
-                Level = level;
+                NICK = nick;
+                COEF = coef;
+                LEVEL = level;
+                CHECKLEVEL = checklevel;
             }
 
             public long ID { get; set; }
-            public string Email { get; set; }
-            public string Password { get; set; }
+            public string EMAIL { get; set; }
+            public string PASSWORD { get; set; }
 
-            public string Nick { get; set; }
-            public string Coef { get; set; }
-            public string Level { get; set; }
+            public string NICK { get; set; }
+            public string COEF { get; set; }
+            public string LEVEL { get; set; }
+            public string CHECKLEVEL { get; set; }
         }
     }
 }

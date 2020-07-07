@@ -102,6 +102,7 @@ public class Interactive : MonoBehaviour
 
             Data.PreTestMenu.transform.GetChild(0).GetComponent<Text>().text = name;
             Data.PreTestMenu.transform.GetChild(1).GetComponent<Text>().text = text;
+            LunchTest();
         }
         else
         {
@@ -140,10 +141,7 @@ public class Interactive : MonoBehaviour
             }
             check_quest++;
         }
-        else if (check_quest == quest_id.Length)
-        {
-            end();
-        }
+        else if (check_quest == quest_id.Length) { end(); }
         
         void end()
         {

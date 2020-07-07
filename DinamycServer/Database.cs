@@ -41,6 +41,7 @@ namespace DinamycServer
             var nick = "";
             var coef = "";
             var level = "";
+            var checklevel = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -51,11 +52,12 @@ namespace DinamycServer
                 nick = reader.GetString("w_nick");
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
+                checklevel = reader.GetString("w_chek_level");
             }
             reader.Close();
             command.Dispose();
 
-            var info = new Data.ClientInfo(id, email, password, nick, coef, level);
+            var info = new Data.ClientInfo(id, email, password, nick, coef, level,checklevel);
             return info;
         }
 
@@ -68,6 +70,7 @@ namespace DinamycServer
             var nick = "";
             var coef = "";
             var level = "";
+            var checklevel = "";
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -77,19 +80,18 @@ namespace DinamycServer
                 nick = reader.GetString("w_nick");
                 coef = reader.GetString("coef");
                 level = reader.GetString("w_level");
+                checklevel = reader.GetString("w_chek_level");
             }
             reader.Close();
             command.Dispose();
 
-            var info = new Data.ClientInfo(id, email, password, nick, coef, level);
+            var info = new Data.ClientInfo(id, email, password, nick, coef, level, checklevel);
             return info;
         }
 
         #endregion
 
         #region Account managment
-
-        #region User
 
         public static void AddAccount(string email, string password, string nick) //Добавить аккаунт (просто добавление)
         {
@@ -153,72 +155,6 @@ namespace DinamycServer
             if (password == Ppassword) return true;
             return false;
         }
-
-        #endregion
-
-        #region Admin
-
-        public static void AddAdminAccount(string login, string password) //Добавить админа (Для админа)
-        { 
-            var command = new MySqlCommand($"INSERT INTO `adminacc` (`w_login`, `w_pass`) VALUES ('{login}', '{password}');", connection);
-
-            try
-            {
-                command.ExecuteNonQuery();
-            }
-            catch
-            {
-                Function.WriteConsole("ERRADDAADMINACC", ConsoleColor.Red);
-                command.Dispose();
-            }
-            command.Dispose();
-        }
-
-        public static bool CheckLoginAdmin(string login) //Проверка логина (Для админа)
-        {
-            var command = new MySqlCommand($"SELECT COUNT(*) FROM adminacc WHERE w_login = '{login}';", connection);
-            long count = 0;
-
-            try
-            {
-                count = (long)command.ExecuteScalar();
-            }
-            catch
-            {
-                Function.WriteConsole("ERRCHECKELOGIN", ConsoleColor.Red);
-                command.Dispose();
-            }
-
-            command.Dispose();
-
-            if (count == 0) return false;
-            return true;
-        }
-
-        public static bool CheckPasswordAdmin(string login, string password) //Проверка пароля (Для админа)
-        {
-            var command = new MySqlCommand($"SELECT w_pass FROM adminacc WHERE w_login = '{login}';", connection);
-            var Ppassword = "";
-
-            try
-            {
-                var reader = command.ExecuteReader();
-                while (reader.Read()) Ppassword = reader.GetString("w_password");
-                reader.Close();
-            }
-            catch
-            {
-                Function.WriteConsole("ERRCHECKPASS", ConsoleColor.Red);
-                command.Dispose();
-            }
-
-            command.Dispose();
-
-            if (password == Ppassword) return true;
-            return false;
-        }
-
-        #endregion
 
         #endregion
 

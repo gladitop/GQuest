@@ -21,6 +21,8 @@ public class Client : MonoBehaviour
     private StreamReader reader;
 
     private List<string> comands = new List<string>();
+    private bool massmsg = false;
+    private string bmassmsg = "";
     private GameObject Indicator;
 
     public Thread threadLOG;
@@ -73,8 +75,8 @@ public class Client : MonoBehaviour
         try
         {
             //Defalt host / post values
-            string host = "37.29.78.130";
-            //string host = "127.0.0.1";
+            //string host = "37.29.78.130";
+            string host = "127.0.0.1";
             int port = 908;
 
             //Create the socket
@@ -106,18 +108,35 @@ public class Client : MonoBehaviour
                 string message = Encoding.UTF8.GetString(buffer, 0, i);
                 Debug.Log("кол-во символов: " + message.Length);
 
-                string[] cmds = message.Split(new[] { '☼' }); //alt+165
+                if(message.Contains("%CMSG")) { massmsg = true; }
 
-                foreach (string cmd in cmds)
+                if ( massmsg) { bmassmsg += message; }
+                else{ CutMsg(); }
+
+                if (message.Contains("%EMSG"))
                 {
-                    if (cmd.Length > 1)
+                    massmsg = false;
+                    int indexOfSubstring = bmassmsg.IndexOf("%EMSG"); // равно 6
+                    var msg = bmassmsg.Substring(5, indexOfSubstring);
+                    Debug.Log(msg);
+                    CutMsg();
+                }
+                void CutMsg()
+                {
+                    string[] cmds = message.Split(new[] { '☼' }); //alt+165
+
+                    foreach (string cmd in cmds)
                     {
-                        comands.Add(cmd);
+                        if (cmd.Length > 1)
+                        {
+                            comands.Add(cmd);
+                        }
                     }
                 }
             }
         }
         else { GameObject.Find("Indicator").GetComponent<Image>().color = Color.red; }
+
         OnIncomingData();
     }
 
