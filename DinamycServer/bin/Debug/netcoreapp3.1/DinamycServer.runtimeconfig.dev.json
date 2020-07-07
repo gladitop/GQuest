@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Qlioo\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Qlioo\\.nuget\\packages"
+      "C:\\Users\\damal\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\damal\\.nuget\\packages"
     ]
   }
 }
