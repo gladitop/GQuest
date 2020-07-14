@@ -1,13 +1,15 @@
-                    .d8888b.  .d88888b.                         888    
-                   d88P  Y88bd88P" "Y88b                        888    
-                   888    888888     888                        888    
-                   888       888     888888  888 .d88b. .d8888b 888888 
-                   888  88888888     888888  888d8P  Y8b88K     888    
-                   888    888888 Y8b 888888  88888888888"Y8888b.888    
-                   Y88b  d88PY88b.Y8b88PY88b 888Y8b.         X88Y88b.  
-                    "Y8888P88 "Y888888"  "Y88888 "Y8888  88888P' "Y888 
-                                    Y8b                                
-                                                        
+```Русский
+                .d8888b.  .d88888b.                         888    
+               d88P  Y88bd88P" "Y88b                        888    
+               888    888888     888                        888    
+               888       888     888888  888 .d88b. .d8888b 888888 
+               888  88888888     888888  888d8P  Y8b88K     888    
+               888    888888 Y8b 888888  88888888888"Y8888b.888    
+               Y88b  d88PY88b.Y8b88PY88b 888Y8b.         X88Y88b.  
+                "Y8888P88 "Y888888"  "Y88888 "Y8888  88888P' "Y888 
+                                Y8b                                
+```
+
 `GQuest`
 
 # Использовано
@@ -19,6 +21,7 @@
 * [YoutubeExtractor](https://github.com/flagbug/YoutubeExtractor)
 * SqlLite
 * .Net Core 3.0
+* [SQLite4Unity3d](https://github.com/robertohuertasm/SQLite4Unity3d)
 
 # Авторы
 
