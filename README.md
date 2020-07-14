@@ -10,7 +10,8 @@
                                 Y8b                                
 ```
 
-`GQuest`
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/gladitop/GQuest.svg)](http://isitmaintained.com/project/gladitop/GQuest "Average time to resolve an issue") [![Percentage of issues still open](http://isitmaintained.com/badge/open/gladitop/GQuest.svg)](http://isitmaintained.com/project/gladitop/GQuest "Percentage of issues still open") ![version](https://img.shields.io/badge/version-1.0-red) ![codacy](https://img.shields.io/badge/codacy-B-green) <a href="https://github.com/gladitop/GQuest/graphs/contributors" alt="Contributors">
+        <img src="https://img.shields.io/github/contributors/gladitop/GQuest" /></a>
 
 # Использовано
 
@@ -50,28 +51,28 @@
 
 ## Файлы
 
-| Имя             | Описание       |
-|-----------------|:--------------:|
-| `AdminGQuest`   | Админ панель   |
+| Имя             |    Описание    |
+| --------------- | :------------: |
+| `AdminGQuest`   |  Админ панель  |
 | `ClientUnity`   | Клиент (Unity) |
-| `DinamycServer` | Сервер         |
+| `DinamycServer` |     Сервер     |
 
 ## Команды
 
 ### Админ
 
-| Имя                      | Описание             |
-|--------------------------|:--------------------:|
-| `%ADDAD` *AddAdmin.cs*   | Добавить админа      |
+| Имя                      |       Описание       |
+| ------------------------ | :------------------: |
+| `%ADDAD` *AddAdmin.cs*   |   Добавить админа    |
 | `%DEACC` *DeleteUser.cs* | Удалить пользователя |
-| `%LOGA` *LoginAdmin.cs*  | Вход                 |
+| `%LOGA` *LoginAdmin.cs*  |         Вход         |
 
 ### Пользователь
 
-| Имя                              | Описание                       |
-|----------------------------------|:------------------------------:|
-| `%ULVL` *LevelSender.cs*         | Получение направлений          |
-| `%LOG` *Login.cs*                | Вход                           |
+| Имя                              |            Описание            |
+| -------------------------------- | :----------------------------: |
+| `%ULVL` *LevelSender.cs*         |     Получение направлений      |
+| `%LOG` *Login.cs*                |              Вход              |
 | `%MSG` *Message.cs*              | Отправка сообщение в общий чат |
-| `%UCOEF` *UpdateСoefficients.cs* | Обновление Коэффициента        |
-| `%REG` *Registration.cs*         | Регистрация                    |
+| `%UCOEF` *UpdateСoefficients.cs* |    Обновление Коэффициента     |
+| `%REG` *Registration.cs*         |          Регистрация           |
