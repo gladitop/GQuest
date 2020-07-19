@@ -9,16 +9,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace DinamycServer
 {
-    internal class Program
+    public class Program
     {
         public static TcpListener server { get; set; }
 
-        private static void Main()
+        public static void Main(string[] args)
         {
             #region Запуск сервера + консольные команды
+            
+            //CreateHostBuilder(args).Build().Run(); //Билд демона
             
             Console.WriteLine("Start server...");
             Data.Logger = new StreamWriter("LOG.txt", true);

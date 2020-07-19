@@ -20,3 +20,8 @@ ClientUnity/.vscode/
 ClientUnity/Library/
 ClientUnity/Logs/
 ClientUnity/obj/
+
+# Потом удалить!
+
+WorkerServer/obj/
+WorkerServer/.idea/

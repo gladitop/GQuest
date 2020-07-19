@@ -6,13 +6,14 @@ using System.Threading;
 using System.Security.Cryptography;
 using System.Text;
 using System;
-using Org.BouncyCastle.Asn1.Crmf;
 
 namespace DinamycServer
 {
     public static class Data
     {
         public const int Port = 908; //Порт сервера
+        public const string NameProcess = "dotnet";//Имя процессса сервера
+        public const string Path = "";//Путь до сервера (DinamycServer.dll)
         public static StreamWriter Logger;
         public static List<ThreadClient> Clients = new List<ThreadClient>(); //Инфа о подключённых сокетах(и потоках)
 
