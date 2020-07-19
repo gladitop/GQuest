@@ -17,3 +17,6 @@ DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer
 # Unity
 
 ClientUnity/.vscode/
+ClientUnity/Library/
+ClientUnity/Logs/
+ClientUnity/obj/

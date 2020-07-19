@@ -16,10 +16,10 @@ namespace DinamycServer
     {
         public static TcpListener server { get; set; }
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             #region Запуск сервера + консольные команды
-
+            
             Console.WriteLine("Start server...");
             Data.Logger = new StreamWriter("LOG.txt", true);
             Data.Logger.AutoFlush = true;
