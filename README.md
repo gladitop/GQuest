@@ -23,6 +23,7 @@
 * SqlLite
 * .Net Core 3.0
 * [SQLite4Unity3d](https://github.com/robertohuertasm/SQLite4Unity3d)
+* QT
 
 # Авторы
 
