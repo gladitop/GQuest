@@ -1,21 +1,14 @@
-# Другое
+# Сервер
 
 DinamycServer/obj/
-DinamycServer/LOG.txt
 DinamycServer/.idea/
 DinamycServer/.vscode/
-AdminGQuest/AdminGQuest/bin/
-AdminGQuest/AdminGQuest/obj/
-AdminGQuest/packages/
-AdminGQuest/.vs/
 DinamycServer/.vs/
 DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer.pdb
 DinamycServer/bin/Debug/netcoreapp3.1/LOG.txt
 DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer.deps.json
 DinamycServer/bin/Debug/netcoreapp3.1/DinamycServer
 
-<<<<<<< 160307d89c80945f7fb2659a927b9dd463ed38c1
-=======
 # Демон
 
 WorkerServer/obj/
@@ -26,18 +19,16 @@ WorkerServer/.idea/
 AdminGQuest/build-adminpanel-Desktop-Debug/
 
 
->>>>>>> + QT и С++
 # Unity
 
 ClientUnity/.vscode/
 ClientUnity/Library/
 ClientUnity/Logs/
 ClientUnity/obj/
+<<<<<<< HEAD
 <<<<<<< 160307d89c80945f7fb2659a927b9dd463ed38c1
 
 # Потом удалить!
 
 WorkerServer/obj/
 WorkerServer/.idea/
-=======
->>>>>>> + QT и С++
