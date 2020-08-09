@@ -6,11 +6,11 @@ using System.Windows;
 // набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("AdminGQuest")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("AdminGQuest - Админ панель")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Kvantoryum NEL")]
 [assembly: AssemblyProduct("AdminGQuest")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCopyright("Copyright © KvantStory 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

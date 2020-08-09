@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="AdminGQuest: Главная" Icon="Resources/GQuestIcon.ico" Height="450" Width="800" Closing="main_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <ListBox HorizontalAlignment="Left" Height="425" VerticalAlignment="Top" Width="175"/>
+
     </Grid>
 </Window>

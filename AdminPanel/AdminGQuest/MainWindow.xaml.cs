@@ -35,7 +35,7 @@ namespace AdminGQuest
             {
                 Main m = new Main();
                 m.Show();
-                Hide();//TODO:Исправить (оптимизация), Отправить
+                Hide();
             }
             else
             {
@@ -45,13 +45,24 @@ namespace AdminGQuest
 
         private void btlogin_Click(object sender, RoutedEventArgs e)//Вход
         {
-            Data.SendServer($"%LOGA:{tblogin.Text}:{tbpass.Password}");
-            if (Data.ReceiveServer() == "%LOGOD")
+            Function.SendServer($"%LOGA:{tblogin.Text}:{tbpass.Password}");
+            tblogin.Text = Function.ReceiveServer();
+            if (tblogin.Text == "%GODLOG:☼")//TODO:Какой-то херня (исправить)
             {
                 Main m = new Main();
                 m.Show();
                 Hide();
             }
+            else
+            {
+                MessageBox.Show("Неверный пароль!", Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            /*
+            Main m = new Main();
+            m.Show();
+            Hide();
+            */
         }
 
         private void main_Closing(object sender, System.ComponentModel.CancelEventArgs e)

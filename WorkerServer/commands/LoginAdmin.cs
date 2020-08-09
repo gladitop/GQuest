@@ -8,7 +8,7 @@ namespace WorkerServer
         public void LOGA(object obj, string[] argumets) // %LOGA:login:pass
         {
             var login = argumets[0];
-            var password = argumets[1];
+            var password = argumets[1];//TODO:Какой-то херня
 
             try
             {

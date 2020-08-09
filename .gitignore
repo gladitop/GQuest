@@ -16,8 +16,8 @@ WorkerServer/.idea/
 
 # Админ панель
 
-AdminGQuest/build-adminpanel-Desktop-Debug/
-
+AdminPanel/AdminGQuest/bin/
+AdminPanel/AdminGQuest/obj/
 
 # Unity
 
@@ -25,10 +25,9 @@ ClientUnity/.vscode/
 ClientUnity/Library/
 ClientUnity/Logs/
 ClientUnity/obj/
-<<<<<<< HEAD
-<<<<<<< 160307d89c80945f7fb2659a927b9dd463ed38c1
 
 # Потом удалить!
 
 WorkerServer/obj/
 WorkerServer/.idea/
+AdminPanel/.vs/

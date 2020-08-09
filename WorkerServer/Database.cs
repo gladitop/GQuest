@@ -97,10 +97,8 @@ namespace WorkerServer
 
         public static bool CheckDataAdmin(string login, string password)//Проверка данных на вход у админа
         {
-            var command = new MySqlCommand($"SELECT COUNT(*) FROM Tutor WHERE w_login = '{login}' AND w_password = '{password}';", connection);
+            var command = new MySqlCommand($"SELECT COUNT(*) FROM tutor WHERE w_login = '{login}' AND w_password = '{password}';", connection);
             long count = 0;
-            //TODO:Проверить
-            //Сергей, вы когда сделаете бд?
             
             try
             {
