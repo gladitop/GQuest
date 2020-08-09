@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -14,7 +13,7 @@ namespace WorkerServer
     public class Worker : BackgroundService //Сам наш демон
     {
         #region Демон
-        
+
         public Worker(ILogger<Worker> logger) //Запуск демона
         {
             Data._logger = logger;
@@ -46,7 +45,7 @@ namespace WorkerServer
             #region Запуск сервера + консольные команды
 
             //CreateHostBuilder(args).Build().Run(); //Билд демона
-            
+
             server = new TcpListener(IPAddress.Any, Data.Port);
             server.Start();
             var threadListenClient = new Thread(ListenClients);
@@ -68,7 +67,7 @@ namespace WorkerServer
                         Function.WriteConsole("off server...", ConsoleColor.Yellow);
 
                         Data.ServerStart = false;
-                        threadListenClient.Join();//Навсякий случай (из-за другого всё ломается)
+                        threadListenClient.Join(); //Навсякий случай (из-за другого всё ломается)
                         start:
                         if (server.Pending())
                         {
@@ -76,7 +75,7 @@ namespace WorkerServer
                             Task.Delay(100).Wait();
                             goto start;
                         }
-                        
+
                         server.Stop();
                         Function.WriteConsole("Done off server!", ConsoleColor.Green);
                         Environment.Exit(0);
@@ -93,7 +92,6 @@ namespace WorkerServer
         private static void ListenClients() //Поиск клиентов(Создание потоков с клиентами)
         {
             while (Data.ServerStart)
-            {
                 try
                 {
                     Task.Delay(10).Wait();
@@ -115,7 +113,6 @@ namespace WorkerServer
                 {
                     Function.WriteConsole("ERROR: Add new connect", ConsoleColor.Red);
                 }
-            }
         }
 
         private static void ClientLog(object obj) //Поток клиента

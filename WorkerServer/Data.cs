@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using Microsoft.Extensions.Logging;
@@ -11,7 +10,7 @@ namespace WorkerServer
         public const int Port = 908; //Порт сервера
         public static List<ThreadClient> Clients = new List<ThreadClient>(); //Инфа о подключённых сокетах(и потоках)
         public static bool ServerStart = true; // Сервер запущен?
-        public static ILogger<Worker> _logger;//Systemd - логи
+        public static ILogger<Worker> _logger; //Systemd - логи
 
         public class ThreadClient
         {

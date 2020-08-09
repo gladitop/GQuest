@@ -80,21 +80,13 @@ namespace WorkerServer
         public static void WriteConsole(string text, ConsoleColor color) //Отправка цветного сообщения в консоль
         {
             if (color == ConsoleColor.Red)
-            {
                 Data._logger.LogError(text, DateTimeOffset.Now);
-            }
-            else if(color == ConsoleColor.Yellow)
-            {
+            else if (color == ConsoleColor.Yellow)
                 Data._logger.LogWarning(text, DateTimeOffset.Now);
-            }
             else if (color == ConsoleColor.Green)
-            {
                 Data._logger.LogInformation(text, DateTimeOffset.Now);
-            }
             else
-            {
                 Data._logger.LogDebug(text, DateTimeOffset.Now);
-            }
             Console.ResetColor();
         }
 
