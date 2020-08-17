@@ -11,7 +11,7 @@
 ```
 
 ![version](https://img.shields.io/badge/version-1.0-red) ![codacy](https://img.shields.io/badge/codacy-B-green) <a href="https://github.com/gladitop/GQuest/graphs/contributors" alt="Contributors">
-        <img src="https://img.shields.io/github/contributors/gladitop/GQuest" /></a>
+        <img src="https://img.shields.io/github/contributors/gladitop/GQuest" /></a> ![repo-size](https://img.shields.io/github/repo-size/gladitop/GQuest) 
 
 # Использовано
 
