@@ -103,3 +103,7 @@ crashlytics-build.properties
 WorkerServer/obj/
 WorkerServer/.idea/
 AdminPanel/.vs/
+
+# Прочее
+
+Other/DataBase/123.mw.bak
